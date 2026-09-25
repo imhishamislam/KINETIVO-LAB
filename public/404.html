@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>KINETIVO LAB</title>
+    <script>
+      // Redirect sub-paths back to main page preserving hash and parameters
+      var base = window.location.pathname.split('/')[1];
+      var target = '/' + (base ? base + '/' : '');
+      window.location.replace(target + window.location.hash);
+    </script>
+  </head>
+  <body style="background:#07070c;color:#fff;display:flex;align-items:center;justify-content:center;height:100vh;font-family:sans-serif;">
+    <p>Redirecting to KINETIVO LAB...</p>
+  </body>
+</html>
