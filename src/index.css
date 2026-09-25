@@ -1,0 +1,177 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --bg: #07070c;
+    --bg2: #0a0a11;
+    --panel: #0e0e16;
+    --panel2: #12121c;
+    --line: rgba(255, 255, 255, 0.08);
+    --line2: rgba(255, 255, 255, 0.14);
+    --txt: #f2f3f7;
+    --muted: #9a9aab;
+    --muted2: #6f6f82;
+    --green: #c6f24e;
+    --green-d: #a9d92f;
+    --cyan: #2ed9e3;
+    --pink: #ff3d9a;
+    --violet: #a855f7;
+    --radius: 16px;
+    --f-head: "Outfit", "Hind Siliguri", sans-serif;
+    --f-body: "Inter", "Hind Siliguri", sans-serif;
+  }
+
+  body {
+    background-color: var(--bg);
+    color: var(--txt);
+    font-family: var(--f-body);
+    font-size: 15px;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  body.lang-bn {
+    --f-head: "Hind Siliguri", "Outfit", sans-serif;
+    --f-body: "Hind Siliguri", "Inter", sans-serif;
+  }
+
+  h1, h2, h3, h4, .f-d {
+    font-family: var(--f-head);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1.08;
+  }
+}
+
+/* Background grid with radial mask */
+.gridbg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image: linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+  background-size: 64px 64px;
+  mask-image: radial-gradient(ellipse 120% 90% at 50% 0%, #000 30%, transparent 100%);
+  -webkit-mask-image: radial-gradient(ellipse 120% 90% at 50% 0%, #000 30%, transparent 100%);
+}
+
+/* Gradient divider rule */
+.rule-gradient {
+  height: 1px;
+  width: 100%;
+  background: linear-gradient(90deg, transparent, rgba(46, 217, 227, 0.35), rgba(168, 85, 247, 0.4), rgba(198, 242, 78, 0.35), transparent);
+}
+
+/* Eyebrows and badges */
+.eyebrow-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  border-radius: 9999px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+/* Marquee animation */
+@keyframes marquee-scroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+.animate-marquee {
+  display: flex;
+  width: max-content;
+  animation: marquee-scroll 34s linear infinite;
+}
+
+.animate-marquee:hover {
+  animation-play-state: paused;
+}
+
+@keyframes mouse-wheel {
+  0%, 100% { transform: translate(-50%, 0); opacity: 1; }
+  50% { transform: translate(-50%, 9px); opacity: 0.25; }
+}
+
+.mouse-indicator::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 6px;
+  width: 3px;
+  height: 6px;
+  border-radius: 2px;
+  background: var(--green);
+  transform: translateX(-50%);
+  animation: mouse-wheel 1.7s ease-in-out infinite;
+}
+
+/* Glowing More Work Button from Watch Our Work - Video AD Showing Style.png */
+.more-work-glow-btn {
+  background: linear-gradient(135deg, #ff3d9a 0%, #a855f7 50%, #2ed9e3 100%);
+  padding: 2px;
+  border-radius: 9999px;
+  display: inline-flex;
+  transition: all 0.25s ease;
+  box-shadow: 0 0 35px -5px rgba(168, 85, 247, 0.5), 0 0 20px -3px rgba(46, 217, 227, 0.4);
+}
+
+.more-work-glow-btn:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 0 45px 0 rgba(168, 85, 247, 0.7), 0 0 25px 0 rgba(46, 217, 227, 0.6);
+}
+
+.more-work-inner {
+  background: #090912;
+  border-radius: 9999px;
+  padding: 13px 34px;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  color: #ffffff;
+  font-family: var(--f-head);
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+/* Gradient border for Contact Form Card */
+.gradient-border-card {
+  position: relative;
+  border-radius: 20px;
+  background: rgba(12, 12, 19, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.gradient-border-card::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: 21px;
+  padding: 1px;
+  pointer-events: none;
+  background: linear-gradient(120deg, rgba(46, 217, 227, 0.65), rgba(168, 85, 247, 0.55) 45%, rgba(255, 61, 154, 0.6));
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+}
+
+/* Custom scrollbars */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #07070c;
+}
+::-webkit-scrollbar-thumb {
+  background: #1f1f2e;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #313149;
+}

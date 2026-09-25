@@ -1,0 +1,6 @@
+{
+  "name": "KINETIVO LAB — AI Ad Studio",
+  "description": "Scroll-stopping video ads, AI UGC, commercial product films, and performance creative studio for modern brands.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
