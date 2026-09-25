@@ -8,11 +8,13 @@ import {
   FrontTexts,
   VideoCategory,
   Language,
-  ImagePreset
+  ImagePreset,
+  ProjectLead
 } from '../types';
 import { parseVideoUrl } from '../utils/videoParser';
 import { DEFAULT_PRESET_IMAGES } from '../data/defaultData';
-import { exportBackupJson, importBackupJson, syncAllToDisk } from '../utils/storage';
+import { exportBackupJson, importBackupJson, syncAllToDisk, deleteStoredLead, updateStoredLeadStatus } from '../utils/storage';
+import { sendTestEmail } from '../utils/emailService';
 import {
   Lock,
   Unlock,
@@ -36,7 +38,13 @@ import {
   Copy,
   Clock,
   Sparkles,
-  ArrowLeft
+  ArrowLeft,
+  Mail,
+  MessageSquare,
+  Inbox,
+  Filter,
+  Loader2,
+  AlertCircle
 } from 'lucide-react';
 
 interface AdminPanelProps {
@@ -59,9 +67,11 @@ interface AdminPanelProps {
   onPreviewPost: (slug: string) => void;
   onPreviewPage: (slug: string) => void;
   onPreviewVideo: (video: VideoItem) => void;
+  leads: ProjectLead[];
+  onSaveLeads: (leads: ProjectLead[]) => void;
 }
 
-type AdminTab = 'videos' | 'blogs' | 'pages' | 'showreel' | 'settings';
+type AdminTab = 'videos' | 'blogs' | 'pages' | 'showreel' | 'leads' | 'settings';
 
 export const AdminPanel: React.FC<AdminPanelProps> = ({
   isOpen,
@@ -82,7 +92,9 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
   onActivateFrontEdit,
   onPreviewPost,
   onPreviewPage,
-  onPreviewVideo
+  onPreviewVideo,
+  leads,
+  onSaveLeads
 }) => {
   if (!isOpen) return null;
 
@@ -93,6 +105,10 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
 
   // Active navigation tab inside Admin
   const [activeTab, setActiveTab] = useState<AdminTab>('videos');
+
+  // Leads CRM state
+  const [leadFilter, setLeadFilter] = useState<'all' | 'new' | 'contacted' | 'archived'>('all');
+  const [testEmailStatus, setTestEmailStatus] = useState<{ loading: boolean; message?: string; isError?: boolean } | null>(null);
 
   // Video Ad Editing State
   const [editingVideo, setEditingVideo] = useState<VideoItem | null>(null);
@@ -338,6 +354,73 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
   };
 
   // -------------------------------------------------------------
+  // 6. CLIENT LEADS & EMAIL HANDLERS
+  // -------------------------------------------------------------
+  const handleSendTestEmail = async () => {
+    if (!settingsForm.contactEmail || !settingsForm.contactEmail.includes('@')) {
+      setTestEmailStatus({
+        loading: false,
+        isError: true,
+        message: 'অনুগ্রহ করে একটি সঠিক ইমেইল আইডি দিন।'
+      });
+      return;
+    }
+    setTestEmailStatus({ loading: true });
+    const res = await sendTestEmail(settingsForm.contactEmail);
+    setTestEmailStatus({
+      loading: false,
+      isError: !res.success,
+      message: res.message
+    });
+  };
+
+  const handleDeleteLead = (id: string) => {
+    if (window.confirm('Delete this client lead?')) {
+      const updated = deleteStoredLead(id);
+      onSaveLeads(updated);
+      showToast('Lead deleted.');
+    }
+  };
+
+  const handleToggleLeadStatus = (id: string, currentStatus: 'new' | 'contacted' | 'archived') => {
+    const nextStatus = currentStatus === 'new' ? 'contacted' : currentStatus === 'contacted' ? 'archived' : 'new';
+    const updated = updateStoredLeadStatus(id, nextStatus);
+    onSaveLeads(updated);
+    showToast(`Status updated to ${nextStatus}.`);
+  };
+
+  const handleExportLeadsCsv = () => {
+    if (leads.length === 0) {
+      showToast('No client leads to export.');
+      return;
+    }
+    const headers = ['Date', 'Name', 'Email', 'Brand', 'Website Link', 'Package / Interest', 'Budget', 'Goals & Notes', 'Status', 'Source'];
+    const rows = leads.map(l => [
+      `"${new Date(l.submittedAt).toLocaleString()}"`,
+      `"${(l.name || '').replace(/"/g, '""')}"`,
+      `"${(l.email || '').replace(/"/g, '""')}"`,
+      `"${(l.brand || '').replace(/"/g, '""')}"`,
+      `"${(l.link || '').replace(/"/g, '""')}"`,
+      `"${(l.interest || '').replace(/"/g, '""')}"`,
+      `"${(l.budget || '').replace(/"/g, '""')}"`,
+      `"${(l.goal || '').replace(/"/g, '""')}"`,
+      `"${l.status}"`,
+      `"${l.source}"`
+    ]);
+    const csvContent = [headers.join(','), ...rows.map(r => r.join(','))].join('\n');
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `kinetivo-leads-${new Date().toISOString().split('T')[0]}.csv`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+    showToast('Leads exported to CSV!');
+  };
+
+  // -------------------------------------------------------------
   // PASSCODE UNLOCK SCREEN (Exact passcode: "KineL1525")
   // -------------------------------------------------------------
   if (!isAuthenticated) {
@@ -509,6 +592,33 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
             >
               <Film className="w-4 h-4" />
               <span>Showreel &amp; Banner</span>
+            </button>
+
+            <button
+              onClick={() => setActiveTab('leads')}
+              className={`w-full flex items-center justify-between px-4 py-3 rounded-xl text-xs font-bold transition-all text-left ${
+                activeTab === 'leads'
+                  ? 'bg-[#c6f24e] text-black shadow-md'
+                  : 'text-[#9a9aab] hover:text-white hover:bg-white/5'
+              }`}
+            >
+              <div className="flex items-center gap-3">
+                <Mail className="w-4 h-4" />
+                <span>Client Leads</span>
+              </div>
+              {leads && leads.length > 0 && (
+                <span
+                  className={`text-[10px] px-2 py-0.5 rounded-full font-bold ${
+                    activeTab === 'leads'
+                      ? 'bg-black text-[#c6f24e]'
+                      : 'bg-[#ff3d9a] text-white'
+                  }`}
+                >
+                  {leads.filter(l => l.status === 'new').length > 0
+                    ? `${leads.filter(l => l.status === 'new').length} New`
+                    : leads.length}
+                </span>
+              )}
             </button>
 
             <button
@@ -1631,6 +1741,198 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
           )}
 
           {/* ========================================================= */}
+          {/* TAB: CLIENT LEADS & INQUIRIES (কাস্টমার মেসেজ ও ব্রিফ) */}
+          {/* ========================================================= */}
+          {activeTab === 'leads' && (
+            <div className="space-y-6">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div>
+                  <h1 className="text-2xl font-bold font-['Outfit'] text-white flex items-center gap-2.5">
+                    <span>Client Inquiries &amp; Project Orders</span>
+                    <span className="text-xs px-2.5 py-0.5 rounded-full bg-[#c6f24e]/10 text-[#c6f24e] border border-[#c6f24e]/30 font-mono">
+                      {leads ? leads.length : 0} Total
+                    </span>
+                  </h1>
+                  <p className="text-xs text-[#9a9aab] mt-1">
+                    কাস্টমারদের পাঠানো সমস্ত ব্রিফ ও মেসেজ এখানে সরাসরি সংরক্ষিত থাকবে। আপনি সরাসরি রিপ্লাই পাঠাতে পারবেন।
+                  </p>
+                </div>
+
+                <div className="flex items-center gap-2">
+                  <button
+                    type="button"
+                    onClick={handleExportLeadsCsv}
+                    className="px-4 py-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/15 text-xs text-white font-medium flex items-center gap-1.5 transition-colors cursor-pointer"
+                  >
+                    <Download className="w-3.5 h-3.5 text-[#c6f24e]" />
+                    <span>Export CSV</span>
+                  </button>
+                </div>
+              </div>
+
+              {/* Filter Tabs */}
+              <div className="flex items-center gap-2 border-b border-white/10 pb-3">
+                <Filter className="w-3.5 h-3.5 text-[#6f6f82]" />
+                {(['all', 'new', 'contacted', 'archived'] as const).map((statusKey) => {
+                  const count = statusKey === 'all'
+                    ? (leads ? leads.length : 0)
+                    : (leads ? leads.filter(l => l.status === statusKey).length : 0);
+                  return (
+                    <button
+                      key={statusKey}
+                      onClick={() => setLeadFilter(statusKey)}
+                      className={`px-3 py-1.5 rounded-lg text-xs font-semibold capitalize transition-colors cursor-pointer ${
+                        leadFilter === statusKey
+                          ? 'bg-white/10 text-white border border-white/20'
+                          : 'text-[#9a9aab] hover:text-white'
+                      }`}
+                    >
+                      {statusKey} ({count})
+                    </button>
+                  );
+                })}
+              </div>
+
+              {/* Leads List */}
+              {(() => {
+                const currentLeads = leads || [];
+                const filteredLeads = leadFilter === 'all'
+                  ? currentLeads
+                  : currentLeads.filter(l => l.status === leadFilter);
+
+                if (filteredLeads.length === 0) {
+                  return (
+                    <div className="border border-white/10 rounded-2xl p-12 text-center bg-[#0e0e16]/50">
+                      <Inbox className="w-12 h-12 text-[#6f6f82] mx-auto mb-3 opacity-40" />
+                      <h4 className="text-base font-bold text-white mb-1">
+                        {leadFilter === 'all' ? 'No client inquiries yet' : `No ${leadFilter} inquiries`}
+                      </h4>
+                      <p className="text-xs text-[#9a9aab] max-w-sm mx-auto">
+                        কাস্টমাররা যখন ওয়েবসাইট থেকে প্রজেক্ট ব্রিফ বা কন্টাক্ট ফর্ম পূরণ করবেন, তা সরাসরি এখানে দেখা যাবে এবং আপনার ইমেইলেও পাঠানো হবে।
+                      </p>
+                    </div>
+                  );
+                }
+
+                return (
+                  <div className="space-y-4">
+                    {filteredLeads.map((lead) => (
+                      <div
+                        key={lead.id}
+                        className="border border-white/10 rounded-2xl p-5 bg-[#0e0e16] hover:border-white/20 transition-all space-y-4"
+                      >
+                        <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3 border-b border-white/10 pb-3">
+                          <div>
+                            <div className="flex items-center gap-2">
+                              <h3 className="text-base font-bold text-white font-['Outfit']">
+                                {lead.name}
+                              </h3>
+                              {lead.brand && (
+                                <span className="text-[11px] font-bold uppercase tracking-wider text-[#2ed9e3] px-2 py-0.5 rounded bg-[#2ed9e3]/10 border border-[#2ed9e3]/20">
+                                  {lead.brand}
+                                </span>
+                              )}
+                              <span
+                                className={`text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-full ${
+                                  lead.status === 'new'
+                                    ? 'bg-[#c6f24e]/10 text-[#c6f24e] border border-[#c6f24e]/30'
+                                    : lead.status === 'contacted'
+                                    ? 'bg-[#2ed9e3]/10 text-[#2ed9e3] border border-[#2ed9e3]/30'
+                                    : 'bg-white/5 text-[#9a9aab] border border-white/10'
+                                }`}
+                              >
+                                {lead.status}
+                              </span>
+                            </div>
+                            <div className="text-xs text-[#9a9aab] mt-1 flex flex-wrap items-center gap-3">
+                              <span>Email: <strong className="text-white font-mono">{lead.email}</strong></span>
+                              <span>•</span>
+                              <span className="flex items-center gap-1">
+                                <Clock className="w-3 h-3 text-[#6f6f82]" />
+                                {new Date(lead.submittedAt).toLocaleString()}
+                              </span>
+                              <span>•</span>
+                              <span className="text-[#6f6f82]">
+                                {lead.source === 'brief-modal' ? 'Brief Modal' : 'Contact Form'}
+                              </span>
+                            </div>
+                          </div>
+
+                          <div className="flex items-center gap-2">
+                            <a
+                              href={`mailto:${lead.email}?subject=Re:%20Your%20KINETIVO%20LAB%20Project%20Brief`}
+                              className="px-3.5 py-1.5 rounded-xl bg-[#c6f24e] text-black font-bold text-xs hover:bg-[#d4fc62] transition-colors flex items-center gap-1.5 cursor-pointer shadow-sm"
+                            >
+                              <Mail className="w-3.5 h-3.5" />
+                              <span>Reply Email</span>
+                            </a>
+
+                            <button
+                              type="button"
+                              onClick={() => handleToggleLeadStatus(lead.id, lead.status)}
+                              className="px-3 py-1.5 rounded-xl border border-white/15 bg-white/5 hover:bg-white/10 text-xs text-white transition-colors cursor-pointer"
+                              title="Toggle status: new -> contacted -> archived"
+                            >
+                              Status: {lead.status}
+                            </button>
+
+                            <button
+                              type="button"
+                              onClick={() => handleDeleteLead(lead.id)}
+                              className="w-8 h-8 rounded-xl border border-white/15 bg-white/5 hover:bg-[#ff3d9a] hover:border-[#ff3d9a] text-white flex items-center justify-center transition-colors cursor-pointer"
+                              title="Delete Lead"
+                            >
+                              <Trash2 className="w-3.5 h-3.5" />
+                            </button>
+                          </div>
+                        </div>
+
+                        {/* Lead Details Grid */}
+                        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs bg-white/[0.02] p-3.5 rounded-xl border border-white/5">
+                          <div>
+                            <span className="text-[#6f6f82] block text-[10px] uppercase font-bold">Package / Interest</span>
+                            <span className="text-white font-semibold capitalize">{lead.interest || 'General'}</span>
+                          </div>
+                          <div>
+                            <span className="text-[#6f6f82] block text-[10px] uppercase font-bold">Estimated Budget</span>
+                            <span className="text-[#c6f24e] font-semibold">{lead.budget || 'Not specified'}</span>
+                          </div>
+                          <div>
+                            <span className="text-[#6f6f82] block text-[10px] uppercase font-bold">Product / Website Link</span>
+                            {lead.link ? (
+                              <a
+                                href={lead.link.startsWith('http') ? lead.link : `https://${lead.link}`}
+                                target="_blank"
+                                rel="noreferrer"
+                                className="text-[#2ed9e3] hover:underline flex items-center gap-1 truncate"
+                              >
+                                <span className="truncate">{lead.link}</span>
+                                <ExternalLink className="w-3 h-3 shrink-0" />
+                              </a>
+                            ) : (
+                              <span className="text-[#6f6f82]">None</span>
+                            )}
+                          </div>
+                        </div>
+
+                        {/* Lead Goal / Message */}
+                        {lead.goal && (
+                          <div className="text-xs bg-black/40 p-3.5 rounded-xl border border-white/5">
+                            <span className="text-[#6f6f82] block text-[10px] uppercase font-bold mb-1">Client Goals &amp; Details</span>
+                            <p className="text-white/90 whitespace-pre-wrap leading-relaxed">
+                              {lead.goal}
+                            </p>
+                          </div>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                );
+              })()}
+            </div>
+          )}
+
+          {/* ========================================================= */}
           {/* TAB 5: SETTINGS & SECURITY (WITH PASSCODE CARD) */}
           {/* ========================================================= */}
           {activeTab === 'settings' && (
@@ -1924,26 +2226,91 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
                 </div>
 
                 {/* CONTACT FORM EMAIL & DETAILS */}
-                <div className="border border-white/10 rounded-xl p-4 bg-white/[0.02]">
-                  <div className="flex items-center justify-between gap-2 mb-2">
-                    <label className="block text-[11px] font-bold uppercase text-[#ff3d9a]">
-                      Contact Form Recipient Email (কন্টাক্ট ফর্মের ইমেইল ID) *
-                    </label>
-                    <span className="text-[10px] text-[#2ed9e3] font-mono px-2 py-0.5 rounded bg-[#2ed9e3]/10 border border-[#2ed9e3]/20">
-                      Live Form Target
+                <div className="border border-white/10 rounded-2xl p-5 bg-white/[0.02] space-y-3.5">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                    <div>
+                      <label className="block text-[11px] font-bold uppercase text-[#ff3d9a]">
+                        Contact Form Recipient Email (কন্টাক্ট ফর্মের ইমেইল ID) *
+                      </label>
+                      <p className="text-[11px] text-[#9a9aab] mt-0.5">
+                        ওয়েবসাইটের Contact Form ও প্রজেক্ট ব্রিফ থেকে কাস্টমারদের পাঠানো সমস্ত মেসেজ সরাসরি এই ইমেইলে যাবে।
+                      </p>
+                    </div>
+                    <span className="text-[10px] text-[#2ed9e3] font-mono px-2.5 py-1 rounded-full bg-[#2ed9e3]/10 border border-[#2ed9e3]/20 self-start sm:self-auto shrink-0">
+                      Live Delivery Target
                     </span>
                   </div>
-                  <p className="text-[11px] text-[#9a9aab] mb-3">
-                    এই ইমেইল অ্যাড্রেসটি ওয়েবসাইটের Contact Form এবং Let&apos;s Talk সেকশনে প্রদর্শিত হবে। সমস্ত ক্লায়েন্ট ইনকোয়ারি ও ব্রিফ এই ঠিকানায় পাঠানো হবে।
-                  </p>
-                  <input
-                    type="email"
-                    required
-                    value={settingsForm.contactEmail}
-                    onChange={(e) => setSettingsForm({ ...settingsForm, contactEmail: e.target.value })}
-                    placeholder="e.g. hello@kinetivo.lab or your business email"
-                    className="w-full border border-white/15 rounded-xl bg-white/[0.035] px-4 py-2.5 text-xs text-white font-mono focus:outline-none focus:border-[#ff3d9a]"
-                  />
+
+                  <div className="flex flex-col sm:flex-row gap-2.5">
+                    <input
+                      type="email"
+                      required
+                      value={settingsForm.contactEmail}
+                      onChange={(e) => setSettingsForm({ ...settingsForm, contactEmail: e.target.value })}
+                      placeholder="e.g. imhishamislam@gmail.com or your business email"
+                      className="flex-1 border border-white/15 rounded-xl bg-white/[0.035] px-4 py-2.5 text-xs text-white font-mono focus:outline-none focus:border-[#ff3d9a]"
+                    />
+                    <button
+                      type="button"
+                      onClick={handleSendTestEmail}
+                      disabled={testEmailStatus?.loading}
+                      className="px-4 py-2.5 rounded-xl bg-[#2ed9e3]/15 hover:bg-[#2ed9e3]/25 text-[#2ed9e3] border border-[#2ed9e3]/30 text-xs font-bold transition-all flex items-center justify-center gap-1.5 shrink-0 cursor-pointer disabled:opacity-60"
+                      title="Send a live test email to verify delivery"
+                    >
+                      {testEmailStatus?.loading ? (
+                        <>
+                          <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                          <span>Sending Test...</span>
+                        </>
+                      ) : (
+                        <>
+                          <Mail className="w-3.5 h-3.5" />
+                          <span>Send Test Email (টেস্ট করুন)</span>
+                        </>
+                      )}
+                    </button>
+                  </div>
+
+                  {testEmailStatus && !testEmailStatus.loading && (
+                    <div
+                      className={`p-3.5 rounded-xl text-xs flex items-start gap-2.5 ${
+                        testEmailStatus.isError
+                          ? 'bg-[#ff3d9a]/10 border border-[#ff3d9a]/30 text-[#ff3d9a]'
+                          : 'bg-[#c6f24e]/10 border border-[#c6f24e]/30 text-[#c6f24e]'
+                      }`}
+                    >
+                      {testEmailStatus.isError ? (
+                        <AlertCircle className="w-4 h-4 shrink-0 mt-0.5" />
+                      ) : (
+                        <Check className="w-4 h-4 shrink-0 mt-0.5" />
+                      )}
+                      <div className="space-y-1">
+                        <div className="font-semibold">{testEmailStatus.message}</div>
+                        {!testEmailStatus.isError && (
+                          <div className="text-[11px] opacity-80">
+                            যদি ইনবক্সে সরাসরি না পান, স্প্যাম ফোল্ডার চেক করুন এবং FormSubmit থেকে আসা ইমেইলের "Activate" বাটনে একবার ক্লিক করে অ্যাক্টিভেট করুন।
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  )}
+
+                  <div className="p-3.5 rounded-xl bg-black/40 border border-white/5 text-[11px] text-[#9a9aab] leading-relaxed">
+                    <p className="font-semibold text-white mb-1.5">
+                      💡 Netlify ও গিটহাব পেজে ইমেইল ডেলিভারি কীভাবে নিশ্চিত করবেন:
+                    </p>
+                    <ul className="list-disc list-inside space-y-1 text-[#9a9aab]">
+                      <li>
+                        ফর্ম সাবমিশন কোনো সার্ভার ছাড়া সরাসরি <strong>FormSubmit.co</strong>-এর মাধ্যমে আপনার এই ইমেইলে পাঠিয়ে দেওয়া হয়।
+                      </li>
+                      <li>
+                        নতুন কোনো ইমেইল সেট করার পর, প্রথম মেসেজ পাঠানোর সাথে সাথে FormSubmit থেকে আপনার ইনবক্সে একটি কনফার্মেশন ইমেইল পাঠানো হতে পারে। সেখানে থাকা <strong className="text-[#2ed9e3]">"Activate Form"</strong> বাটনে একবার ক্লিক করলেই ভবিষ্যৎ সমস্ত মেসেজ সরাসরি ইনবক্সে আসবে।
+                      </li>
+                      <li>
+                        এছাড়া কাস্টমারদের প্রতিটি মেসেজ বাম পাশের <strong>"Client Leads"</strong> ট্যাবেও স্বয়ংক্রিয়ভাবে ব্যাকআপ হিসেবে জমা হয়ে থাকে!
+                      </li>
+                    </ul>
+                  </div>
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-1">

@@ -6,7 +6,8 @@ import {
   ExtraPage,
   ShowreelData,
   SiteSettings,
-  FrontTexts
+  FrontTexts,
+  ProjectLead
 } from './types';
 import {
   getStoredVideos,
@@ -23,6 +24,8 @@ import {
   saveFrontTexts,
   getStoredLanguage,
   saveLanguage,
+  getStoredLeads,
+  saveLeads,
   loadInitialDataFromDisk
 } from './utils/storage';
 import { DEFAULT_FRONT_TEXTS } from './data/defaultData';
@@ -59,9 +62,11 @@ export default function App() {
   const [pages, setPages] = useState<ExtraPage[]>(() => getStoredPages());
   const [settings, setSettings] = useState<SiteSettings>(() => getStoredSettings());
   const [frontTexts, setFrontTexts] = useState<FrontTexts>(() => getStoredFrontTexts());
+  const [leads, setLeads] = useState<ProjectLead[]>(() => getStoredLeads());
 
   // Navigation views: 'home' | 'work' | 'blog' | 'page'
-  const [currentView, setCurrentView] = useState<'home' | 'work' | 'blog' | 'page'>('home');
+  const currentViewDefault: 'home' | 'work' | 'blog' | 'page' = 'home';
+  const [currentView, setCurrentView] = useState<'home' | 'work' | 'blog' | 'page'>(currentViewDefault);
   const [activePageSlug, setActivePageSlug] = useState<string | null>(null);
   const [activeBlogSlug, setActiveBlogSlug] = useState<string | null>(null);
 
@@ -85,6 +90,7 @@ export default function App() {
         if (Array.isArray(diskData.blogs)) setBlogs(diskData.blogs);
         if (Array.isArray(diskData.pages)) setPages(diskData.pages);
         if (diskData.settings) setSettings(diskData.settings);
+        if (Array.isArray(diskData.leads)) setLeads(diskData.leads);
         if (diskData.frontTexts) {
           setFrontTexts(diskData.frontTexts);
           setWorkingFrontTexts(diskData.frontTexts);
@@ -336,6 +342,7 @@ export default function App() {
               frontTexts={isFrontEditMode ? workingFrontTexts : frontTexts}
               isFrontEditMode={isFrontEditMode}
               onEditText={handleEditText}
+              onNewLead={(l) => setLeads(prev => [l, ...prev])}
             />
           </>
         )}
@@ -411,6 +418,8 @@ export default function App() {
         onClose={() => setBriefModalOpen(false)}
         lang={lang}
         initialInterest={briefInterest}
+        settings={settings}
+        onNewLead={(l) => setLeads(prev => [l, ...prev])}
       />
 
       {/* Admin Panel Modal / Dashboard with Passcode 'KineL1525' */}
@@ -465,6 +474,11 @@ export default function App() {
         onPreviewVideo={(v) => {
           setAdminPanelOpen(false);
           setActiveVideoModal(v);
+        }}
+        leads={leads}
+        onSaveLeads={(newLeads) => {
+          setLeads(newLeads);
+          saveLeads(newLeads);
         }}
       />
     </div>

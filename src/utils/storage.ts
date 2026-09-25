@@ -5,7 +5,8 @@ import {
   ShowreelData,
   SiteSettings,
   FrontTexts,
-  Language
+  Language,
+  ProjectLead
 } from '../types';
 import {
   DEFAULT_VIDEOS,
@@ -23,7 +24,8 @@ const STORAGE_KEYS = {
   PAGES: 'kinetivo_pages_v2',
   SETTINGS: 'kinetivo_settings_v2',
   FRONT_TEXTS: 'kinetivo_front_texts_v2',
-  LANGUAGE: 'kinetivo_language_pref'
+  LANGUAGE: 'kinetivo_language_pref',
+  LEADS: 'kinetivo_leads_v2'
 };
 
 // Background disk synchronization debounce timer
@@ -43,7 +45,8 @@ export async function syncAllToDisk(): Promise<boolean> {
       blogs: getStoredBlogs(),
       pages: getStoredPages(),
       settings: getStoredSettings(),
-      frontTexts: getStoredFrontTexts()
+      frontTexts: getStoredFrontTexts(),
+      leads: getStoredLeads()
     };
 
     const res = await fetch('/api/data', {
@@ -80,6 +83,7 @@ export async function loadInitialDataFromDisk(): Promise<{
   pages?: ExtraPage[];
   settings?: SiteSettings;
   frontTexts?: FrontTexts;
+  leads?: ProjectLead[];
 } | null> {
   try {
     const res = await fetch('/api/data');
@@ -103,6 +107,9 @@ export async function loadInitialDataFromDisk(): Promise<{
         }
         if (data.frontTexts) {
           localStorage.setItem(STORAGE_KEYS.FRONT_TEXTS, JSON.stringify(data.frontTexts));
+        }
+        if (Array.isArray(data.leads)) {
+          localStorage.setItem(STORAGE_KEYS.LEADS, JSON.stringify(data.leads));
         }
         return data;
       }
@@ -254,6 +261,46 @@ export function saveLanguage(lang: Language): void {
   }
 }
 
+export function getStoredLeads(): ProjectLead[] {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEYS.LEADS);
+    if (raw) return JSON.parse(raw);
+  } catch (e) {
+    console.error('Failed to load leads from storage', e);
+  }
+  return [];
+}
+
+export function saveLeads(leads: ProjectLead[]): void {
+  try {
+    localStorage.setItem(STORAGE_KEYS.LEADS, JSON.stringify(leads));
+  } catch (e) {
+    console.error('Failed to save leads to storage', e);
+  }
+  triggerDiskSync();
+}
+
+export function addStoredLead(lead: ProjectLead): ProjectLead[] {
+  const current = getStoredLeads();
+  const updated = [lead, ...current];
+  saveLeads(updated);
+  return updated;
+}
+
+export function deleteStoredLead(id: string): ProjectLead[] {
+  const current = getStoredLeads();
+  const updated = current.filter(l => l.id !== id);
+  saveLeads(updated);
+  return updated;
+}
+
+export function updateStoredLeadStatus(id: string, status: 'new' | 'contacted' | 'archived'): ProjectLead[] {
+  const current = getStoredLeads();
+  const updated = current.map(l => l.id === id ? { ...l, status } : l);
+  saveLeads(updated);
+  return updated;
+}
+
 export function exportBackupJson(): string {
   const payload = {
     version: '2.0.0',
@@ -263,7 +310,8 @@ export function exportBackupJson(): string {
     blogs: getStoredBlogs(),
     pages: getStoredPages(),
     settings: getStoredSettings(),
-    frontTexts: getStoredFrontTexts()
+    frontTexts: getStoredFrontTexts(),
+    leads: getStoredLeads()
   };
   return JSON.stringify(payload, null, 2);
 }
@@ -277,6 +325,7 @@ export function importBackupJson(jsonString: string): boolean {
     if (parsed.pages) savePages(parsed.pages);
     if (parsed.settings) saveSettings(parsed.settings);
     if (parsed.frontTexts) saveFrontTexts(parsed.frontTexts);
+    if (Array.isArray(parsed.leads)) saveLeads(parsed.leads);
     triggerDiskSync();
     return true;
   } catch (e) {

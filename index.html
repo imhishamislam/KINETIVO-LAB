@@ -15,6 +15,16 @@
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700&family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
   </head>
   <body class="bg-[#07070c] text-[#f2f3f7] antialiased selection:bg-[#c6f24e] selection:text-black">
+    <!-- Netlify static form detection -->
+    <form name="kinetivo-brief" data-netlify="true" netlify-honeypot="bot-field" hidden>
+      <input type="text" name="name" />
+      <input type="email" name="email" />
+      <input type="text" name="brand" />
+      <input type="text" name="link" />
+      <input type="text" name="interest" />
+      <input type="text" name="budget" />
+      <textarea name="goal"></textarea>
+    </form>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>

@@ -1,19 +1,25 @@
 import React, { useState, useEffect } from 'react';
-import { Language } from '../types';
-import { X, Send, CheckCircle2, AlertCircle } from 'lucide-react';
+import { Language, SiteSettings, ProjectLead } from '../types';
+import { X, Send, CheckCircle2, AlertCircle, Loader2 } from 'lucide-react';
+import { addStoredLead } from '../utils/storage';
+import { sendProjectBriefEmail } from '../utils/emailService';
 
 interface BriefModalProps {
   isOpen: boolean;
   onClose: () => void;
   lang: Language;
   initialInterest?: string;
+  settings: SiteSettings;
+  onNewLead?: (lead: ProjectLead) => void;
 }
 
 export const BriefModal: React.FC<BriefModalProps> = ({
   isOpen,
   onClose,
   lang,
-  initialInterest
+  initialInterest,
+  settings,
+  onNewLead
 }) => {
   if (!isOpen) return null;
 
@@ -29,18 +35,19 @@ export const BriefModal: React.FC<BriefModalProps> = ({
     goal: ''
   });
 
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [status, setStatus] = useState<{ type: 'idle' | 'success' | 'error'; message: string }>({
+    type: 'idle',
+    message: ''
+  });
+
   useEffect(() => {
     if (initialInterest) {
       setFormData(prev => ({ ...prev, interest: initialInterest }));
     }
   }, [initialInterest]);
 
-  const [status, setStatus] = useState<{ type: 'idle' | 'success' | 'error'; message: string }>({
-    type: 'idle',
-    message: ''
-  });
-
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (!formData.name.trim() || !formData.email.trim()) {
@@ -63,12 +70,58 @@ export const BriefModal: React.FC<BriefModalProps> = ({
       return;
     }
 
-    setStatus({
-      type: 'success',
-      message: isBn
-        ? `ধন্যবাদ ${formData.name.split(' ')[0]}! ব্রিফ গ্রহণ করা হয়েছে। ${formData.email}-এ ১২ ঘণ্টার মধ্যে ফ্রি স্ক্রিপ্ট ও হুক আইডিয়া পাঠানো হবে।`
-        : `Thank you ${formData.name.split(' ')[0]}! Brief sent. We will reply to ${formData.email} within 12 hours with your free hook + script concept.`
+    setIsSubmitting(true);
+    setStatus({ type: 'idle', message: '' });
+
+    // 1. Record lead locally & in Admin CRM immediately
+    const lead: ProjectLead = {
+      id: 'lead-' + Date.now() + '-' + Math.random().toString(36).substring(2, 7),
+      name: formData.name.trim(),
+      email: formData.email.trim(),
+      brand: formData.brand.trim() || undefined,
+      link: formData.link.trim() || undefined,
+      interest: formData.interest,
+      budget: formData.budget.trim() || undefined,
+      goal: formData.goal.trim() || undefined,
+      submittedAt: new Date().toISOString(),
+      source: 'brief-modal',
+      status: 'new'
+    };
+    addStoredLead(lead);
+    if (onNewLead) {
+      onNewLead(lead);
+    }
+
+    // 2. Dispatch real email to the configured recipient email
+    const targetEmail = settings?.contactEmail || 'hello@kinetivo.lab';
+    const emailResult = await sendProjectBriefEmail(targetEmail, {
+      name: formData.name.trim(),
+      email: formData.email.trim(),
+      brand: formData.brand.trim(),
+      link: formData.link.trim(),
+      interest: formData.interest,
+      budget: formData.budget.trim(),
+      goal: formData.goal.trim(),
+      source: 'brief-modal'
     });
+
+    setIsSubmitting(false);
+
+    if (emailResult.isActivationRequired) {
+      setStatus({
+        type: 'success',
+        message: isBn
+          ? `ধন্যবাদ ${formData.name.split(' ')[0]}! আপনার ব্রিফ পাঠানো হয়েছে। আপনার ইমেইল (${targetEmail})-এ FormSubmit থেকে একটি অ্যাক্টিভেশন লিংক পাঠানো হয়েছে। লিংকে একবার ক্লিক করলে সব মেসেজ সরাসরি ইনবক্সে আসবে।`
+          : `Thank you ${formData.name.split(' ')[0]}! Brief sent. A one-time activation email was sent to ${targetEmail}. Please check your inbox or spam to confirm FormSubmit.`
+      });
+    } else {
+      setStatus({
+        type: 'success',
+        message: isBn
+          ? `ধন্যবাদ ${formData.name.split(' ')[0]}! ব্রিফ সরাসরি আমাদের স্টুডিও ইমেইলে (${targetEmail}) পাঠানো হয়েছে। ১২ ঘণ্টার মধ্যে আপনার সাথে যোগাযোগ করা হবে।`
+          : `Thank you ${formData.name.split(' ')[0]}! Brief sent directly to ${targetEmail}. We will review and reply within 12 hours.`
+      });
+    }
 
     setTimeout(() => {
       onClose();
@@ -82,7 +135,7 @@ export const BriefModal: React.FC<BriefModalProps> = ({
         budget: '',
         goal: ''
       });
-    }, 4000);
+    }, 4500);
   };
 
   return (
@@ -251,10 +304,20 @@ export const BriefModal: React.FC<BriefModalProps> = ({
 
           <button
             type="submit"
-            className="w-full py-3.5 rounded-full bg-[#c6f24e] text-black font-bold text-sm hover:bg-[#d4fc62] transition-all transform hover:-translate-y-0.5 shadow-[0_8px_30px_-6px_rgba(198,242,78,0.7)] flex items-center justify-center gap-2 focus:outline-none mt-2"
+            disabled={isSubmitting}
+            className="w-full py-3.5 rounded-full bg-[#c6f24e] text-black font-bold text-sm hover:bg-[#d4fc62] transition-all transform hover:-translate-y-0.5 shadow-[0_8px_30px_-6px_rgba(198,242,78,0.7)] flex items-center justify-center gap-2 focus:outline-none mt-2 disabled:opacity-70 disabled:cursor-not-allowed cursor-pointer"
           >
-            <Send className="w-4 h-4" />
-            <span>{isBn ? 'ব্রিফ পাঠান — ফ্রি কনসেপ্ট নিন' : 'Send Brief — Get Free Concept'}</span>
+            {isSubmitting ? (
+              <>
+                <Loader2 className="w-4 h-4 animate-spin" />
+                <span>{isBn ? 'পাঠানো হচ্ছে...' : 'Submitting Brief...'}</span>
+              </>
+            ) : (
+              <>
+                <Send className="w-4 h-4" />
+                <span>{isBn ? 'ব্রিফ পাঠান — ফ্রি কনসেপ্ট নিন' : 'Send Brief — Get Free Concept'}</span>
+              </>
+            )}
           </button>
         </form>
       </div>

@@ -136,3 +136,17 @@ export interface ImagePreset {
   category: string;
   url: string;
 }
+
+export interface ProjectLead {
+  id: string;
+  name: string;
+  email: string;
+  brand?: string;
+  link?: string;
+  interest: string;
+  budget?: string;
+  goal?: string;
+  submittedAt: string;
+  source: 'contact-section' | 'brief-modal';
+  status: 'new' | 'contacted' | 'archived';
+}
