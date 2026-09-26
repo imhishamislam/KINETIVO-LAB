@@ -24,16 +24,16 @@ export const WatchOurWork: React.FC<WatchOurWorkProps> = ({
   const isBn = lang === 'bn';
   const [activeCategory, setActiveCategory] = useState<VideoCategory>('all');
 
-  // Categories per user request: deleted 'spokesperson', added 'other'
+  // Categories: All -> Agency Promo -> Commercial Ads -> UGC Ads -> Product Demo -> SaaS Promo -> Unboxing -> VSL
   const CATEGORIES: { id: VideoCategory; labelEn: string; labelBn: string }[] = [
     { id: 'all', labelEn: 'All', labelBn: 'সব' },
+    { id: 'agency_promo', labelEn: 'Agency Promo', labelBn: 'এজেন্সি প্রোমো' },
     { id: 'commercial', labelEn: 'Commercial Ads', labelBn: 'বাণিজ্যিক অ্যাড' },
     { id: 'ugc', labelEn: 'UGC Ads', labelBn: 'UGC অ্যাড' },
     { id: 'demo', labelEn: 'Product Demo', labelBn: 'প্রোডাক্ট ডেমো' },
     { id: 'saas', labelEn: 'SaaS Promo', labelBn: 'SaaS প্রোমো' },
     { id: 'unbox', labelEn: 'Unboxing', labelBn: 'আনবক্সিং' },
-    { id: 'vsl', labelEn: 'VSL', labelBn: 'VSL' },
-    { id: 'other', labelEn: 'Other Ads', labelBn: 'অন্যান্য অ্যাড' }
+    { id: 'vsl', labelEn: 'VSL', labelBn: 'VSL' }
   ];
 
   const publishedVideos = videos.filter(v => v.status === 'published');
@@ -48,7 +48,7 @@ export const WatchOurWork: React.FC<WatchOurWorkProps> = ({
 
   const filteredVideos = activeCategory === 'all'
     ? displayPool.slice(0, 6)
-    : displayPool.filter(v => v.cat === activeCategory).slice(0, 6);
+    : displayPool.filter(v => v.cat === activeCategory || (activeCategory === 'agency_promo' && v.cat === ('other' as VideoCategory))).slice(0, 6);
 
   const getCategoryBadgeLabel = (cat: VideoCategory) => {
     switch (cat) {
@@ -58,7 +58,8 @@ export const WatchOurWork: React.FC<WatchOurWorkProps> = ({
       case 'saas': return 'SAAS';
       case 'unbox': return 'UNBOX';
       case 'vsl': return 'VSL';
-      case 'other': return isBn ? 'অন্যান্য' : 'OTHER ADS';
+      case 'agency_promo': return isBn ? 'এজেন্সি প্রোমো' : 'AGENCY PROMO';
+      case 'other': return isBn ? 'এজেন্সি প্রোমো' : 'AGENCY PROMO';
       default: return 'AD';
     }
   };
@@ -72,7 +73,8 @@ export const WatchOurWork: React.FC<WatchOurWorkProps> = ({
       case 'saas': return '#a855f7';
       case 'unbox': return '#c6f24e';
       case 'vsl': return '#2ed9e3';
-      case 'other': return '#2ed9e3';
+      case 'agency_promo': return '#c6f24e';
+      case 'other': return '#c6f24e';
       default: return '#c6f24e';
     }
   };

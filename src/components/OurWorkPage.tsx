@@ -23,19 +23,21 @@ export const OurWorkPage: React.FC<OurWorkPageProps> = ({
 
   const CATEGORIES: { id: VideoCategory; labelEn: string; labelBn: string }[] = [
     { id: 'all', labelEn: 'All', labelBn: 'সব' },
+    { id: 'agency_promo', labelEn: 'Agency Promo', labelBn: 'এজেন্সি প্রোমো' },
     { id: 'commercial', labelEn: 'Commercial Ads', labelBn: 'বাণিজ্যিক অ্যাড' },
     { id: 'ugc', labelEn: 'UGC Ads', labelBn: 'UGC অ্যাড' },
     { id: 'demo', labelEn: 'Product Demo', labelBn: 'প্রোডাক্ট ডেমো' },
     { id: 'saas', labelEn: 'SaaS Promo', labelBn: 'SaaS প্রোমো' },
     { id: 'unbox', labelEn: 'Unboxing', labelBn: 'আনবক্সিং' },
-    { id: 'vsl', labelEn: 'VSL', labelBn: 'VSL' },
-    { id: 'other', labelEn: 'Other Ads', labelBn: 'অন্যান্য অ্যাড' }
+    { id: 'vsl', labelEn: 'VSL', labelBn: 'VSL' }
   ];
 
   const publishedVideos = videos.filter(v => v.status === 'published');
 
   const filteredVideos = publishedVideos.filter(v => {
-    const matchesCat = activeCategory === 'all' || v.cat === activeCategory;
+    const matchesCat = activeCategory === 'all' 
+      || v.cat === activeCategory 
+      || (activeCategory === 'agency_promo' && v.cat === ('other' as VideoCategory));
     const q = searchQuery.toLowerCase();
     const matchesSearch =
       !q ||
@@ -55,7 +57,8 @@ export const OurWorkPage: React.FC<OurWorkPageProps> = ({
       case 'saas': return 'SAAS';
       case 'unbox': return 'UNBOX';
       case 'vsl': return 'VSL';
-      case 'other': return isBn ? 'অন্যান্য' : 'OTHER ADS';
+      case 'agency_promo': return isBn ? 'এজেন্সি প্রোমো' : 'AGENCY PROMO';
+      case 'other': return isBn ? 'এজেন্সি প্রোমো' : 'AGENCY PROMO';
       default: return 'AD';
     }
   };
@@ -69,7 +72,8 @@ export const OurWorkPage: React.FC<OurWorkPageProps> = ({
       case 'saas': return '#a855f7';
       case 'unbox': return '#c6f24e';
       case 'vsl': return '#2ed9e3';
-      case 'other': return '#2ed9e3';
+      case 'agency_promo': return '#c6f24e';
+      case 'other': return '#c6f24e';
       default: return '#c6f24e';
     }
   };

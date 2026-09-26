@@ -826,7 +826,7 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
                             className="px-2 py-0.5 rounded-full bg-white/5 border border-white/10"
                             style={{ color: v.badgeColor || '#2ed9e3' }}
                           >
-                            {v.cat}
+                            {v.cat === 'agency_promo' || v.cat === 'other' ? 'AGENCY PROMO' : v.cat}
                           </span>
                         </td>
                         <td className="py-3 px-4 text-[11px] text-[#9a9aab]">
@@ -937,17 +937,17 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
                             Category *
                           </label>
                           <select
-                            value={editingVideo.cat}
+                            value={editingVideo.cat === 'other' ? 'agency_promo' : editingVideo.cat}
                             onChange={(e) => setEditingVideo({ ...editingVideo, cat: e.target.value as VideoCategory })}
                             className="w-full border border-white/15 rounded-xl bg-[#0e0e16] px-4 py-2.5 text-xs text-white focus:outline-none focus:border-[#c6f24e]"
                           >
+                            <option value="agency_promo">Agency Promo</option>
                             <option value="commercial">Commercial Ads</option>
                             <option value="ugc">UGC Ads</option>
                             <option value="demo">Product Demo</option>
                             <option value="saas">SaaS Promo</option>
                             <option value="unbox">Unboxing</option>
                             <option value="vsl">VSL</option>
-                            <option value="other">Other Ads</option>
                           </select>
                         </div>
                       </div>

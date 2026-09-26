@@ -8,6 +8,7 @@ export type VideoCategory =
   | 'saas'
   | 'unbox'
   | 'vsl'
+  | 'agency_promo'
   | 'other';
 
 export interface VideoItem {

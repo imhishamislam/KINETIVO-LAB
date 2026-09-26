@@ -1,5 +1,6 @@
 import {
   VideoItem,
+  VideoCategory,
   BlogPost,
   ExtraPage,
   ShowreelData,
@@ -165,7 +166,12 @@ export async function loadInitialDataFromDisk(): Promise<{
 export function getStoredVideos(): VideoItem[] {
   try {
     const raw = localStorage.getItem(STORAGE_KEYS.VIDEOS);
-    if (raw) return JSON.parse(raw);
+    if (raw) {
+      const parsed: VideoItem[] = JSON.parse(raw);
+      if (Array.isArray(parsed)) {
+        return parsed.map(v => v.cat === ('other' as VideoCategory) ? { ...v, cat: 'agency_promo' } : v);
+      }
+    }
   } catch (e) {
     console.error('Failed to load videos from storage', e);
   }

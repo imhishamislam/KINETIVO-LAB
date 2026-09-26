@@ -187,7 +187,7 @@ export const DEFAULT_VIDEOS: VideoItem[] = [
   },
   {
     id: 'vid-8',
-    cat: 'other',
+    cat: 'agency_promo',
     brand: 'SOLARIS ECO',
     titleEn: 'Solaris — Clean Tech Storytelling Brand Film',
     titleBn: 'Solaris — ক্লিন টেক ব্র্যান্ড স্টোরিটেলিং ফিল্ম',
@@ -197,7 +197,7 @@ export const DEFAULT_VIDEOS: VideoItem[] = [
     views: '310K',
     thumbnail: 'https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?auto=format&fit=crop&w=800&q=80',
     videoUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
-    badgeColor: '#2ed9e3',
+    badgeColor: '#c6f24e',
     isFeatured: false,
     status: 'published',
     createdAt: '2026-03-12'
