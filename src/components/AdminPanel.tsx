@@ -44,7 +44,8 @@ import {
   Inbox,
   Filter,
   Loader2,
-  AlertCircle
+  AlertCircle,
+  Star
 } from 'lucide-react';
 
 interface AdminPanelProps {
@@ -198,6 +199,21 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
     };
     onSaveVideos([dup, ...videos]);
     showToast('Video Ad duplicated.');
+  };
+
+  const handleToggleFeatured = (v: VideoItem) => {
+    const isNowFeatured = !v.isFeatured;
+    const currentFeaturedCount = videos.filter(x => x.isFeatured && x.id !== v.id).length;
+
+    if (isNowFeatured && currentFeaturedCount >= 6) {
+      if (!window.confirm(`Already ${currentFeaturedCount} videos are featured on the Homepage. Do you want to feature this video as well? (Homepage displays the top 6 featured videos).`)) {
+        return;
+      }
+    }
+
+    const updated = videos.map(item => item.id === v.id ? { ...item, isFeatured: isNowFeatured } : item);
+    onSaveVideos(updated);
+    showToast(isNowFeatured ? '⭐ Video featured on Homepage!' : 'Video removed from Homepage featured list.');
   };
 
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>, setter: (url: string) => void) => {
@@ -716,6 +732,36 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
                 </button>
               </div>
 
+              {/* Homepage Featured Banner Indicator */}
+              <div className="mb-6 p-4 rounded-2xl bg-[#0e0e16] border border-[#c6f24e]/30 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+                <div className="flex items-center gap-3">
+                  <div className="w-9 h-9 rounded-xl bg-[#c6f24e]/15 border border-[#c6f24e]/30 flex items-center justify-center text-[#c6f24e] shrink-0">
+                    <Star className="w-4 h-4 fill-[#c6f24e]" />
+                  </div>
+                  <div>
+                    <div className="font-bold text-xs text-white flex items-center gap-2">
+                      <span>Homepage Featured Videos (হোমপেজে প্রদর্শিত ভিডিও)</span>
+                      <span className="font-mono text-[10px] px-2 py-0.5 rounded-full bg-[#c6f24e] text-black font-bold">
+                        {videos.filter(v => v.isFeatured && v.status === 'published').length} / 6 Selected
+                      </span>
+                    </div>
+                    <p className="text-[11px] text-[#9a9aab] mt-0.5">
+                      নিচের তালিকায় যেকোনো ভিডিওর পাশে <strong>"Add to Home"</strong> বাটনে ক্লিক করে বা <strong>Edit</strong> ফর্মে টিক মার্ক দিয়ে আপনার পছন্দের ৬টি ভিডিও হোমপেজে ফিউচার্ড হিসেবে দেখাতে পারবেন। বাকি সব ভিডিও শুধু <strong>'COMPLETE WORK LIBRARY'</strong> পেজে দেখাবে।
+                    </p>
+                  </div>
+                </div>
+
+                <div className="text-[11px] text-[#6f6f82] shrink-0 self-end sm:self-auto">
+                  {videos.filter(v => v.isFeatured).length === 6 ? (
+                    <span className="text-[#c6f24e] font-semibold">✓ Perfect (৬টি সিলেক্টেড)</span>
+                  ) : videos.filter(v => v.isFeatured).length > 6 ? (
+                    <span className="text-[#ff3d9a] font-semibold">প্রথম ৬টি হোমপেজে শো করবে</span>
+                  ) : (
+                    <span className="text-[#2ed9e3] font-semibold">{6 - videos.filter(v => v.isFeatured).length}টি আরও সিলেক্ট করতে পারবেন</span>
+                  )}
+                </div>
+              </div>
+
               {/* Videos Table */}
               <div className="border border-white/10 rounded-2xl bg-[#0e0e16] overflow-hidden">
                 <table className="w-full text-xs text-left">
@@ -726,12 +772,18 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
                       <th className="py-3.5 px-4">Category</th>
                       <th className="py-3.5 px-4">Metrics</th>
                       <th className="py-3.5 px-4">Status</th>
+                      <th className="py-3.5 px-4 text-center">
+                        <span className="flex items-center justify-center gap-1 text-[#c6f24e]">
+                          <Star className="w-3 h-3 fill-[#c6f24e]" />
+                          <span>Homepage (Featured)</span>
+                        </span>
+                      </th>
                       <th className="py-3.5 px-4 text-right">Actions</th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-white/5">
                     {videos.map(v => (
-                      <tr key={v.id} className="hover:bg-white/[0.02]">
+                      <tr key={v.id} className={`hover:bg-white/[0.02] ${v.isFeatured ? 'bg-[#c6f24e]/[0.02]' : ''}`}>
                         <td className="py-3 px-4 w-20">
                           <div className="w-16 h-12 rounded-lg bg-black overflow-hidden relative border border-white/10">
                             <img
@@ -739,11 +791,23 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
                               alt={v.titleEn}
                               className="w-full h-full object-cover"
                             />
+                            {v.isFeatured && (
+                              <div className="absolute top-1 left-1 bg-black/80 rounded-full p-0.5 border border-[#c6f24e]">
+                                <Star className="w-2.5 h-2.5 text-[#c6f24e] fill-[#c6f24e]" />
+                              </div>
+                            )}
                           </div>
                         </td>
                         <td className="py-3 px-4">
-                          <div className="font-extrabold text-[10px] uppercase text-[#c6f24e]">
-                            {v.brand}
+                          <div className="flex items-center gap-2">
+                            <div className="font-extrabold text-[10px] uppercase text-[#c6f24e]">
+                              {v.brand}
+                            </div>
+                            {v.isFeatured && (
+                              <span className="px-1.5 py-0.2 rounded text-[9px] font-bold bg-[#c6f24e]/10 text-[#c6f24e] border border-[#c6f24e]/30">
+                                Homepage Featured
+                              </span>
+                            )}
                           </div>
                           <div className="font-bold text-white text-xs mt-0.5">
                             {v.titleEn}
@@ -779,6 +843,21 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
                           >
                             {v.status}
                           </span>
+                        </td>
+                        <td className="py-3 px-4 text-center">
+                          <button
+                            type="button"
+                            onClick={() => handleToggleFeatured(v)}
+                            className={`px-3 py-1.5 rounded-full text-xs font-bold transition-all cursor-pointer inline-flex items-center gap-1.5 ${
+                              v.isFeatured
+                                ? 'bg-[#c6f24e] text-black shadow-[0_0_12px_rgba(198,242,78,0.4)] hover:bg-[#d4fc62]'
+                                : 'bg-white/5 text-[#9a9aab] border border-white/10 hover:border-[#c6f24e]/50 hover:text-white'
+                            }`}
+                            title={v.isFeatured ? 'Click to remove from Homepage Featured' : 'Click to feature on Homepage'}
+                          >
+                            <Star className={`w-3.5 h-3.5 ${v.isFeatured ? 'fill-black' : ''}`} />
+                            <span>{v.isFeatured ? 'Featured (হোমপেজ)' : 'Add to Home'}</span>
+                          </button>
                         </td>
                         <td className="py-3 px-4 text-right">
                           <div className="flex items-center justify-end gap-1.5">
@@ -1082,6 +1161,42 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
                             <option value="draft">Draft</option>
                           </select>
                         </div>
+                      </div>
+
+                      {/* FEATURED IN HOMEPAGE TICK-MARK (USER REQUEST: [Video Ads Management /Edit Video Ad - টিক মার্ক করলে]) */}
+                      <div className="border border-white/10 rounded-2xl p-4 bg-[#c6f24e]/[0.03] flex items-center justify-between gap-4">
+                        <div className="flex items-center gap-3">
+                          <div className={`w-8 h-8 rounded-lg flex items-center justify-center border ${
+                            editingVideo.isFeatured
+                              ? 'bg-[#c6f24e]/20 border-[#c6f24e] text-[#c6f24e]'
+                              : 'bg-white/5 border-white/15 text-[#9a9aab]'
+                          }`}>
+                            <Star className={`w-4 h-4 ${editingVideo.isFeatured ? 'fill-[#c6f24e]' : ''}`} />
+                          </div>
+                          <div>
+                            <div className="font-bold text-xs text-white font-['Outfit'] flex items-center gap-2">
+                              <span>Feature on Homepage (হোমপেজে ফিউচার্ড হিসেবে দেখান)</span>
+                              {editingVideo.isFeatured && (
+                                <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-[#c6f24e] text-black">
+                                  ✓ Active
+                                </span>
+                              )}
+                            </div>
+                            <p className="text-[11px] text-[#9a9aab] mt-0.5">
+                              টিক মার্ক করলে এই ভিডিওটি হোমপেজের 'Our Work' সেকশনের ৬টি নির্বাচিত ভিডিওর তালিকায় চলে আসবে। টিক মার্ক না থাকলে এটি শুধু সম্পূর্ণ 'Our Work Library' পেজে দেখাবে।
+                            </p>
+                          </div>
+                        </div>
+
+                        <label className="relative inline-flex items-center cursor-pointer shrink-0">
+                          <input
+                            type="checkbox"
+                            checked={!!editingVideo.isFeatured}
+                            onChange={(e) => setEditingVideo({ ...editingVideo, isFeatured: e.target.checked })}
+                            className="sr-only peer"
+                          />
+                          <div className="w-11 h-6 bg-white/10 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#c6f24e] peer-checked:after:bg-black"></div>
+                        </label>
                       </div>
 
                       <div className="flex justify-end gap-3 pt-4 border-t border-white/10">

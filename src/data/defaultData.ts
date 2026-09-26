@@ -130,7 +130,7 @@ export const DEFAULT_VIDEOS: VideoItem[] = [
     thumbnail: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80',
     videoUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
     badgeColor: '#a855f7',
-    isFeatured: false,
+    isFeatured: true,
     status: 'published',
     createdAt: '2026-03-01'
   },
@@ -147,7 +147,7 @@ export const DEFAULT_VIDEOS: VideoItem[] = [
     thumbnail: warehouseImg,
     videoUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
     badgeColor: '#c6f24e',
-    isFeatured: false,
+    isFeatured: true,
     status: 'published',
     createdAt: '2026-03-04'
   },
@@ -164,7 +164,7 @@ export const DEFAULT_VIDEOS: VideoItem[] = [
     thumbnail: 'https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=800&q=80',
     videoUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
     badgeColor: '#2ed9e3',
-    isFeatured: false,
+    isFeatured: true,
     status: 'published',
     createdAt: '2026-03-08'
   },

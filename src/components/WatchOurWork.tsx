@@ -37,9 +37,18 @@ export const WatchOurWork: React.FC<WatchOurWorkProps> = ({
   ];
 
   const publishedVideos = videos.filter(v => v.status === 'published');
+
+  // Featured videos selected by the admin (tagged with isFeatured === true)
+  const featuredPublishedVideos = publishedVideos.filter(v => v.isFeatured);
+
+  // If the admin has chosen featured videos, use them; if less than 6 or none yet, fall back gracefully
+  const displayPool = featuredPublishedVideos.length > 0 
+    ? featuredPublishedVideos 
+    : publishedVideos;
+
   const filteredVideos = activeCategory === 'all'
-    ? publishedVideos.slice(0, 6)
-    : publishedVideos.filter(v => v.cat === activeCategory).slice(0, 6);
+    ? displayPool.slice(0, 6)
+    : displayPool.filter(v => v.cat === activeCategory).slice(0, 6);
 
   const getCategoryBadgeLabel = (cat: VideoCategory) => {
     switch (cat) {
