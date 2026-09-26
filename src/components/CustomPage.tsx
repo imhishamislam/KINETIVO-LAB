@@ -1,7 +1,7 @@
 import React from 'react';
 import { Language, ExtraPage } from '../types';
 import { parseVideoUrl } from '../utils/videoParser';
-import { ArrowLeft } from 'lucide-react';
+import { ArrowLeft, Sparkles, ShieldCheck, ArrowUpRight, CheckCircle2 } from 'lucide-react';
 
 interface CustomPageProps {
   lang: Language;
@@ -21,46 +21,135 @@ export const CustomPage: React.FC<CustomPageProps> = ({
   const subtitle = isBn ? page.subtitleBn : page.subtitleEn;
   const content = isBn ? page.contentBn : page.contentEn;
 
+  const isAboutPage = page.slug === 'about-us';
+  const isTermsPage = page.slug === 'terms-and-privacy';
+
   return (
-    <div className="pt-28 pb-20">
-      <div className="max-w-3xl mx-auto px-5">
-        {/* Breadcrumb Back */}
-        <div className="mb-6">
+    <div className="pt-28 sm:pt-36 pb-24 relative">
+      {/* Ambient background glow */}
+      <div className="absolute top-20 left-1/2 -translate-x-1/2 w-[600px] h-[350px] bg-gradient-to-b from-[#2ed9e3]/10 via-[#a855f7]/10 to-transparent blur-[120px] pointer-events-none -z-10" />
+
+      <div className="max-w-4xl mx-auto px-5 sm:px-6">
+        {/* Navigation Breadcrumb */}
+        <div className="mb-8 flex items-center justify-between">
           <button
             onClick={onNavigateHome}
-            className="inline-flex items-center gap-2 text-xs font-semibold text-[#9a9aab] hover:text-[#c6f24e] transition-colors"
+            className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-white/10 bg-white/5 text-xs font-semibold text-[#9a9aab] hover:text-[#c6f24e] hover:border-[#c6f24e]/40 transition-all cursor-pointer"
           >
-            <ArrowLeft className="w-4 h-4" />
+            <ArrowLeft className="w-3.5 h-3.5" />
             <span>{isBn ? 'হোমপেজে ফিরে যান' : 'Back to Home'}</span>
           </button>
+
+          <div className="flex items-center gap-2">
+            <span className="text-[11px] font-mono px-3 py-1 rounded-full border border-white/10 bg-white/[0.03] text-[#6f6f82] uppercase tracking-wider">
+              {isAboutPage ? (isBn ? 'স্টুডিও পরিচিতি' : 'Official Studio Page') : isTermsPage ? (isBn ? 'আইনি নীতি' : 'Official Legal Notice') : 'Page'}
+            </span>
+          </div>
         </div>
 
-        {/* Header */}
-        <div className="mb-8">
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white font-['Outfit'] tracking-tight leading-tight">
+        {/* Hero Header Card */}
+        <div className="mb-10 text-left">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full border border-[#c6f24e]/30 bg-[#c6f24e]/10 text-[#c6f24e] text-xs font-extrabold uppercase tracking-widest mb-4">
+            {isAboutPage ? (
+              <>
+                <Sparkles className="w-3.5 h-3.5" />
+                <span>{isBn ? 'কিনেটিভো স্টুডিও পরিচিতি' : 'Kinetivo Studio Overview'}</span>
+              </>
+            ) : (
+              <>
+                <ShieldCheck className="w-3.5 h-3.5 text-[#2ed9e3]" />
+                <span className="text-[#2ed9e3]">{isBn ? '১০০% বাণিজ্যিক অধিকার নিশ্চয়তা' : '100% Commercial Protection'}</span>
+              </>
+            )}
+          </div>
+
+          <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black text-white font-['Outfit'] tracking-tight leading-[1.08]">
             {title}
           </h1>
+
           {subtitle && (
-            <p className="text-sm sm:text-base text-[#9a9aab] mt-3 leading-relaxed">
+            <p className="text-base sm:text-lg text-[#a9a9bc] mt-4 leading-relaxed max-w-3xl font-normal border-l-2 border-[#c6f24e]/60 pl-4 py-1 bg-white/[0.015] rounded-r-xl">
               {subtitle}
             </p>
           )}
         </div>
 
-        {/* Banner image if present */}
+        {/* Feature / Trust Highlights Bar */}
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-10">
+          {isAboutPage ? (
+            <>
+              <div className="border border-white/10 rounded-2xl p-4 bg-[#0e0e16]/80 backdrop-blur-md">
+                <div className="text-[10px] uppercase font-bold text-[#2ed9e3] tracking-wider">{isBn ? 'ডেলিভারি গতি' : 'Delivery Speed'}</div>
+                <div className="text-xl font-black font-['Outfit'] text-white mt-1">48–72H</div>
+                <div className="text-[10px] text-[#6f6f82] mt-0.5">{isBn ? 'লঞ্চ-রেডি ক্রিয়েটিভ' : 'Launch-ready ads'}</div>
+              </div>
+              <div className="border border-white/10 rounded-2xl p-4 bg-[#0e0e16]/80 backdrop-blur-md">
+                <div className="text-[10px] uppercase font-bold text-[#c6f24e] tracking-wider">{isBn ? 'গ্লোবাল ল্যাঙ্গুয়েজ' : 'Languages'}</div>
+                <div className="text-xl font-black font-['Outfit'] text-white mt-1">200+</div>
+                <div className="text-[10px] text-[#6f6f82] mt-0.5">{isBn ? 'নেটিভ লিপ-সিঙ্ক' : 'Native lip-sync'}</div>
+              </div>
+              <div className="border border-white/10 rounded-2xl p-4 bg-[#0e0e16]/80 backdrop-blur-md">
+                <div className="text-[10px] uppercase font-bold text-[#ff3d9a] tracking-wider">{isBn ? 'গড় ROAS স্কেল' : 'Avg. ROAS'}</div>
+                <div className="text-xl font-black font-['Outfit'] text-white mt-1">4.8x</div>
+                <div className="text-[10px] text-[#6f6f82] mt-0.5">{isBn ? 'পরীক্ষিত পেইড ফানেল' : 'Direct response'}</div>
+              </div>
+              <div className="border border-white/10 rounded-2xl p-4 bg-[#0e0e16]/80 backdrop-blur-md">
+                <div className="text-[10px] uppercase font-bold text-[#a855f7] tracking-wider">{isBn ? 'বাণিজ্যিক অধিকার' : 'License'}</div>
+                <div className="text-xl font-black font-['Outfit'] text-white mt-1">100%</div>
+                <div className="text-[10px] text-[#6f6f82] mt-0.5">{isBn ? 'আজীবন সম্পূর্ণ মালিকানা' : 'Zero royalty fees'}</div>
+              </div>
+            </>
+          ) : (
+            <>
+              <div className="border border-white/10 rounded-2xl p-4 bg-[#0e0e16]/80 backdrop-blur-md">
+                <div className="text-[10px] uppercase font-bold text-[#2ed9e3] tracking-wider">{isBn ? 'লাইসেন্স মেয়াদ' : 'Term'}</div>
+                <div className="text-xl font-black font-['Outfit'] text-white mt-1">Perpetual</div>
+                <div className="text-[10px] text-[#6f6f82] mt-0.5">{isBn ? 'আজীবন বৈধ' : 'Never expires'}</div>
+              </div>
+              <div className="border border-white/10 rounded-2xl p-4 bg-[#0e0e16]/80 backdrop-blur-md">
+                <div className="text-[10px] uppercase font-bold text-[#c6f24e] tracking-wider">{isBn ? 'বিজ্ঞাপন প্ল্যাটফর্ম' : 'Ad Coverage'}</div>
+                <div className="text-xl font-black font-['Outfit'] text-white mt-1">Unlimited</div>
+                <div className="text-[10px] text-[#6f6f82] mt-0.5">{isBn ? 'মেটা, টিকটক, ইউটিউব' : 'All digital platforms'}</div>
+              </div>
+              <div className="border border-white/10 rounded-2xl p-4 bg-[#0e0e16]/80 backdrop-blur-md">
+                <div className="text-[10px] uppercase font-bold text-[#ff3d9a] tracking-wider">{isBn ? 'গোপনীয়তা' : 'Confidentiality'}</div>
+                <div className="text-xl font-black font-['Outfit'] text-white mt-1">Strict NDA</div>
+                <div className="text-[10px] text-[#6f6f82] mt-0.5">{isBn ? 'নিরাপদ ক্লাউড স্টোরেজ' : 'Enterprise grade'}</div>
+              </div>
+              <div className="border border-white/10 rounded-2xl p-4 bg-[#0e0e16]/80 backdrop-blur-md">
+                <div className="text-[10px] uppercase font-bold text-[#a855f7] tracking-wider">{isBn ? 'অতিরিক্ত ফি' : 'Hidden Fees'}</div>
+                <div className="text-xl font-black font-['Outfit'] text-white mt-1">$0.00</div>
+                <div className="text-[10px] text-[#6f6f82] mt-0.5">{isBn ? 'স্বচ্ছ মাইলস্টোন প্রাইসিং' : 'No surprise charges'}</div>
+              </div>
+            </>
+          )}
+        </div>
+
+        {/* High-Fidelity Cover Banner */}
         {page.bannerImg && (
-          <div className="rounded-2xl overflow-hidden mb-8 border border-white/10 aspect-[16/9] bg-black">
+          <div className="relative rounded-3xl overflow-hidden mb-12 border border-white/15 shadow-2xl bg-black aspect-[16/9] group">
             <img
               src={page.bannerImg}
               alt={title}
-              className="w-full h-full object-cover"
+              className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-102"
+              referrerPolicy="no-referrer"
             />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#07070c] via-transparent to-black/30 pointer-events-none" />
+            <div className="absolute bottom-4 left-5 right-5 flex items-center justify-between text-xs text-white/80 backdrop-blur-md bg-black/40 px-4 py-2 rounded-xl border border-white/10">
+              <span className="font-semibold font-['Outfit'] flex items-center gap-1.5">
+                <span className="w-2 h-2 rounded-full bg-[#c6f24e] animate-pulse" />
+                <span>KINETIVO STUDIO</span>
+              </span>
+              <span className="text-[11px] text-[#9a9aab]">
+                {isAboutPage ? 'Creative Studio & Lab Infrastructure' : 'Commercial IP & Legal Protection'}
+              </span>
+            </div>
           </div>
         )}
 
-        {/* Video if present */}
+        {/* Video Embed If Provided */}
         {page.videoUrl && (
-          <div className="rounded-2xl overflow-hidden mb-8 border border-white/10 aspect-[16/9] bg-black">
+          <div className="rounded-3xl overflow-hidden mb-12 border border-white/15 aspect-[16/9] bg-black shadow-2xl">
             {(() => {
               const parsed = parseVideoUrl(page.videoUrl);
               return (
@@ -76,62 +165,124 @@ export const CustomPage: React.FC<CustomPageProps> = ({
           </div>
         )}
 
-        {/* Content body formatted */}
-        <div className="prose prose-invert max-w-none text-[#d5d5e2] text-sm sm:text-base leading-relaxed space-y-5">
-          {content.split('\n\n').map((paragraph, idx) => {
-            if (paragraph.startsWith('## ')) {
+        {/* Content Body with Rich Markdown & Card Formatting */}
+        <div className="bg-[#0e0e16]/60 border border-white/10 rounded-3xl p-6 sm:p-10 backdrop-blur-xl shadow-xl">
+          <div className="space-y-6 text-[#d0d0df] text-[15px] sm:text-[16px] leading-relaxed">
+            {content.split('\n\n').map((paragraph, idx) => {
+              // Section Heading Level 2 (##)
+              if (paragraph.startsWith('## ')) {
+                return (
+                  <div key={idx} className="pt-6 pb-2 first:pt-0 border-b border-white/10 mb-6">
+                    <h2 className="text-2xl sm:text-3xl font-extrabold text-white font-['Outfit'] tracking-tight flex items-center gap-3">
+                      <span className="w-1.5 h-6 rounded-full bg-gradient-to-b from-[#c6f24e] to-[#2ed9e3]" />
+                      <span>{paragraph.replace('## ', '')}</span>
+                    </h2>
+                  </div>
+                );
+              }
+
+              // Section Heading Level 3 (###)
+              if (paragraph.startsWith('### ')) {
+                return (
+                  <div key={idx} className="pt-4 mb-2">
+                    <h3 className="text-lg sm:text-xl font-bold text-[#c6f24e] font-['Outfit'] tracking-normal">
+                      {paragraph.replace('### ', '')}
+                    </h3>
+                  </div>
+                );
+              }
+
+              // Section Heading Level 4 (####)
+              if (paragraph.startsWith('#### ')) {
+                return (
+                  <div key={idx} className="pt-2 mb-1">
+                    <h4 className="text-base sm:text-lg font-bold text-[#2ed9e3] font-['Outfit']">
+                      {paragraph.replace('#### ', '')}
+                    </h4>
+                  </div>
+                );
+              }
+
+              // Blockquotes (> )
+              if (paragraph.startsWith('> ')) {
+                return (
+                  <blockquote
+                    key={idx}
+                    className="border-l-4 border-[#2ed9e3] pl-5 pr-4 py-3 italic text-white bg-gradient-to-r from-[#2ed9e3]/10 to-transparent rounded-r-2xl my-5 font-medium text-base"
+                  >
+                    {paragraph.replace('> ', '')}
+                  </blockquote>
+                );
+              }
+
+              // Bullet points (- )
+              if (paragraph.startsWith('- ')) {
+                const items = paragraph.split('\n').map(line => line.replace('- ', ''));
+                return (
+                  <ul key={idx} className="space-y-2.5 my-4">
+                    {items.map((it, i) => (
+                      <li key={i} className="flex items-start gap-3 bg-white/[0.02] p-3 rounded-xl border border-white/5 text-[#c8c8d8]">
+                        <CheckCircle2 className="w-4 h-4 text-[#c6f24e] shrink-0 mt-0.5" />
+                        <span className="text-sm sm:text-base leading-relaxed">
+                          {/* Parse bold text inside list items */}
+                          {it.split(/(\*\*.*?\*\*)/).map((chunk, cIdx) => {
+                            if (chunk.startsWith('**') && chunk.endsWith('**')) {
+                              return <strong key={cIdx} className="text-white font-bold">{chunk.slice(2, -2)}</strong>;
+                            }
+                            return chunk;
+                          })}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                );
+              }
+
+              // Standard paragraphs with **bold** parser
               return (
-                <h2 key={idx} className="text-xl sm:text-2xl font-bold text-white font-['Outfit'] mt-8 mb-4">
-                  {paragraph.replace('## ', '')}
-                </h2>
+                <p key={idx} className="text-[#a9a9bc] leading-relaxed">
+                  {paragraph.split(/(\*\*.*?\*\*)/).map((chunk, cIdx) => {
+                    if (chunk.startsWith('**') && chunk.endsWith('**')) {
+                      return <strong key={cIdx} className="text-white font-bold">{chunk.slice(2, -2)}</strong>;
+                    }
+                    return chunk;
+                  })}
+                </p>
               );
-            }
-            if (paragraph.startsWith('### ')) {
-              return (
-                <h3 key={idx} className="text-lg font-bold text-[#c6f24e] font-['Outfit'] mt-6 mb-3">
-                  {paragraph.replace('### ', '')}
-                </h3>
-              );
-            }
-            if (paragraph.startsWith('> ')) {
-              return (
-                <blockquote
-                  key={idx}
-                  className="border-l-2 border-[#2ed9e3] pl-4 py-1 italic text-white bg-white/[0.02] rounded-r-xl my-4"
-                >
-                  {paragraph.replace('> ', '')}
-                </blockquote>
-              );
-            }
-            if (paragraph.startsWith('- ')) {
-              const items = paragraph.split('\n').map(line => line.replace('- ', ''));
-              return (
-                <ul key={idx} className="list-disc list-inside space-y-1.5 my-3 text-[#9a9aab]">
-                  {items.map((it, i) => (
-                    <li key={i}>{it}</li>
-                  ))}
-                </ul>
-              );
-            }
-            return <p key={idx}>{paragraph}</p>;
-          })}
+            })}
+          </div>
         </div>
 
-        {/* Bottom CTA */}
-        <div className="mt-14 pt-8 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <button
-            onClick={onNavigateHome}
-            className="text-xs font-bold text-[#9a9aab] hover:text-white"
-          >
-            {isBn ? 'হোমপেজে যান' : 'Go to Homepage'}
-          </button>
+        {/* Conversion CTA Footer Banner */}
+        <div className="mt-12 rounded-3xl p-8 border border-white/15 bg-gradient-to-r from-[#0e0e16] via-[#141424] to-[#0e0e16] shadow-2xl flex flex-col sm:flex-row items-center justify-between gap-6">
+          <div>
+            <div className="text-xs font-bold uppercase tracking-widest text-[#c6f24e] mb-1">
+              {isBn ? 'পরবর্তী পদক্ষেপ' : 'Ready To Launch?'}
+            </div>
+            <h3 className="text-xl sm:text-2xl font-black text-white font-['Outfit']">
+              {isBn ? 'আপনার ব্র্যান্ডের জন্য ফ্রি কনসেপ্ট ও স্ক্রিপ্ট নিন' : 'Get Your Free Custom Ad Concept & Script'}
+            </h3>
+            <p className="text-xs sm:text-sm text-[#9a9aab] mt-1 max-w-md">
+              {isBn ? '১২ ঘণ্টার মধ্যে আমাদের স্ট্র্যাটেজিস্টরা আপনার পণ্যের ৩টি হুক সহ পূর্ণ প্ল্যান পাঠাবে।' : 'Receive 3 scroll-stopping angles and hooks tailored to your offer within 12 hours.'}
+            </p>
+          </div>
 
-          <button
-            onClick={onOpenBrief}
-            className="px-6 py-2.5 rounded-full bg-[#c6f24e] text-black font-bold text-xs hover:bg-[#d4fc62] transition-colors"
-          >
-            {isBn ? 'প্রজেক্ট শুরু করুন' : 'Start a Project'}
-          </button>
+          <div className="flex items-center gap-3 shrink-0">
+            <button
+              onClick={onNavigateHome}
+              className="px-5 py-3 rounded-full border border-white/15 bg-white/5 text-xs font-bold text-white hover:bg-white/10 transition-colors cursor-pointer"
+            >
+              {isBn ? 'হোমপেজ' : 'Home'}
+            </button>
+
+            <button
+              onClick={onOpenBrief}
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[#c6f24e] text-black font-extrabold text-xs sm:text-sm hover:bg-[#d4fc62] transition-all transform hover:-translate-y-0.5 shadow-[0_8px_25px_-6px_rgba(198,242,78,0.7)] cursor-pointer"
+            >
+              <span>{isBn ? 'প্রজেক্ট শুরু করুন' : 'Start Project'}</span>
+              <ArrowUpRight className="w-4 h-4" />
+            </button>
+          </div>
         </div>
       </div>
     </div>

@@ -228,7 +228,26 @@ export function saveBlogs(blogs: BlogPost[]): void {
 export function getStoredPages(): ExtraPage[] {
   try {
     const raw = localStorage.getItem(STORAGE_KEYS.PAGES);
-    if (raw) return JSON.parse(raw);
+    if (raw) {
+      const parsed: ExtraPage[] = JSON.parse(raw);
+      // Migrate old default pages with old unsplash URLs to the new AI generated high-res images and professional content
+      return parsed.map(page => {
+        const defaultMatch = DEFAULT_EXTRA_PAGES.find(dp => dp.id === page.id || dp.slug === page.slug);
+        if (defaultMatch && (!page.bannerImg || page.bannerImg.includes('unsplash.com'))) {
+          return {
+            ...page,
+            bannerImg: defaultMatch.bannerImg,
+            titleEn: defaultMatch.titleEn,
+            titleBn: defaultMatch.titleBn,
+            subtitleEn: defaultMatch.subtitleEn,
+            subtitleBn: defaultMatch.subtitleBn,
+            contentEn: defaultMatch.contentEn,
+            contentBn: defaultMatch.contentBn
+          };
+        }
+        return page;
+      });
+    }
   } catch (e) {
     console.error('Failed to load pages from storage', e);
   }

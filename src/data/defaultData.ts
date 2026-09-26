@@ -13,6 +13,8 @@ import fintechImg from '../assets/images/fintech_app_analytics_1790287409792.jpg
 import perfumeImg from '../assets/images/luxury_perfume_blue_1790287424841.jpg';
 import warehouseImg from '../assets/images/warehouse_unboxing_1790287438710.jpg';
 import heroBgImg from '../assets/images/hero_geometric_bg_1790291197104.jpg';
+import aboutCoverImg from '../assets/images/about_studio_creative_1790453486299.jpg';
+import termsCoverImg from '../assets/images/legal_security_guarantee_1790453500441.jpg';
 
 export const DEFAULT_PRESET_IMAGES: ImagePreset[] = [
   {
@@ -305,32 +307,70 @@ export const DEFAULT_EXTRA_PAGES: ExtraPage[] = [
     slug: 'about-us',
     titleEn: 'About KINETIVO STUDIO',
     titleBn: 'কিনেটিভো স্টুডিও সম্পর্কে',
-    subtitleEn: 'We bridge hyper-realistic creative AI and direct-response performance advertising.',
-    subtitleBn: 'আমরা বাস্তবসম্মত ক্রিয়েটিভ এআই এবং ডিরেক্ট-রেসপন্স বিজ্ঞাপনের সমন্বয় ঘটাই।',
-    contentEn: `## Who We Are
+    subtitleEn: 'An elite AI-powered video advertising and performance creative studio engineering high-converting direct response assets for ambitious global brands.',
+    subtitleBn: 'উচ্চ-রূপান্তরকারী ভিডিও বিজ্ঞাপন এবং পারফরম্যান্স ক্রিয়েটিভ স্টুডিও — যা উচ্চাকাঙ্ক্ষী গ্লোবাল ব্র্যান্ডের জন্য তৈরি করে স্ক্রল-থামানো আসল রেভিনিউ ক্রিয়েটিভ।',
+    contentEn: `## Who We Are: The New Paradigm of Creative Production
 
-KINETIVO STUDIO is an elite AI-powered video advertising studio based in Bangladesh and serving visionary e-commerce brands, SaaS companies, and digital creators worldwide.
+KINETIVO STUDIO is a modern AI-first commercial production and performance creative powerhouse. Headquartered in Bangladesh and engineering high-impact campaigns worldwide, we bridge cutting-edge generative cinematography, algorithmic direct response architecture, and deep consumer psychology.
 
-### Our Philosophy: Ideas In Motion
-We believe that creative fatigue is the single biggest threat to paid media ROI. To win in today's algorithmic landscape, brands need continuous, high-volume testing of scroll-stopping creative assets.
+We exist for one relentless mission: **to eradicate creative fatigue and build unstoppable paid media funnels for visionaries, DTC founders, and digital enterprises.**
 
-### What Sets Us Apart
-- **Speed**: Ready-to-launch creatives delivered in 48–72 hours.
-- **Global Reach**: 200+ languages supported with native accents and realistic lip-sync.
-- **ROI-Driven**: Built for Meta, TikTok, and YouTube direct response funnels.
-- **Full Commercial Rights**: Every video belongs to you 100% with no ongoing royalty strings attached.`,
-    contentBn: `## আমরা কারা
+### Why Traditional Video Production Fails in 2026
+In today's fast-moving algorithmic media landscape (TikTok, Meta, Reels, YouTube Shorts), ad fatigue sets in within 5 to 9 days. Traditional agency models are structurally broken:
+- **Painfully Slow**: 3 to 6 weeks from kickoff to delivery.
+- **Exorbitantly Expensive**: $3,000–$10,000+ per shoot day with actors, equipment rentals, location scouting, and catering.
+- **Zero Agility**: If a creative angle flops, reshooting requires new contracts, new invoices, and another month of wasted momentum.
 
-কিনেটিভো স্টুডিও একটি আধুনিক AI-চালিত ভিডিও বিজ্ঞাপন স্টুডিও। বাংলাদেশ থেকে পরিচালিত হলেও আমরা বিশ্বের শীর্ষ ই-কমার্স ব্র্যান্ড, SaaS কোম্পানি ও ডিজিটাল উদ্যোক্তাদের সেবা প্রদান করি।
+### The KINETIVO Advantage: Hyper-Realistic Production at Warp Speed
+At KINETIVO STUDIO, we replace slow shoot days with proprietary generative video pipelines, high-fidelity lip-sync engines, and direct-response performance scripts:
+- **Lightning 48–72 Hour Turnaround**: Test fresh creative angles every single week before your competitors even finish their storyboard meetings.
+- **Infinite Native Localization (200+ Languages)**: Scale winning winning ad hooks across European, Middle Eastern, Asian, and Latin American markets with authentic local dialects and natural facial resonance.
+- **Performance-First DNA**: Every second of video is engineered around the **3-Second Hook Rate**, **Hold Rate**, and **Click-to-Purchase Conversion**.
+- **100% Complete Commercial Ownership**: No royalties, no talent buyout renewals, and no usage limitations.
 
-### আমাদের দর্শন: আইডিয়া যখন গতিশীল
-আমরা বিশ্বাস করি যে ক্রিয়েটিভের ক্লান্তিই পেইড ক্যাম্পেইনের সবচেয়ে বড় অন্তরায়। বর্তমান অ্যালগরিদমে জয়ী হতে হলে ব্র্যান্ডগুলোর নিয়মিত স্ক্রল-থামানো বৈচিত্র্যময় কনটেন্ট দরকার।
+### Our 3-Pillar Creative Philosophy
 
-### কেন আমরা ব্যতিক্রমী
-- **গতি**: ৪৮ থেকে ৭২ ঘণ্টার মধ্যে লঞ্চ-রেডি ভিডিও ডেলিভারি।
-- **বিশ্বব্যাপী পরিধি**: ২০০টির বেশি ভাষায় নেটিভ লিপ-সিঙ্ক সাপোর্ট।
-- **বাণিজ্যিক অধিকার**: প্রতিটি ভিডিওর শতভাগ মালিকানা আপনার।`,
-    bannerImg: 'https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?auto=format&fit=crop&w=1000&q=80',
+#### 1. The 0.8-Second Pattern Interrupt
+The modern human thumb scrolls 300 feet of content daily. Our creative scientists engineer sensory disruption in the first frame — unexpected camera moves, sound cues, and visceral curiosity gaps that compel the viewer to stop immediately.
+
+#### 2. Direct-Response Emotional Resonance
+Great visuals mean nothing without buyer conviction. Our scripts combine problem agitation, empathetic founder or customer narratives, hyper-detailed social proof, and undeniable value demonstrations that build rapid trust.
+
+#### 3. Algorithmic Iteration & Angle Diversity
+We believe creative volume beats guesswork. By testing 5 to 10 distinct hook angles for each product, we identify 10x winners that drop your blended Customer Acquisition Cost (CAC) by up to 60%.
+
+### Global Reach & Technical Excellence
+From high-converting TikTok UGC and luxury 3D product commercials to complex B2B SaaS explainers and 15-minute high-ticket VSLs, KINETIVO STUDIO equips your brand with elite visual assets that dominate ad feeds worldwide.`,
+    contentBn: `## আমরা কারা: ক্রিয়েটিভ প্রোডাকশনের আধুনিক রূপান্তর
+
+কিনেটিভো স্টুডিও একটি সর্বাধুনিক এআই-চালিত কর্মার্শিয়াল ভিডিও বিজ্ঞাপন ও পারফরম্যান্স ক্রিয়েটিভ স্টুডিও। বাংলাদেশ থেকে পরিচালিত হলেও আমরা যুক্তরাষ্ট্র, যুক্তরাজ্য, মধ্যপ্রাচ্য ও বিশ্বজুড়ে নেতৃস্থানীয় ইকমার্স ব্র্যান্ড, স্যাজ (SaaS) কোম্পানি ও ডিজিটাল প্রতিষ্ঠানে সেবা প্রদান করি।
+
+আমাদের মূল লক্ষ্য: **ক্রিয়েটিভের ক্লান্তি দূর করে পেইড অ্যাডভার্টাইজিংয়ে সর্বোচ্চ আরওএএস (ROAS) ও কাস্টমার অ্যাকুইজিশন নিশ্চিত করা।**
+
+### কেন প্রচলিত ভিডিও শুটিং ২০২৬ সালে অচল?
+বর্তমান দ্রুতগতির মেটা (Facebook/Instagram), টিকটক ও ইউটিউব অ্যালগরিদমে যেকোনো ভালো ক্রিয়েটিভ ৭ থেকে ১০ দিনের মধ্যেই দর্শককে ক্লান্ত করে ফেলে। সনাতন প্রোডাকশন হাউজের মডেল এখন অকার্যকর:
+- **অত্যন্ত ধীরগতি**: শুটিং ব্রিফ থেকে ডেলিভারি পেতে ৩ থেকে ৬ সপ্তাহ সময় নষ্ট হয়।
+- **অতিরিক্ত ব্যয়বহুল**: প্রতিটি শুটিং-ডেতে অভিনেতা, স্টুডিও ভাড়া ও টেকনিক্যাল ক্রু বাবদ হাজার হাজার ডলার খরচ হয়।
+- **পরিবর্তন অসম্ভব**: একটি কনসেপ্ট বাজারে কাজ না করলে নতুন করে রিশুটিং করতে আরও কয়েক সপ্তাহ ও অর্থ ব্যয় হয়।
+
+### কিনেটিভো স্টুডিওর অনন্য সুবিধাসমূহ
+কিনেটিভো স্টুডিও আধুনিক জেনারেটিভ এআই ও হাইপার-রিয়েলিস্টিক ভিজ্যুয়াল প্রযুক্তির সাহায্যে পুরো প্রক্রিয়াটিকে গতিশীল করেছে:
+- **৪৮ থেকে ৭২ ঘণ্টায় ডেলিভারি**: সপ্তাহ নয়, দিনের মধ্যেই লঞ্চ-রেডি হাই-কনভার্টিং বিজ্ঞাপন হাতে পান।
+- **২০০+ ভাষায় নেটিভ লোকালাইজেশন**: একই বিজ্ঞাপন নিখুঁত লিপ-সিঙ্ক ও স্থানীয় উচ্চারণে বিশ্বের যেকোনো প্রান্তের দর্শকের কাছে পৌঁছে দিন।
+- **ডিরেক্ট-রেসপন্স ভিত্তিক স্ক্রিপ্ট**: প্রতিটি সেকেন্ড পরিকল্পিত হয় প্রথম ৩-সেকেন্ডের হুক রেট ও সেলস কনভার্সন বৃদ্ধির জন্য।
+- **শতভাগ বাণিজ্যিক মালিকানা**: আজীবন সম্পূর্ণ ব্যবহারের অধিকার, কোনো অতিরিক্ত রয়্যালটি বা ফি ছাড়া।
+
+### আমাদের ৩টি মূল কর্মপদ্ধতি
+
+#### ১. ০.৮-সেকেন্ডের প্যাটার্ন ইন্টারাপ্ট
+সোশ্যাল মিডিয়ার দ্রুতগতির ফিডে দর্শককে প্রথম মুহূর্তেই থামিয়ে দেওয়া আমাদের প্রথম কাজ। অদ্ভুত ফ্রেম মুভমেন্ট, অপ্রত্যাশিত সাউন্ড ও চোখ ধাঁধানো ভিজ্যুয়াল দিয়ে আমরা স্ক্রল থামাই।
+
+#### ২. মানসিক সংযোগ ও বিশ্বাসযোগ্যতা
+শুধু সুন্দর ছবি নয়, পণ্যের আসল মূল্য ও কাস্টমারের দৈনন্দিন সমস্যার সমাধান স্পষ্টভাবে তুলে ধরা হয় যাতে দ্রুত কেনার সিদ্ধান্ত তৈরি হয়।
+
+#### ৩. বৈচিত্র্যময় হুক ও অ্যাঙ্গেল টেস্টিং
+একই পণ্যের বিভিন্ন দৃষ্টিকোণ (UGC রিভিউ, আনবক্সিং, তুলনা, সিনেমাটিক ফিল) দ্রুত তৈরি করে টেস্ট করার সুবিধা, যা অ্যাড স্পেন্ড কমাতে সাহায্য করে।`,
+    bannerImg: aboutCoverImg,
     videoUrl: '',
     showInNav: true,
     showInFooter: true,
@@ -340,26 +380,64 @@ We believe that creative fatigue is the single biggest threat to paid media ROI.
     id: 'page-terms',
     slug: 'terms-and-privacy',
     titleEn: 'Commercial Terms & Privacy Policy',
-    titleBn: 'শর্তাবলী ও গোপনীয়তা নীতি',
-    subtitleEn: 'Full commercial rights, transparent licensing, and ironclad client privacy guarantee.',
-    subtitleBn: 'সম্পূর্ণ বাণিজ্যিক অধিকার, স্বচ্ছ লাইসেন্স এবং নির্ভরযোগ্য গোপনীয়তা নিশ্চয়তা।',
-    contentEn: `## Commercial Licensing
+    titleBn: 'বাণিজ্যিক শর্তাবলী ও গোপনীয়তা নীতি',
+    subtitleEn: 'Ironclad commercial IP ownership, worldwide perpetual licensing, transparent deliverables, and enterprise-grade client data confidentiality.',
+    subtitleBn: 'সম্পূর্ণ আইপি মালিকানা, আন্তর্জাতিক বাণিজ্যিক লাইসেন্স, স্বচ্ছ ডেলিভারি গ্যারান্টি এবং নির্ভরযোগ্য প্রাতিষ্ঠানিক গোপনীয়তা নীতি।',
+    contentEn: `## Master Commercial Terms & Service Agreement
 
-All video ads, graphics, and copy created by KINETIVO STUDIO come with full, perpetual, worldwide commercial usage rights.
+At KINETIVO STUDIO, we believe in complete operational transparency, mutual trust, and uncompromising legal clarity. All creative services, video assets, copy, scripts, and rendered media delivered by KINETIVO STUDIO are governed by the following master terms.
 
-### Key Points:
-1. **Ownership**: You own 100% of the delivered deliverables once final balance is settled.
-2. **Paid Advertising**: You have unrestricted rights to whitelist, run Spark Ads, TV commercials, and paid digital campaigns across Meta, TikTok, Google, YouTube, and Amazon.
-3. **Data Privacy**: We never share your product briefs, unreleased assets, or proprietary funnel data with third parties.`,
-    contentBn: `## বাণিজ্যিক লাইসেন্স
+### 1. 100% Perpetual Worldwide Commercial Rights
+Upon settlement of the final invoice or package payment, **you receive 100% full, irrevocable, and perpetual commercial exploitation rights** for all finalized deliverables:
+- **Unrestricted Whitelisting & Paid Ads**: Run Spark Ads, Meta Dark Posts, YouTube Pre-Rolls, Google Performance Max, Amazon Video Ads, and digital TV without any usage renewal fees.
+- **Broadcast & Digital Distribution**: Freely publish across websites, OTT platforms, landing pages, digital billboards, and brand social channels worldwide.
+- **No Royalty Clawbacks**: Unlike traditional talent agencies that impose 6-month or 1-year likeness caps, KINETIVO STUDIO deliverables have **zero talent expiration dates**.
 
-কিনেটিভো স্টুডিও কর্তৃক তৈরি প্রতিটি ভিডিও বিজ্ঞাপন, গ্রাফিক্স এবং স্ক্রিপ্টের সাথে আপনি পাবেন অনির্দিষ্টকালের সম্পূর্ণ বাণিজ্যিক ব্যবহারের অধিকার।
+### 2. Intellectual Property & Brand Assets
+- **Client Materials**: You retain absolute, exclusive ownership of all logos, trademarks, product samples, proprietary raw footage, and brand assets provided to KINETIVO STUDIO.
+- **Final Deliverables**: KINETIVO STUDIO transfers full title to the finished, rendered video files and accompanying advertising scripts upon completion.
+- **Portfolio Showcase**: Unless you explicitly request a Non-Disclosure Agreement (NDA), KINETIVO STUDIO reserves the customary right to display finished work in our public portfolio and showreel to celebrate creative excellence.
 
-### মূল নীতিসমূহ:
-১. **মালিকানা**: চূড়ান্ত কাজ হস্তান্তরের সাথে সাথে আপনি এর ১০০% মালিকানা লাভ করবেন।
-২. **পেইড অ্যাডভার্টাইজিং**: ফেসবুক, টিকটক, গুগল ও ইউটিউবে কোনো অতিরিক্ত রয়্যালটি ছাড়াই বিজ্ঞাপন চালাতে পারবেন।
-৩. **ডেটা নিরাপত্তা**: আপনার কোনো তথ্য বা পণ্যের বিবরণ কখনোই তৃতীয় পক্ষের কাছে প্রকাশ করা হয় না।`,
-    bannerImg: 'https://images.unsplash.com/photo-1450133064473-71024230f91b?auto=format&fit=crop&w=1000&q=80',
+### 3. Turnaround, Delivery & Revision Policy
+- **Turnaround Guarantee**: Standard deliverables are completed within 48 to 72 business hours after brief sign-off and asset receipt.
+- **Iterative Revisions**: Every standard creative tier includes dedicated revision rounds to fine-tune pacing, audio balance, copy adjustments, subtitles, or color grading.
+- **Concept Pivot**: If a script adjustment is requested prior to final rendering, we pivot immediately at no structural penalty.
+
+### 4. Enterprise-Grade Client Privacy & Confidentiality
+Your proprietary funnel metrics, unreleased product launches, and strategic advertising angles are protected under strict confidentiality protocols:
+- **Strict Non-Disclosure**: We never disclose your ad spend, ROAS performance metrics, supplier contacts, or unreleased SKU specifications to third parties.
+- **Encrypted Asset Handling**: All client briefs and confidential assets are transferred and stored in secure, encrypted cloud environments.
+- **Mutual NDAs**: We gladly execute custom Non-Disclosure Agreements for enterprise and venture-backed clients upon request.
+
+### 5. Payment, Invoicing & Satisfaction Guarantee
+- **Transparent Milestone Pricing**: Clear, upfront pricing with zero hidden surcharges, zero rendering fees, and zero licensing markups.
+- **Secure Processing**: Payments are securely processed through verified international payment gateways.
+- **Dedicated Account Support**: Direct point of contact for project continuity, rapid script adjustments, and ongoing creative strategy consultation.`,
+    contentBn: `## সার্বজনীন বাণিজ্যিক শর্তাবলী ও প্রাতিষ্ঠানিক নীতি
+
+কিনেটিভো স্টুডিওর সাথে চুক্তিবদ্ধ প্রতিটি ক্লায়েন্টের জন্য আমাদের নীতি সম্পূর্ণ স্বচ্ছ, নির্ভরযোগ্য এবং আইনিভাবে সুরক্ষিত। আমাদের দ্বারা তৈরিকৃত প্রতিটি ভিডিও ক্রিয়েটিভ ও সেবার ক্ষেত্রে নিচের নীতিমালা প্রযোজ্য:
+
+### ১. শতভাগ বাণিজ্যিক ও আজীবন মালিকানা অধিকার
+চূড়ান্ত পেমেন্ট সম্পন্ন হওয়ার সাথে সাথে গ্রাহক তৈরিকৃত সমস্ত ভিডিও ফাইলের **১০০% আজীবন, আন্তর্জাতিক ও অপ্রতিরোধ্য বাণিজ্যিক স্বত্বাধিকার** লাভ করবেন:
+- **পেইড অ্যাডভার্টাইজিং**: ফেসবুক, ইনস্টাগ্রাম, টিকটক, গুগল, ইউটিউব ও ডিজিটাল প্ল্যাটফর্মে কোনো অতিরিক্ত রয়্যালটি বা মেয়াদোত্তীর্ণের ফি ছাড়াই যতখুশি বিজ্ঞাপন চালাতে পারবেন।
+- **মেয়াদহীন ব্যবহার**: কোনো অভিনেতা বা মডেলের ১ বছর মেয়াদের লিমিটেশন নেই; আজীবন ব্যবহার করতে পারবেন।
+- **মাল্টি-প্ল্যাটফর্ম সুবিধা**: ওয়েবসাইট, সোশ্যাল মিডিয়া, ইমেইল ফানেল বা টিভিসি সর্বত্র প্রকাশের অবাধ স্বাধীনতা।
+
+### ২. বুদ্ধিবৃত্তিক সম্পদ ও ক্লায়েন্টের স্বত্ব
+- **ক্লায়েন্টের উপাদান**: আপনার নিজস্ব লোগো, ট্রেডমার্ক, প্রডাক্ট ফটো ও কাঁচামালের শতভাগ মালিকানা সর্বদা আপনারই থাকবে।
+- **চুড়ান্ত ফাইল**: প্রজেক্ট সম্পূর্ণ হলে হাই-রেজোলিউশন ৪K/১০৮০p রেন্ডার করা ভিডিও এবং স্ক্রিপ্টের পূর্ণ অধিকার আপনাকে হস্তান্তর করা হয়।
+- **পোর্টফোলিও প্রদর্শন**: গোপনীয়তা চুক্তি (NDA) না থাকলে আমরা আমাদের সেরা কাজের স্বীকৃতিস্বরূপ পোর্টফোলিও বা শোরিলে ভিডিও প্রদর্শন করতে পারি।
+
+### ৩. ডেলিভারি সময়সীমা ও রিভিশন নীতি
+- **দ্রুত ডেলিভারি**: ব্রিফ ফাইনাল হওয়ার পর সাধারণত ৪৮ থেকে ৭২ ঘণ্টার মধ্যে প্রথম ড্রাফট হস্তান্তর করা হয়।
+- **রিভিশন সাপোর্ট**: প্রতিটি প্যাকেজে টেক্সট, সাবটাইটেল, মিউজিক বা কালার পরিবর্তনের জন্য প্রয়োজনীয় রিভিশন সুবিধা অন্তর্ভুক্ত থাকে।
+- **মান নিশ্চয়তা**: ক্লায়েন্টের সন্তুষ্টি আমাদের শীর্ষ অগ্রাধিকার।
+
+### ৪. ডেটা নিরাপত্তা ও ব্যবসায়িক গোপনীয়তা
+- **পণ্যের গোপনীয়তা**: আপনার অপ্রকাশিত পণ্য, সাপ্লায়ার বা ব্যবসায়িক ডেটা কখনো তৃতীয় পক্ষের কাছে প্রকাশ করা হয় না।
+- **এনক্রিপ্টেড ক্লাউড স্টোরেজ**: আপনার পাঠানো ব্রিফ ও ফাইল আধুনিক নিরাপত্তা ব্যবস্থায় সংরক্ষিত থাকে।
+- **কাস্টম এনডিএ (NDA)**: ক্লায়েন্টের প্রয়োজনে আমরা প্রাতিষ্ঠানিক নন-ডিসক্লোজার এগ্রিমেন্টে স্বাক্ষর করতে সদা প্রস্তুত।`,
+    bannerImg: termsCoverImg,
     videoUrl: '',
     showInNav: false,
     showInFooter: true,
