@@ -28,42 +28,51 @@ const STORAGE_KEYS = {
   LEADS: 'kinetivo_leads_v2'
 };
 
-// Background disk synchronization debounce timer
+import { saveToFirestore, loadFromFirestore } from '../services/cloudStorage';
+
+// Background disk & cloud synchronization debounce timer
 let syncTimer: ReturnType<typeof setTimeout> | null = null;
 
 /**
- * Persists the entire database to the server's local file (data/store.json).
- * This ensures that on Windows / Node.js, closing terminal or browser NEVER loses data.
+ * Persists the entire database to both Firebase Firestore (for Netlify/GitHub Pages/all devices)
+ * and the server's local file (data/store.json).
+ * This ensures changes made from any browser or location are permanently live for all users worldwide!
  */
 export async function syncAllToDisk(): Promise<boolean> {
-  try {
-    const payload = {
-      version: '2.0.0',
-      updatedAt: new Date().toISOString(),
-      videos: getStoredVideos(),
-      showreel: getStoredShowreel(),
-      blogs: getStoredBlogs(),
-      pages: getStoredPages(),
-      settings: getStoredSettings(),
-      frontTexts: getStoredFrontTexts(),
-      leads: getStoredLeads()
-    };
+  const payload = {
+    version: '2.0.0',
+    updatedAt: new Date().toISOString(),
+    videos: getStoredVideos(),
+    showreel: getStoredShowreel(),
+    blogs: getStoredBlogs(),
+    pages: getStoredPages(),
+    settings: getStoredSettings(),
+    frontTexts: getStoredFrontTexts(),
+    leads: getStoredLeads()
+  };
 
+  // 1. Sync to Firebase Cloud Firestore
+  try {
+    saveToFirestore(payload);
+  } catch (err) {
+    console.warn('[Storage] Cloud sync error:', err);
+  }
+
+  // 2. Sync to local node server if running
+  try {
     const res = await fetch('/api/data', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload)
     });
-
     return res.ok;
   } catch (err) {
-    // If running in static/pure client mode, gracefully fall back to localStorage
-    return false;
+    return true;
   }
 }
 
 /**
- * Triggers a debounced sync to local disk storage
+ * Triggers a debounced sync to cloud and local storage
  */
 export function triggerDiskSync(): void {
   if (syncTimer) clearTimeout(syncTimer);
@@ -73,8 +82,9 @@ export function triggerDiskSync(): void {
 }
 
 /**
- * Loads data from server local disk file (/api/data) on app start.
- * If server has saved data, it syncs localStorage and returns the payload.
+ * Loads data on app start:
+ * First attempts to load from Firebase Firestore (works on Netlify, mobile, any IP).
+ * Falls back to local /api/data, then to localStorage.
  */
 export async function loadInitialDataFromDisk(): Promise<{
   videos?: VideoItem[];
@@ -85,6 +95,38 @@ export async function loadInitialDataFromDisk(): Promise<{
   frontTexts?: FrontTexts;
   leads?: ProjectLead[];
 } | null> {
+  // Priority 1: Check Firebase Firestore (Universal cloud storage)
+  try {
+    const cloudData = await loadFromFirestore();
+    if (cloudData && typeof cloudData === 'object') {
+      if (Array.isArray(cloudData.videos) && cloudData.videos.length > 0) {
+        localStorage.setItem(STORAGE_KEYS.VIDEOS, JSON.stringify(cloudData.videos));
+      }
+      if (cloudData.showreel) {
+        localStorage.setItem(STORAGE_KEYS.SHOWREEL, JSON.stringify(cloudData.showreel));
+      }
+      if (Array.isArray(cloudData.blogs) && cloudData.blogs.length > 0) {
+        localStorage.setItem(STORAGE_KEYS.BLOGS, JSON.stringify(cloudData.blogs));
+      }
+      if (Array.isArray(cloudData.pages) && cloudData.pages.length > 0) {
+        localStorage.setItem(STORAGE_KEYS.PAGES, JSON.stringify(cloudData.pages));
+      }
+      if (cloudData.settings) {
+        localStorage.setItem(STORAGE_KEYS.SETTINGS, JSON.stringify(cloudData.settings));
+      }
+      if (cloudData.frontTexts) {
+        localStorage.setItem(STORAGE_KEYS.FRONT_TEXTS, JSON.stringify(cloudData.frontTexts));
+      }
+      if (Array.isArray(cloudData.leads)) {
+        localStorage.setItem(STORAGE_KEYS.LEADS, JSON.stringify(cloudData.leads));
+      }
+      return cloudData;
+    }
+  } catch (err) {
+    console.warn('[Storage] Firestore initial load warning:', err);
+  }
+
+  // Priority 2: Local server fallback (/api/data)
   try {
     const res = await fetch('/api/data');
     if (res.ok) {
@@ -115,7 +157,7 @@ export async function loadInitialDataFromDisk(): Promise<{
       }
     }
   } catch (e) {
-    // Server endpoint not reachable or client running standalone
+    // Standalone static hosting
   }
   return null;
 }

@@ -28,6 +28,7 @@ import {
   saveLeads,
   loadInitialDataFromDisk
 } from './utils/storage';
+import { subscribeToFirestore } from './services/cloudStorage';
 import { DEFAULT_FRONT_TEXTS } from './data/defaultData';
 
 import { Navbar } from './components/Navbar';
@@ -81,14 +82,15 @@ export default function App() {
   const [workingFrontTexts, setWorkingFrontTexts] = useState<FrontTexts>(frontTexts);
   const [hasUnsavedFrontChanges, setHasUnsavedFrontChanges] = useState(false);
 
-  // Auto-sync persistent database from disk file (/api/data)
+  // Auto-sync persistent database from Cloud Firestore & local disk
   useEffect(() => {
+    // 1. Initial load
     loadInitialDataFromDisk().then((diskData) => {
       if (diskData) {
-        if (Array.isArray(diskData.videos)) setVideos(diskData.videos);
+        if (Array.isArray(diskData.videos) && diskData.videos.length > 0) setVideos(diskData.videos);
         if (diskData.showreel) setShowreel(diskData.showreel);
-        if (Array.isArray(diskData.blogs)) setBlogs(diskData.blogs);
-        if (Array.isArray(diskData.pages)) setPages(diskData.pages);
+        if (Array.isArray(diskData.blogs) && diskData.blogs.length > 0) setBlogs(diskData.blogs);
+        if (Array.isArray(diskData.pages) && diskData.pages.length > 0) setPages(diskData.pages);
         if (diskData.settings) setSettings(diskData.settings);
         if (Array.isArray(diskData.leads)) setLeads(diskData.leads);
         if (diskData.frontTexts) {
@@ -97,6 +99,25 @@ export default function App() {
         }
       }
     });
+
+    // 2. Real-time subscription to cloud changes across all devices/browsers
+    const unsubscribe = subscribeToFirestore((cloudData) => {
+      if (cloudData) {
+        if (Array.isArray(cloudData.videos) && cloudData.videos.length > 0) setVideos(cloudData.videos);
+        if (cloudData.showreel) setShowreel(cloudData.showreel);
+        if (Array.isArray(cloudData.blogs) && cloudData.blogs.length > 0) setBlogs(cloudData.blogs);
+        if (Array.isArray(cloudData.pages) && cloudData.pages.length > 0) setPages(cloudData.pages);
+        if (cloudData.settings) setSettings(cloudData.settings);
+        if (Array.isArray(cloudData.leads)) setLeads(cloudData.leads);
+        if (cloudData.frontTexts) {
+          setFrontTexts(cloudData.frontTexts);
+        }
+      }
+    });
+
+    return () => {
+      unsubscribe();
+    };
   }, []);
 
   // Listen to hash changes (e.g. #admin, #work, #blog)

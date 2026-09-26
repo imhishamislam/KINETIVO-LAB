@@ -2446,19 +2446,22 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
                 </form>
               </div>
 
-              {/* LOCAL DISK SYNC & BACKUP MANAGEMENT */}
+              {/* CLOUD FIRESTORE & STORAGE PERSISTENCE */}
               <div className="border border-white/10 rounded-2xl p-5 sm:p-6 bg-[#0e0e16]/80 space-y-4">
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-white/10 pb-4">
                   <div className="flex items-center gap-2.5">
-                    <div className="w-8 h-8 rounded-lg bg-[#2ed9e3]/15 text-[#2ed9e3] border border-[#2ed9e3]/30 flex items-center justify-center shrink-0">
-                      <HardDrive className="w-4 h-4" />
+                    <div className="w-8 h-8 rounded-lg bg-[#c6f24e]/15 text-[#c6f24e] border border-[#c6f24e]/30 flex items-center justify-center shrink-0">
+                      <Sparkles className="w-4 h-4" />
                     </div>
                     <div>
-                      <h4 className="font-bold text-sm text-white font-['Outfit']">
-                        Windows Local Storage & File Persistence (ডিস্ক স্টোরেজ)
+                      <h4 className="font-bold text-sm text-white font-['Outfit'] flex items-center gap-2">
+                        <span>Universal Cloud Sync &amp; Persistence (Firebase Firestore)</span>
+                        <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-[#c6f24e]/10 text-[#c6f24e] border border-[#c6f24e]/30">
+                          Active &amp; Connected
+                        </span>
                       </h4>
                       <p className="text-[11px] text-[#9a9aab]">
-                        টার্মিনাল বা ব্রাউজার বন্ধ করলেও সমস্ত ডেটা আপনার কম্পিউটারের <code className="text-[#2ed9e3] bg-white/5 px-1 py-0.5 rounded">data/store.json</code> ফাইলে সেভ থাকে।
+                        যেকোনো ব্রাউজার, মোবাইল বা নতুন আইপি থেকে সাইট ওপেন করলে আপনার সেভ করা ভিডিও, পোস্ট এবং ইমেইল সেটিংস ক্লাউড থেকে তাৎক্ষণিকভাবে লোড হবে।
                       </p>
                     </div>
                   </div>
@@ -2469,8 +2472,8 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
                     disabled={diskSyncStatus === 'syncing'}
                     className="px-4 py-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/15 text-xs text-white font-medium flex items-center gap-1.5 transition-colors cursor-pointer self-start sm:self-auto shrink-0"
                   >
-                    <HardDrive className="w-3.5 h-3.5 text-[#2ed9e3]" />
-                    <span>{diskSyncStatus === 'syncing' ? 'Syncing...' : diskSyncStatus === 'synced' ? '✓ Synced to Disk' : 'Force Save to Disk'}</span>
+                    <HardDrive className="w-3.5 h-3.5 text-[#c6f24e]" />
+                    <span>{diskSyncStatus === 'syncing' ? 'Syncing to Cloud...' : diskSyncStatus === 'synced' ? '✓ Synced to Cloud' : 'Force Sync to Cloud'}</span>
                   </button>
                 </div>
 

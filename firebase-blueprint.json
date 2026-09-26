@@ -1,0 +1,46 @@
+{
+  "entities": {
+    "StudioContent": {
+      "title": "Studio Content",
+      "description": "Global website content including videos, blog posts, pages, showreel, front texts, and settings for KINETIVO LAB",
+      "type": "object",
+      "properties": {
+        "videos": { "type": "array", "description": "List of portfolio video ads" },
+        "blogs": { "type": "array", "description": "List of blog articles" },
+        "pages": { "type": "array", "description": "List of custom extra pages" },
+        "showreel": { "type": "object", "description": "Main showreel video config" },
+        "settings": { "type": "object", "description": "Site global settings including recipient contact email" },
+        "frontTexts": { "type": "object", "description": "Front-end text overrides" },
+        "updatedAt": { "type": "string", "description": "ISO timestamp of last update" }
+      }
+    },
+    "ClientLead": {
+      "title": "Client Lead",
+      "description": "Inquiries, project briefs, and video ad orders submitted by visitors",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "email": { "type": "string" },
+        "brand": { "type": "string" },
+        "link": { "type": "string" },
+        "interest": { "type": "string" },
+        "budget": { "type": "string" },
+        "goal": { "type": "string" },
+        "submittedAt": { "type": "string" },
+        "source": { "type": "string" },
+        "status": { "type": "string" }
+      },
+      "required": ["name", "email", "submittedAt"]
+    }
+  },
+  "firestore": {
+    "/studio/content": {
+      "schema": "StudioContent",
+      "description": "Single global document storing all editable website content across devices and browsers"
+    },
+    "/leads/{leadId}": {
+      "schema": "ClientLead",
+      "description": "Collection of client submissions and project briefs"
+    }
+  }
+}
