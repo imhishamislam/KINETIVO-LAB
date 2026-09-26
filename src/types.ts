@@ -25,6 +25,7 @@ export interface VideoItem {
   videoUrl: string;
   badgeColor?: string;
   isFeatured?: boolean;
+  featuredOrder?: number; // 1 to 6 position order in ALL category on homepage
   status: 'published' | 'draft';
   createdAt?: string;
 }

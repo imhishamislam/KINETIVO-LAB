@@ -30,7 +30,7 @@ export const WhyUs: React.FC<WhyUsProps> = ({
         <div className="text-center max-w-2xl mx-auto mb-12">
           <span className="eyebrow-badge text-[#c6f24e] border border-[#c6f24e]/30 bg-[#c6f24e]/10 mb-4">
             <span className="w-1.5 h-1.5 rounded-full bg-[#c6f24e] shadow-[0_0_8px_#c6f24e]" />
-            {isBn ? 'কেন কিনেটিভো ল্যাব' : 'Why Kinetivo Lab'}
+            {isBn ? 'কেন কিনেটিভো স্টুডিও' : 'Why Kinetivo Studio'}
           </span>
           <h2
             className={`text-3xl sm:text-4xl lg:text-5xl font-black uppercase text-white font-['Outfit'] tracking-tight mt-2 ${
@@ -146,7 +146,7 @@ export const WhyUs: React.FC<WhyUsProps> = ({
                     {isBn ? 'তুলনা' : 'COMPARE'}
                   </th>
                   <th className="text-center text-[10px] font-extrabold tracking-[0.16em] uppercase bg-[#c6f24e] text-black py-2 px-3 rounded-t-xl">
-                    KINETIVO LAB
+                    KINETIVO STUDIO
                   </th>
                   <th className="text-center text-[10px] font-bold tracking-[0.16em] uppercase text-[#6f6f82] pb-3">
                     {isBn ? 'প্রচলিত পদ্ধতি' : 'TRADITIONAL'}

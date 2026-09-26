@@ -216,6 +216,17 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
     showToast(isNowFeatured ? '⭐ Video featured on Homepage!' : 'Video removed from Homepage featured list.');
   };
 
+  const handleSetFeaturedOrder = (v: VideoItem, order: number | undefined) => {
+    const updated = videos.map(item => {
+      if (item.id === v.id) {
+        return { ...item, isFeatured: true, featuredOrder: order };
+      }
+      return item;
+    });
+    onSaveVideos(updated);
+    showToast(`Homepage Slot #${order} assigned to ${v.brand}!`);
+  };
+
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>, setter: (url: string) => void) => {
     const file = e.target.files?.[0];
     if (file) {
@@ -746,7 +757,7 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
                       </span>
                     </div>
                     <p className="text-[11px] text-[#9a9aab] mt-0.5">
-                      নিচের তালিকায় যেকোনো ভিডিওর পাশে <strong>"Add to Home"</strong> বাটনে ক্লিক করে বা <strong>Edit</strong> ফর্মে টিক মার্ক দিয়ে আপনার পছন্দের ৬টি ভিডিও হোমপেজে ফিউচার্ড হিসেবে দেখাতে পারবেন। বাকি সব ভিডিও শুধু <strong>'COMPLETE WORK LIBRARY'</strong> পেজে দেখাবে।
+                      নিচের তালিকায় যেকোনো ভিডিওর পাশে <strong>"Add to Home"</strong> বাটনে ক্লিক করে এবং ড্রপডাউন থেকে <strong>Slot 1, 2, 3, 4, 5, 6</strong> সিলেক্ট করে হোমপেজের 'ALL' ক্যাটাগরিতে ইচ্ছামতো সিরিয়াল নির্ধারণ করতে পারবেন। বাকি ক্যাটাগরির ভিডিওগুলো যথারীতি স্বাভাবিক অর্ডারে প্রদর্শিত হবে।
                     </p>
                   </div>
                 </div>
@@ -845,19 +856,44 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
                           </span>
                         </td>
                         <td className="py-3 px-4 text-center">
-                          <button
-                            type="button"
-                            onClick={() => handleToggleFeatured(v)}
-                            className={`px-3 py-1.5 rounded-full text-xs font-bold transition-all cursor-pointer inline-flex items-center gap-1.5 ${
-                              v.isFeatured
-                                ? 'bg-[#c6f24e] text-black shadow-[0_0_12px_rgba(198,242,78,0.4)] hover:bg-[#d4fc62]'
-                                : 'bg-white/5 text-[#9a9aab] border border-white/10 hover:border-[#c6f24e]/50 hover:text-white'
-                            }`}
-                            title={v.isFeatured ? 'Click to remove from Homepage Featured' : 'Click to feature on Homepage'}
-                          >
-                            <Star className={`w-3.5 h-3.5 ${v.isFeatured ? 'fill-black' : ''}`} />
-                            <span>{v.isFeatured ? 'Featured (হোমপেজ)' : 'Add to Home'}</span>
-                          </button>
+                          <div className="flex flex-col items-center gap-1.5">
+                            <button
+                              type="button"
+                              onClick={() => handleToggleFeatured(v)}
+                              className={`px-3 py-1.5 rounded-full text-xs font-bold transition-all cursor-pointer inline-flex items-center gap-1.5 ${
+                                v.isFeatured
+                                  ? 'bg-[#c6f24e] text-black shadow-[0_0_12px_rgba(198,242,78,0.4)] hover:bg-[#d4fc62]'
+                                  : 'bg-white/5 text-[#9a9aab] border border-white/10 hover:border-[#c6f24e]/50 hover:text-white'
+                              }`}
+                              title={v.isFeatured ? 'Click to remove from Homepage Featured' : 'Click to feature on Homepage'}
+                            >
+                              <Star className={`w-3.5 h-3.5 ${v.isFeatured ? 'fill-black' : ''}`} />
+                              <span>{v.isFeatured ? 'Featured (Home)' : 'Add to Home'}</span>
+                            </button>
+
+                            {/* Position Order Selector: 1 2 3 4 5 6 */}
+                            {v.isFeatured && (
+                              <div className="flex items-center gap-1 bg-[#12121c] border border-white/15 px-2 py-0.5 rounded-lg">
+                                <span className="text-[10px] text-[#6f6f82] uppercase font-bold">Slot:</span>
+                                <select
+                                  value={v.featuredOrder || ''}
+                                  onChange={(e) => {
+                                    const val = e.target.value ? parseInt(e.target.value, 10) : undefined;
+                                    handleSetFeaturedOrder(v, val);
+                                  }}
+                                  className="bg-transparent text-[#c6f24e] font-extrabold text-xs focus:outline-none cursor-pointer"
+                                >
+                                  <option value="" className="bg-[#0e0e16] text-[#9a9aab]">Auto</option>
+                                  <option value="1" className="bg-[#0e0e16] text-[#c6f24e]">1 (1st)</option>
+                                  <option value="2" className="bg-[#0e0e16] text-[#c6f24e]">2 (2nd)</option>
+                                  <option value="3" className="bg-[#0e0e16] text-[#c6f24e]">3 (3rd)</option>
+                                  <option value="4" className="bg-[#0e0e16] text-[#c6f24e]">4 (4th)</option>
+                                  <option value="5" className="bg-[#0e0e16] text-[#c6f24e]">5 (5th)</option>
+                                  <option value="6" className="bg-[#0e0e16] text-[#c6f24e]">6 (6th)</option>
+                                </select>
+                              </div>
+                            )}
+                          </div>
                         </td>
                         <td className="py-3 px-4 text-right">
                           <div className="flex items-center justify-end gap-1.5">
@@ -1164,39 +1200,74 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
                       </div>
 
                       {/* FEATURED IN HOMEPAGE TICK-MARK (USER REQUEST: [Video Ads Management /Edit Video Ad - টিক মার্ক করলে]) */}
-                      <div className="border border-white/10 rounded-2xl p-4 bg-[#c6f24e]/[0.03] flex items-center justify-between gap-4">
-                        <div className="flex items-center gap-3">
-                          <div className={`w-8 h-8 rounded-lg flex items-center justify-center border ${
-                            editingVideo.isFeatured
-                              ? 'bg-[#c6f24e]/20 border-[#c6f24e] text-[#c6f24e]'
-                              : 'bg-white/5 border-white/15 text-[#9a9aab]'
-                          }`}>
-                            <Star className={`w-4 h-4 ${editingVideo.isFeatured ? 'fill-[#c6f24e]' : ''}`} />
-                          </div>
-                          <div>
-                            <div className="font-bold text-xs text-white font-['Outfit'] flex items-center gap-2">
-                              <span>Feature on Homepage (হোমপেজে ফিউচার্ড হিসেবে দেখান)</span>
-                              {editingVideo.isFeatured && (
-                                <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-[#c6f24e] text-black">
-                                  ✓ Active
-                                </span>
-                              )}
+                      <div className="border border-white/10 rounded-2xl p-4 bg-[#c6f24e]/[0.03] space-y-4">
+                        <div className="flex items-center justify-between gap-4">
+                          <div className="flex items-center gap-3">
+                            <div className={`w-8 h-8 rounded-lg flex items-center justify-center border ${
+                              editingVideo.isFeatured
+                                ? 'bg-[#c6f24e]/20 border-[#c6f24e] text-[#c6f24e]'
+                                : 'bg-white/5 border-white/15 text-[#9a9aab]'
+                            }`}>
+                              <Star className={`w-4 h-4 ${editingVideo.isFeatured ? 'fill-[#c6f24e]' : ''}`} />
                             </div>
-                            <p className="text-[11px] text-[#9a9aab] mt-0.5">
-                              টিক মার্ক করলে এই ভিডিওটি হোমপেজের 'Our Work' সেকশনের ৬টি নির্বাচিত ভিডিওর তালিকায় চলে আসবে। টিক মার্ক না থাকলে এটি শুধু সম্পূর্ণ 'Our Work Library' পেজে দেখাবে।
-                            </p>
+                            <div>
+                              <div className="font-bold text-xs text-white font-['Outfit'] flex items-center gap-2">
+                                <span>Feature on Homepage (হোমপেজে ফিউচার্ড হিসেবে দেখান)</span>
+                                {editingVideo.isFeatured && (
+                                  <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-[#c6f24e] text-black">
+                                    ✓ Active
+                                  </span>
+                                )}
+                              </div>
+                              <p className="text-[11px] text-[#9a9aab] mt-0.5">
+                                টিক মার্ক করলে এই ভিডিওটি হোমপেজের 'Our Work' সেকশনের ৬টি নির্বাচিত ভিডিওর তালিকায় চলে আসবে।
+                              </p>
+                            </div>
                           </div>
+
+                          <label className="relative inline-flex items-center cursor-pointer shrink-0">
+                            <input
+                              type="checkbox"
+                              checked={!!editingVideo.isFeatured}
+                              onChange={(e) => setEditingVideo({ ...editingVideo, isFeatured: e.target.checked })}
+                              className="sr-only peer"
+                            />
+                            <div className="w-11 h-6 bg-white/10 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#c6f24e] peer-checked:after:bg-black"></div>
+                          </label>
                         </div>
 
-                        <label className="relative inline-flex items-center cursor-pointer shrink-0">
-                          <input
-                            type="checkbox"
-                            checked={!!editingVideo.isFeatured}
-                            onChange={(e) => setEditingVideo({ ...editingVideo, isFeatured: e.target.checked })}
-                            className="sr-only peer"
-                          />
-                          <div className="w-11 h-6 bg-white/10 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#c6f24e] peer-checked:after:bg-black"></div>
-                        </label>
+                        {/* Serial Order Selector (1, 2, 3, 4, 5, 6) in ALL category */}
+                        {editingVideo.isFeatured && (
+                          <div className="pt-3 border-t border-white/10 flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-black/40 p-3 rounded-xl">
+                            <div>
+                              <div className="text-xs font-bold text-white flex items-center gap-1.5">
+                                <span className="text-[#c6f24e]">ALL ক্যাটাগরির সিরিয়াল নম্বর (Position 1 - 6):</span>
+                              </div>
+                              <p className="text-[11px] text-[#9a9aab] mt-0.5">
+                                হোমপেজে 'ALL' ক্যাটাগরিতে এই ভিডিওটি কত নম্বরে দেখাবে (১, ২, ৩, ৪, ৫, বা ৬)।
+                              </p>
+                            </div>
+
+                            <div className="flex items-center gap-2">
+                              <select
+                                value={editingVideo.featuredOrder || ''}
+                                onChange={(e) => setEditingVideo({
+                                  ...editingVideo,
+                                  featuredOrder: e.target.value ? parseInt(e.target.value, 10) : undefined
+                                })}
+                                className="border border-[#c6f24e]/50 bg-[#0e0e16] text-[#c6f24e] font-extrabold text-xs rounded-xl px-4 py-2 focus:outline-none cursor-pointer"
+                              >
+                                <option value="" className="text-[#9a9aab]">Auto Order (স্বয়ংক্রিয়)</option>
+                                <option value="1">Slot 1 — ১ম স্থানে দেখাবে</option>
+                                <option value="2">Slot 2 — ২য় স্থানে দেখাবে</option>
+                                <option value="3">Slot 3 — ৩য় স্থানে দেখাবে</option>
+                                <option value="4">Slot 4 — ৪র্থ স্থানে দেখাবে</option>
+                                <option value="5">Slot 5 — ৫ম স্থানে দেখাবে</option>
+                                <option value="6">Slot 6 — ৬ষ্ঠ স্থানে দেখাবে</option>
+                              </select>
+                            </div>
+                          </div>
+                        )}
                       </div>
 
                       <div className="flex justify-end gap-3 pt-4 border-t border-white/10">
@@ -2141,14 +2212,14 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
                         <div className="w-16 h-16 rounded-xl bg-gradient-to-br from-[#c6f24e] via-[#2ed9e3] to-[#a855f7] p-[2px] flex items-center justify-center shrink-0 shadow-[0_0_20px_rgba(46,217,227,0.3)]">
                           <div className="w-full h-full bg-[#07070c] rounded-[10px] flex items-center justify-center">
                             <span className="font-black text-xl tracking-tighter bg-gradient-to-r from-[#c6f24e] to-[#2ed9e3] bg-clip-text text-transparent">
-                              KL
+                              KS
                             </span>
                           </div>
                         </div>
                       )}
                       <div>
                         <div className="text-xs font-bold text-white">
-                          {settingsForm.logoUrl ? 'Custom Uploaded Logo' : 'Default KL Gradient Icon'}
+                          {settingsForm.logoUrl ? 'Custom Uploaded Logo' : 'Default KS Gradient Icon'}
                         </div>
                         <div className="text-[11px] text-[#6f6f82]">
                           Appears in top navbar, footer, and brand headers
@@ -2176,7 +2247,7 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
                             onClick={() => setSettingsForm({ ...settingsForm, logoUrl: '' })}
                             className="px-3.5 py-2 rounded-xl border border-white/15 bg-white/5 hover:bg-white/10 text-xs text-[#9a9aab] hover:text-white transition-colors"
                           >
-                            Reset to Default KL Logo
+                            Reset to Default KS Logo
                           </button>
                         )}
                       </div>

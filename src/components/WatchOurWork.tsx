@@ -39,16 +39,25 @@ export const WatchOurWork: React.FC<WatchOurWorkProps> = ({
   const publishedVideos = videos.filter(v => v.status === 'published');
 
   // Featured videos selected by the admin (tagged with isFeatured === true)
-  const featuredPublishedVideos = publishedVideos.filter(v => v.isFeatured);
+  // For the 'ALL' category on the front page, sort strictly by custom serial order (1, 2, 3, 4, 5, 6)
+  const featuredPublishedVideos = publishedVideos
+    .filter(v => v.isFeatured)
+    .sort((a, b) => {
+      const orderA = a.featuredOrder !== undefined && a.featuredOrder !== null ? a.featuredOrder : 999;
+      const orderB = b.featuredOrder !== undefined && b.featuredOrder !== null ? b.featuredOrder : 999;
+      return orderA - orderB;
+    });
 
   // If the admin has chosen featured videos, use them; if less than 6 or none yet, fall back gracefully
   const displayPool = featuredPublishedVideos.length > 0 
     ? featuredPublishedVideos 
     : publishedVideos;
 
+  // In ALL category, display exactly the top 6 featured in ordered sequence (1, 2, 3, 4, 5, 6)
+  // In specific categories, show videos for that category in their natural order as before
   const filteredVideos = activeCategory === 'all'
     ? displayPool.slice(0, 6)
-    : displayPool.filter(v => v.cat === activeCategory || (activeCategory === 'agency_promo' && v.cat === ('other' as VideoCategory))).slice(0, 6);
+    : publishedVideos.filter(v => v.cat === activeCategory || (activeCategory === 'agency_promo' && v.cat === ('other' as VideoCategory))).slice(0, 6);
 
   const getCategoryBadgeLabel = (cat: VideoCategory) => {
     switch (cat) {

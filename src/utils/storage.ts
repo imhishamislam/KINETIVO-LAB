@@ -249,9 +249,14 @@ export function getStoredSettings(): SiteSettings {
     const raw = localStorage.getItem(STORAGE_KEYS.SETTINGS);
     if (raw) {
       const parsed = JSON.parse(raw);
+      // Migrate old default site name if still present
+      const siteNameEn = parsed.siteNameEn === 'KINETIVO LAB — AI Ad Studio' ? DEFAULT_SETTINGS.siteNameEn : (parsed.siteNameEn || DEFAULT_SETTINGS.siteNameEn);
+      const siteNameBn = parsed.siteNameBn === 'কিনেটিভো ল্যাব — AI অ্যাড স্টুডিও' ? DEFAULT_SETTINGS.siteNameBn : (parsed.siteNameBn || DEFAULT_SETTINGS.siteNameBn);
       return {
         ...DEFAULT_SETTINGS,
         ...parsed,
+        siteNameEn,
+        siteNameBn,
         passcode: parsed.passcode || DEFAULT_SETTINGS.passcode,
         heroBgImage: parsed.heroBgImage !== undefined ? parsed.heroBgImage : DEFAULT_SETTINGS.heroBgImage
       };

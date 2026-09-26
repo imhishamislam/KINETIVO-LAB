@@ -52,21 +52,21 @@ export const Footer: React.FC<FooterProps> = ({
               {settings.logoUrl ? (
                 <img
                   src={settings.logoUrl}
-                  alt="KINETIVO LAB Logo"
+                  alt="KINETIVO STUDIO Logo"
                   className="w-10 h-10 rounded-lg object-contain bg-black/40 border border-white/10 p-0.5"
                 />
               ) : (
                 <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-[#c6f24e] via-[#2ed9e3] to-[#a855f7] p-[1.5px] flex items-center justify-center shrink-0">
                   <div className="w-full h-full bg-[#07070c] rounded-[7px] flex items-center justify-center">
                     <span className="font-extrabold text-sm tracking-tighter bg-gradient-to-r from-[#c6f24e] to-[#2ed9e3] bg-clip-text text-transparent">
-                      KL
+                      KS
                     </span>
                   </div>
                 </div>
               )}
               <div className="leading-none">
                 <div className="font-extrabold text-[17px] tracking-tight font-['Outfit'] text-white">
-                  KINETIVO <span className="bg-gradient-to-r from-[#c6f24e] to-[#2ed9e3] bg-clip-text text-transparent">LAB</span>
+                  KINETIVO <span className="bg-gradient-to-r from-[#c6f24e] to-[#2ed9e3] bg-clip-text text-transparent">STUDIO</span>
                 </div>
                 <div className="text-[8px] font-semibold tracking-[0.28em] text-[#6f6f82] uppercase mt-1">
                   {isBn ? settings.taglineBn : settings.taglineEn}

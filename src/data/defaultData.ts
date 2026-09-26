@@ -80,6 +80,7 @@ export const DEFAULT_VIDEOS: VideoItem[] = [
     videoUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
     badgeColor: '#c6f24e',
     isFeatured: true,
+    featuredOrder: 1,
     status: 'published',
     createdAt: '2026-02-15'
   },
@@ -97,6 +98,7 @@ export const DEFAULT_VIDEOS: VideoItem[] = [
     videoUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
     badgeColor: '#2ed9e3',
     isFeatured: true,
+    featuredOrder: 2,
     status: 'published',
     createdAt: '2026-02-20'
   },
@@ -114,6 +116,7 @@ export const DEFAULT_VIDEOS: VideoItem[] = [
     videoUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
     badgeColor: '#ff3d9a',
     isFeatured: true,
+    featuredOrder: 3,
     status: 'published',
     createdAt: '2026-02-28'
   },
@@ -131,6 +134,7 @@ export const DEFAULT_VIDEOS: VideoItem[] = [
     videoUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
     badgeColor: '#a855f7',
     isFeatured: true,
+    featuredOrder: 4,
     status: 'published',
     createdAt: '2026-03-01'
   },
@@ -148,6 +152,7 @@ export const DEFAULT_VIDEOS: VideoItem[] = [
     videoUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
     badgeColor: '#c6f24e',
     isFeatured: true,
+    featuredOrder: 5,
     status: 'published',
     createdAt: '2026-03-04'
   },
@@ -165,6 +170,7 @@ export const DEFAULT_VIDEOS: VideoItem[] = [
     videoUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
     badgeColor: '#2ed9e3',
     isFeatured: true,
+    featuredOrder: 6,
     status: 'published',
     createdAt: '2026-03-08'
   },
@@ -205,8 +211,8 @@ export const DEFAULT_VIDEOS: VideoItem[] = [
 ];
 
 export const DEFAULT_SHOWREEL: ShowreelData = {
-  titleEn: 'KINETIVO LAB — 2026 Showreel',
-  titleBn: 'কিনেটিভো ল্যাব — ২০২৬ শোরিল',
+  titleEn: 'KINETIVO STUDIO — 2026 Showreel',
+  titleBn: 'কিনেটিভো স্টুডিও — ২০২৬ শোরিল',
   descEn: 'UGC ads, AI spokespersons, VSLs & cinematic concepts in one cut.',
   descBn: 'UGC অ্যাড, AI স্পোকসপারসন, VSL ও সিনেমাটিক কনসেপ্ট — এক কাটে।',
   duration: '0:08',
@@ -297,13 +303,13 @@ export const DEFAULT_EXTRA_PAGES: ExtraPage[] = [
   {
     id: 'page-about',
     slug: 'about-us',
-    titleEn: 'About KINETIVO LAB',
-    titleBn: 'কিনেটিভো ল্যাব সম্পর্কে',
+    titleEn: 'About KINETIVO STUDIO',
+    titleBn: 'কিনেটিভো স্টুডিও সম্পর্কে',
     subtitleEn: 'We bridge hyper-realistic creative AI and direct-response performance advertising.',
     subtitleBn: 'আমরা বাস্তবসম্মত ক্রিয়েটিভ এআই এবং ডিরেক্ট-রেসপন্স বিজ্ঞাপনের সমন্বয় ঘটাই।',
     contentEn: `## Who We Are
 
-KINETIVO LAB is an elite AI-powered video advertising studio based in Bangladesh and serving visionary e-commerce brands, SaaS companies, and digital creators worldwide.
+KINETIVO STUDIO is an elite AI-powered video advertising studio based in Bangladesh and serving visionary e-commerce brands, SaaS companies, and digital creators worldwide.
 
 ### Our Philosophy: Ideas In Motion
 We believe that creative fatigue is the single biggest threat to paid media ROI. To win in today's algorithmic landscape, brands need continuous, high-volume testing of scroll-stopping creative assets.
@@ -315,7 +321,7 @@ We believe that creative fatigue is the single biggest threat to paid media ROI.
 - **Full Commercial Rights**: Every video belongs to you 100% with no ongoing royalty strings attached.`,
     contentBn: `## আমরা কারা
 
-কিনেটিভো ল্যাব একটি আধুনিক AI-চালিত ভিডিও বিজ্ঞাপন স্টুডিও। বাংলাদেশ থেকে পরিচালিত হলেও আমরা বিশ্বের শীর্ষ ই-কমার্স ব্র্যান্ড, SaaS কোম্পানি ও ডিজিটাল উদ্যোক্তাদের সেবা প্রদান করি।
+কিনেটিভো স্টুডিও একটি আধুনিক AI-চালিত ভিডিও বিজ্ঞাপন স্টুডিও। বাংলাদেশ থেকে পরিচালিত হলেও আমরা বিশ্বের শীর্ষ ই-কমার্স ব্র্যান্ড, SaaS কোম্পানি ও ডিজিটাল উদ্যোক্তাদের সেবা প্রদান করি।
 
 ### আমাদের দর্শন: আইডিয়া যখন গতিশীল
 আমরা বিশ্বাস করি যে ক্রিয়েটিভের ক্লান্তিই পেইড ক্যাম্পেইনের সবচেয়ে বড় অন্তরায়। বর্তমান অ্যালগরিদমে জয়ী হতে হলে ব্র্যান্ডগুলোর নিয়মিত স্ক্রল-থামানো বৈচিত্র্যময় কনটেন্ট দরকার।
@@ -339,7 +345,7 @@ We believe that creative fatigue is the single biggest threat to paid media ROI.
     subtitleBn: 'সম্পূর্ণ বাণিজ্যিক অধিকার, স্বচ্ছ লাইসেন্স এবং নির্ভরযোগ্য গোপনীয়তা নিশ্চয়তা।',
     contentEn: `## Commercial Licensing
 
-All video ads, graphics, and copy created by KINETIVO LAB come with full, perpetual, worldwide commercial usage rights.
+All video ads, graphics, and copy created by KINETIVO STUDIO come with full, perpetual, worldwide commercial usage rights.
 
 ### Key Points:
 1. **Ownership**: You own 100% of the delivered deliverables once final balance is settled.
@@ -347,7 +353,7 @@ All video ads, graphics, and copy created by KINETIVO LAB come with full, perpet
 3. **Data Privacy**: We never share your product briefs, unreleased assets, or proprietary funnel data with third parties.`,
     contentBn: `## বাণিজ্যিক লাইসেন্স
 
-কিনেটিভো ল্যাব কর্তৃক তৈরি প্রতিটি ভিডিও বিজ্ঞাপন, গ্রাফিক্স এবং স্ক্রিপ্টের সাথে আপনি পাবেন অনির্দিষ্টকালের সম্পূর্ণ বাণিজ্যিক ব্যবহারের অধিকার।
+কিনেটিভো স্টুডিও কর্তৃক তৈরি প্রতিটি ভিডিও বিজ্ঞাপন, গ্রাফিক্স এবং স্ক্রিপ্টের সাথে আপনি পাবেন অনির্দিষ্টকালের সম্পূর্ণ বাণিজ্যিক ব্যবহারের অধিকার।
 
 ### মূল নীতিসমূহ:
 ১. **মালিকানা**: চূড়ান্ত কাজ হস্তান্তরের সাথে সাথে আপনি এর ১০০% মালিকানা লাভ করবেন।
@@ -362,8 +368,8 @@ All video ads, graphics, and copy created by KINETIVO LAB come with full, perpet
 ];
 
 export const DEFAULT_SETTINGS: SiteSettings = {
-  siteNameEn: 'KINETIVO LAB — AI Ad Studio',
-  siteNameBn: 'কিনেটিভো ল্যাব — AI অ্যাড স্টুডিও',
+  siteNameEn: 'KINETIVO STUDIO — AI Ad Studio',
+  siteNameBn: 'কিনেটিভো স্টুডিও — AI অ্যাড স্টুডিও',
   taglineEn: 'Ideas In Motion',
   taglineBn: 'আইডিয়া যখন গতিশীল',
   logoUrl: '', // Default logo mark rendered via SVG/Base64

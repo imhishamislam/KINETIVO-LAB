@@ -81,14 +81,14 @@ export const Navbar: React.FC<NavbarProps> = ({
           {settings.logoUrl ? (
             <img
               src={settings.logoUrl}
-              alt="KINETIVO LAB Logo"
+              alt="KINETIVO STUDIO Logo"
               className="w-9 h-9 rounded-lg object-contain bg-black/40 border border-white/10 p-0.5"
             />
           ) : (
             <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-[#c6f24e] via-[#2ed9e3] to-[#a855f7] p-[1.5px] flex items-center justify-center shrink-0 shadow-[0_0_15px_rgba(46,217,227,0.3)]">
               <div className="w-full h-full bg-[#07070c] rounded-[7px] flex items-center justify-center">
                 <span className="font-extrabold text-sm tracking-tighter bg-gradient-to-r from-[#c6f24e] to-[#2ed9e3] bg-clip-text text-transparent">
-                  KL
+                  KS
                 </span>
               </div>
             </div>
@@ -96,7 +96,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           <div className="flex flex-col justify-center">
             <span className="font-extrabold text-[16px] sm:text-[18px] tracking-tight font-['Outfit'] text-white whitespace-nowrap leading-none flex items-center gap-1.5">
               <span>KINETIVO</span>
-              <span className="bg-gradient-to-r from-[#c6f24e] to-[#2ed9e3] bg-clip-text text-transparent">LAB</span>
+              <span className="bg-gradient-to-r from-[#c6f24e] to-[#2ed9e3] bg-clip-text text-transparent">STUDIO</span>
             </span>
             <span className="text-[8px] font-semibold tracking-[0.28em] text-[#6f6f82] uppercase mt-1 whitespace-nowrap leading-none">
               {lang === 'bn' ? settings.taglineBn : settings.taglineEn}
