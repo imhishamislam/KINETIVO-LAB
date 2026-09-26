@@ -84,7 +84,7 @@ export const Hero: React.FC<HeroProps> = ({
               )}
             </h1>
 
-            {/* Hero Subtitle / Paragraph (Exact match with 1 HERO.png) */}
+            {/* Hero Subtitle / Paragraph */}
             <p
               className={`text-[#9a9aab] text-sm sm:text-base mt-6 mb-8 max-w-xl leading-relaxed ${
                 isFrontEditMode ? 'ring-2 ring-dashed ring-amber-400 p-2 rounded-xl cursor-text' : ''
@@ -100,13 +100,13 @@ export const Hero: React.FC<HeroProps> = ({
               {isBn ? (
                 <>
                   আমরা তৈরি করি হাই-কনভার্টিং ভিডিও অ্যাড, AI স্পোকসপারসন ও VSL —{' '}
-                  <strong className="text-white font-bold">TikTok, Instagram ও Facebook</strong>-এর জন্য।
+                  <strong className="text-white font-bold">All Digital Platforms</strong>-এর জন্য।
                   ধীরগতির, বেশি দামি ক্রিয়েটরদের পেছনে টাকা খরচ বন্ধ করুন — হাইপার-রিয়েলিস্টিক AI UGC দিয়ে দ্রুত স্কেল করুন।
                 </>
               ) : (
                 <>
                   We create high-converting video ads, AI spokespersons &amp; VSLs for{' '}
-                  <strong className="text-white font-bold">TikTok, Instagram &amp; Facebook</strong>.
+                  <strong className="text-white font-bold">All Digital Platforms</strong>.
                   Stop burning money on slow, overpriced creators — scale faster with hyper-realistic AI UGC.
                 </>
               )}

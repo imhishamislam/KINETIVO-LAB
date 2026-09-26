@@ -107,18 +107,18 @@ export const Navbar: React.FC<NavbarProps> = ({
         {/* Desktop Nav Links */}
         <nav className="hidden lg:flex items-center gap-7 text-[13.5px] font-medium text-[#c8c8d6]">
           <button
-            onClick={() => scrollToSection('services')}
-            className="hover:text-white transition-colors relative py-1 focus:outline-none cursor-pointer"
-          >
-            {lang === 'bn' ? 'সার্ভিস' : 'Services'}
-          </button>
-          <button
             onClick={onOpenWork}
             className={`hover:text-white transition-colors relative py-1 focus:outline-none cursor-pointer ${
               currentView === 'work' ? 'text-[#c6f24e] font-semibold' : ''
             }`}
           >
             {lang === 'bn' ? 'আমাদের কাজ' : 'Work'}
+          </button>
+          <button
+            onClick={() => scrollToSection('services')}
+            className="hover:text-white transition-colors relative py-1 focus:outline-none cursor-pointer"
+          >
+            {lang === 'bn' ? 'সার্ভিস' : 'Services'}
           </button>
           <button
             onClick={() => scrollToSection('why')}
@@ -214,21 +214,21 @@ export const Navbar: React.FC<NavbarProps> = ({
         </nav>
 
         {/* Right CTA cluster */}
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2 sm:gap-3 shrink-0">
           {/* Language Switcher Button */}
           <button
             onClick={onToggleLang}
-            className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-full border border-white/15 bg-white/5 text-[12px] font-bold text-white hover:border-[#c6f24e] hover:text-[#c6f24e] transition-colors focus:outline-none"
+            className="flex items-center gap-1 sm:gap-1.5 px-2.5 sm:px-3.5 py-1.5 rounded-full border border-white/15 bg-white/5 text-[11px] sm:text-[12px] font-bold text-white hover:border-[#c6f24e] hover:text-[#c6f24e] transition-colors focus:outline-none"
             title={lang === 'bn' ? 'Switch to English' : 'বাংলায় পরিবর্তন করুন'}
           >
             <Globe className="w-3.5 h-3.5" />
             <span>{lang === 'bn' ? 'English' : 'বাংলা'}</span>
           </button>
 
-          {/* Watch Work Ghost Button */}
+          {/* Watch Work Ghost Button (Visible on sm screens and up) */}
           <button
             onClick={onOpenWork}
-            className="hidden sm:inline-flex items-center gap-2 px-4 py-2 rounded-full border border-white/15 bg-white/5 text-[13px] font-bold text-white hover:bg-white/10 hover:border-white/30 transition-all focus:outline-none"
+            className="hidden md:inline-flex items-center gap-2 px-4 py-2 rounded-full border border-white/15 bg-white/5 text-[13px] font-bold text-white hover:bg-white/10 hover:border-white/30 transition-all focus:outline-none"
           >
             <Play className="w-3 h-3 fill-current" />
             <span>{lang === 'bn' ? 'কাজ দেখুন' : 'Watch Work'}</span>
@@ -237,63 +237,66 @@ export const Navbar: React.FC<NavbarProps> = ({
           {/* Start Project CTA Button */}
           <button
             onClick={() => onOpenBrief()}
-            className="inline-flex items-center gap-1.5 px-4 sm:px-5 py-2 sm:py-2.5 rounded-full bg-[#c6f24e] text-black font-bold text-[13px] sm:text-[14px] hover:bg-[#d4fc62] transition-all transform hover:-translate-y-0.5 shadow-[0_8px_30px_-6px_rgba(198,242,78,0.6)] focus:outline-none whitespace-nowrap"
+            className="hidden sm:inline-flex items-center gap-1.5 px-4 sm:px-5 py-2 sm:py-2.5 rounded-full bg-[#c6f24e] text-black font-bold text-[13px] sm:text-[14px] hover:bg-[#d4fc62] transition-all transform hover:-translate-y-0.5 shadow-[0_8px_30px_-6px_rgba(198,242,78,0.6)] focus:outline-none whitespace-nowrap"
           >
             <span>{lang === 'bn' ? 'প্রজেক্ট শুরু করুন' : 'Start Project'}</span>
             <ArrowUpRight className="w-4 h-4" />
           </button>
 
-          {/* Mobile Menu Hamburger */}
+          {/* Mobile Menu Hamburger (Always clearly visible and high contrast on mobile) */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="lg:hidden p-2 rounded-lg border border-white/15 bg-white/5 text-white focus:outline-none"
+            className="lg:hidden p-2 sm:p-2.5 rounded-xl border border-white/20 bg-white/10 hover:bg-white/20 text-white focus:outline-none transition-colors active:scale-95 flex items-center justify-center shrink-0 cursor-pointer shadow-md"
             aria-label="Toggle navigation menu"
           >
-            {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+            {mobileMenuOpen ? <X className="w-5 h-5 text-[#c6f24e]" /> : <Menu className="w-5 h-5 text-white" />}
           </button>
         </div>
       </div>
 
       {/* Mobile Drawer Menu */}
       {mobileMenuOpen && (
-        <div className="lg:hidden bg-[#07070c]/98 border-t border-white/10 px-6 py-6 mt-3 shadow-2xl animate-in slide-in-from-top duration-200">
-          <div className="flex flex-col gap-3 font-semibold text-sm">
-            <button
-              onClick={() => scrollToSection('services')}
-              className="text-left py-2 text-[#c8c8d6] hover:text-white border-b border-white/5"
-            >
-              {lang === 'bn' ? 'সার্ভিস' : 'Services'}
-            </button>
+        <div className="lg:hidden bg-[#07070c]/98 backdrop-blur-2xl border-t border-white/10 px-5 sm:px-6 py-6 shadow-2xl animate-in slide-in-from-top duration-200 max-h-[85vh] overflow-y-auto">
+          <div className="flex flex-col gap-2 font-semibold text-sm">
             <button
               onClick={() => {
                 setMobileMenuOpen(false);
                 onOpenWork();
               }}
-              className="text-left py-2 text-[#c8c8d6] hover:text-white border-b border-white/5"
+              className="text-left py-2.5 px-3 rounded-lg text-white font-bold bg-[#c6f24e]/10 border border-[#c6f24e]/30 flex items-center justify-between"
             >
-              {lang === 'bn' ? 'আমাদের কাজ (Our Work)' : 'Our Work'}
+              <span>{lang === 'bn' ? 'আমাদের কাজ (Our Work)' : 'Our Work'}</span>
+              <span className="text-[10px] uppercase tracking-wider text-[#c6f24e] px-2 py-0.5 rounded bg-[#c6f24e]/20 font-mono">
+                Featured
+              </span>
+            </button>
+            <button
+              onClick={() => scrollToSection('services')}
+              className="text-left py-2.5 px-3 rounded-lg text-[#c8c8d6] hover:text-white hover:bg-white/5 border-b border-white/5 transition-colors"
+            >
+              {lang === 'bn' ? 'সার্ভিস (Services)' : 'Services'}
             </button>
             <button
               onClick={() => scrollToSection('why')}
-              className="text-left py-2 text-[#c8c8d6] hover:text-white border-b border-white/5"
+              className="text-left py-2.5 px-3 rounded-lg text-[#c8c8d6] hover:text-white hover:bg-white/5 border-b border-white/5 transition-colors"
             >
               {lang === 'bn' ? 'কেন আমরা' : 'Why Us'}
             </button>
             <button
               onClick={() => scrollToSection('process')}
-              className="text-left py-2 text-[#c8c8d6] hover:text-white border-b border-white/5"
+              className="text-left py-2.5 px-3 rounded-lg text-[#c8c8d6] hover:text-white hover:bg-white/5 border-b border-white/5 transition-colors"
             >
               {lang === 'bn' ? 'প্রসেস' : 'Process'}
             </button>
             <button
               onClick={() => scrollToSection('pricing')}
-              className="text-left py-2 text-[#c8c8d6] hover:text-white border-b border-white/5"
+              className="text-left py-2.5 px-3 rounded-lg text-[#c8c8d6] hover:text-white hover:bg-white/5 border-b border-white/5 transition-colors"
             >
               {lang === 'bn' ? 'মূল্য' : 'Pricing'}
             </button>
             <button
               onClick={() => scrollToSection('reviews')}
-              className="text-left py-2 text-[#c8c8d6] hover:text-white border-b border-white/5"
+              className="text-left py-2.5 px-3 rounded-lg text-[#c8c8d6] hover:text-white hover:bg-white/5 border-b border-white/5 transition-colors"
             >
               {lang === 'bn' ? 'রিভিউ' : 'Reviews'}
             </button>

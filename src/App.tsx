@@ -271,20 +271,7 @@ export default function App() {
               <div className="rule-gradient" />
             </div>
 
-            {/* 3. Services Section (What We Create) */}
-            <Services
-              lang={lang}
-              onOpenBrief={openBrief}
-              frontTexts={isFrontEditMode ? workingFrontTexts : frontTexts}
-              isFrontEditMode={isFrontEditMode}
-              onEditText={handleEditText}
-            />
-
-            <div className="max-w-[1160px] mx-auto px-5">
-              <div className="rule-gradient" />
-            </div>
-
-            {/* 4. Watch Our Work (Featured Showreel + Category Filters + Video Ads + Glowing More Work button) */}
+            {/* 3. Watch Our Work (Featured Showreel + Category Filters + Video Ads + Glowing More Work button) */}
             <WatchOurWork
               lang={lang}
               videos={videos}
@@ -293,6 +280,19 @@ export default function App() {
               onSelectVideo={(v) => setActiveVideoModal(v)}
               onOpenOurWorkPage={navigateWork}
               onOpenBrief={() => openBrief()}
+            />
+
+            <div className="max-w-[1160px] mx-auto px-5">
+              <div className="rule-gradient" />
+            </div>
+
+            {/* 4. Services Section (What We Create) */}
+            <Services
+              lang={lang}
+              onOpenBrief={openBrief}
+              frontTexts={isFrontEditMode ? workingFrontTexts : frontTexts}
+              isFrontEditMode={isFrontEditMode}
+              onEditText={handleEditText}
             />
 
             <div className="max-w-[1160px] mx-auto px-5">

@@ -76,8 +76,8 @@ export const Footer: React.FC<FooterProps> = ({
 
             <p className="text-xs sm:text-sm text-[#9a9aab] max-w-xs leading-relaxed mb-6">
               {isBn
-                ? 'TikTok, Instagram ও Facebook-এর জন্য হাই-কনভার্টিং ভিডিও অ্যাড, AI স্পোকসপারসন ও VSL। স্ক্রল-থামানো ক্রিয়েটিভ, সপ্তাহ নয় — দিনের মধ্যে ডেলিভারি।'
-                : 'High-converting video ads, AI spokespersons & VSLs for TikTok, Instagram and Facebook. Scroll-stopping creatives, delivered in days — not weeks.'}
+                ? 'All Digital Platforms-এর জন্য হাই-কনভার্টিং ভিডিও অ্যাড, AI স্পোকসপারসন ও VSL। স্ক্রল-থামানো ক্রিয়েটিভ, সপ্তাহ নয় — দিনের মধ্যে ডেলিভারি।'
+                : 'High-converting video ads, AI spokespersons & VSLs for All Digital Platforms. Scroll-stopping creatives, delivered in days — not weeks.'}
             </p>
 
             {/* Social Icons */}
