@@ -596,7 +596,7 @@ Something that turns an idea into a visual experience.
 ## KINETIVO STUDIO
 **Ideas in Motion.**`,
     bannerImg: aboutCoverImg,
-    videoUrl: '',
+    videoUrl: '<div class="wistia_responsive_padding" style="padding:56.25% 0 0 0;position:relative;"><div class="wistia_responsive_wrapper" style="height:100%;left:0;position:absolute;top:0;width:100%;"><iframe src="https://fast.wistia.net/embed/iframe/e84bnb6l9r?web_component=true&seo=true" title="KINETIVO STUDIO showcase AD Full Video" allow="autoplay; fullscreen" allowtransparency="true" frameborder="0" scrolling="no" class="wistia_embed" name="wistia_embed" width="100%" height="100%"></iframe></div></div>',
     showInNav: true,
     showInFooter: true,
     status: 'published'

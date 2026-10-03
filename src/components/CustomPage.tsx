@@ -125,8 +125,31 @@ export const CustomPage: React.FC<CustomPageProps> = ({
           )}
         </div>
 
-        {/* High-Fidelity Cover Banner */}
-        {page.bannerImg && (
+        {/* Hero Video Embed OR High-Fidelity Cover Banner */}
+        {page.videoUrl ? (
+          <div className="relative rounded-3xl overflow-hidden mb-12 border border-white/15 shadow-2xl bg-black aspect-[16/9] group">
+            {page.videoUrl.includes('<div') || page.videoUrl.includes('<iframe') ? (
+              <div
+                className="w-full h-full [&_iframe]:w-full [&_iframe]:h-full [&_iframe]:border-0 [&_.wistia_responsive_padding]:!p-0 [&_.wistia_responsive_padding]:!h-full [&_.wistia_responsive_wrapper]:!h-full [&_.wistia_responsive_wrapper]:!w-full"
+                dangerouslySetInnerHTML={{ __html: page.videoUrl }}
+              />
+            ) : (
+              (() => {
+                const parsed = parseVideoUrl(page.videoUrl);
+                return (
+                  <iframe
+                    src={parsed.src}
+                    title="Page Video"
+                    className="w-full h-full border-0"
+                    allow="autoplay; fullscreen"
+                    allowFullScreen
+                    name="wistia_embed"
+                  />
+                );
+              })()
+            )}
+          </div>
+        ) : page.bannerImg ? (
           <div className="relative rounded-3xl overflow-hidden mb-12 border border-white/15 shadow-2xl bg-black aspect-[16/9] group">
             <img
               src={page.bannerImg}
@@ -145,25 +168,7 @@ export const CustomPage: React.FC<CustomPageProps> = ({
               </span>
             </div>
           </div>
-        )}
-
-        {/* Video Embed If Provided */}
-        {page.videoUrl && (
-          <div className="rounded-3xl overflow-hidden mb-12 border border-white/15 aspect-[16/9] bg-black shadow-2xl">
-            {(() => {
-              const parsed = parseVideoUrl(page.videoUrl);
-              return (
-                <iframe
-                  src={parsed.src}
-                  title="Page Video"
-                  className="w-full h-full border-0"
-                  allow="autoplay; encrypted-media; fullscreen"
-                  allowFullScreen
-                />
-              );
-            })()}
-          </div>
-        )}
+        ) : null}
 
         {/* Content Body with Rich Markdown & Card Formatting */}
         <div className="bg-[#0e0e16]/80 border border-white/10 rounded-3xl p-6 sm:p-12 backdrop-blur-xl shadow-2xl">

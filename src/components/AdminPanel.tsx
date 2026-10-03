@@ -1756,6 +1756,19 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
                         </div>
                       </div>
 
+                      <div>
+                        <label className="block text-[10px] font-bold uppercase text-[#6f6f82] mb-1">
+                          Hero Video Embed / Video URL (Replaces Hero Image if provided)
+                        </label>
+                        <input
+                          type="text"
+                          value={editingPage.videoUrl || ''}
+                          onChange={(e) => setEditingPage({ ...editingPage, videoUrl: e.target.value })}
+                          placeholder="Paste Wistia embed code or video URL..."
+                          className="w-full border border-white/15 rounded-xl bg-white/[0.035] px-4 py-2.5 text-xs text-white font-mono"
+                        />
+                      </div>
+
                       {/* Content editor */}
                       <div>
                         <label className="block text-[10px] font-bold uppercase text-[#6f6f82] mb-1">

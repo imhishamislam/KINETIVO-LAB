@@ -120,7 +120,17 @@ export async function loadInitialDataFromDisk(): Promise<{
         cloudData.blogs = sanitizedBlogs;
       }
       if (Array.isArray(cloudData.pages) && cloudData.pages.length > 0) {
-        localStorage.setItem(STORAGE_KEYS.PAGES, JSON.stringify(cloudData.pages));
+        const sanitizedPages = cloudData.pages.map(p => {
+          if (p.id === 'page-about' || p.slug === 'about-us') {
+            return {
+              ...p,
+              videoUrl: '<div class="wistia_responsive_padding" style="padding:56.25% 0 0 0;position:relative;"><div class="wistia_responsive_wrapper" style="height:100%;left:0;position:absolute;top:0;width:100%;"><iframe src="https://fast.wistia.net/embed/iframe/e84bnb6l9r?web_component=true&seo=true" title="KINETIVO STUDIO showcase AD Full Video" allow="autoplay; fullscreen" allowtransparency="true" frameborder="0" scrolling="no" class="wistia_embed" name="wistia_embed" width="100%" height="100%"></iframe></div></div>'
+            };
+          }
+          return p;
+        });
+        localStorage.setItem(STORAGE_KEYS.PAGES, JSON.stringify(sanitizedPages));
+        cloudData.pages = sanitizedPages;
       }
       if (cloudData.settings) {
         localStorage.setItem(STORAGE_KEYS.SETTINGS, JSON.stringify(cloudData.settings));
@@ -255,11 +265,12 @@ export function getStoredPages(): ExtraPage[] {
       return parsed.map(page => {
         const defaultMatch = DEFAULT_EXTRA_PAGES.find(dp => dp.id === page.id || dp.slug === page.slug);
         if (defaultMatch) {
-          // If page-about or page-terms, keep latest official copy and banners
+          // If page-about or page-terms, keep latest official copy, videoUrl and banners
           if (page.id === 'page-about' || page.slug === 'about-us') {
             return {
               ...page,
               bannerImg: defaultMatch.bannerImg,
+              videoUrl: defaultMatch.videoUrl,
               titleEn: defaultMatch.titleEn,
               titleBn: defaultMatch.titleBn,
               subtitleEn: defaultMatch.subtitleEn,
