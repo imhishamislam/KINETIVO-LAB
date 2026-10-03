@@ -136,7 +136,21 @@ export async function loadInitialDataFromDisk(): Promise<{
         localStorage.setItem(STORAGE_KEYS.SETTINGS, JSON.stringify(cloudData.settings));
       }
       if (cloudData.frontTexts) {
-        localStorage.setItem(STORAGE_KEYS.FRONT_TEXTS, JSON.stringify(cloudData.frontTexts));
+        const ft = cloudData.frontTexts;
+        const heroBadge1En = (!ft.heroBadge1En || ft.heroBadge1En === 'AI-Powered UGC Ad Studio')
+          ? DEFAULT_FRONT_TEXTS.heroBadge1En
+          : ft.heroBadge1En;
+        const heroBadge1Bn = (!ft.heroBadge1Bn || ft.heroBadge1Bn === 'AI-চালিত UGC অ্যাড স্টুডিও')
+          ? DEFAULT_FRONT_TEXTS.heroBadge1Bn
+          : ft.heroBadge1Bn;
+        const sanitizedFt = {
+          ...DEFAULT_FRONT_TEXTS,
+          ...ft,
+          heroBadge1En,
+          heroBadge1Bn
+        };
+        localStorage.setItem(STORAGE_KEYS.FRONT_TEXTS, JSON.stringify(sanitizedFt));
+        cloudData.frontTexts = sanitizedFt;
       }
       if (Array.isArray(cloudData.leads)) {
         localStorage.setItem(STORAGE_KEYS.LEADS, JSON.stringify(cloudData.leads));
@@ -345,7 +359,22 @@ export function saveSettings(settings: SiteSettings): void {
 export function getStoredFrontTexts(): FrontTexts {
   try {
     const raw = localStorage.getItem(STORAGE_KEYS.FRONT_TEXTS);
-    if (raw) return { ...DEFAULT_FRONT_TEXTS, ...JSON.parse(raw) };
+    if (raw) {
+      const parsed = JSON.parse(raw);
+      const heroBadge1En = (!parsed.heroBadge1En || parsed.heroBadge1En === 'AI-Powered UGC Ad Studio')
+        ? DEFAULT_FRONT_TEXTS.heroBadge1En
+        : parsed.heroBadge1En;
+      const heroBadge1Bn = (!parsed.heroBadge1Bn || parsed.heroBadge1Bn === 'AI-চালিত UGC অ্যাড স্টুডিও')
+        ? DEFAULT_FRONT_TEXTS.heroBadge1Bn
+        : parsed.heroBadge1Bn;
+
+      return {
+        ...DEFAULT_FRONT_TEXTS,
+        ...parsed,
+        heroBadge1En,
+        heroBadge1Bn
+      };
+    }
   } catch (e) {
     console.error('Failed to load front texts from storage', e);
   }

@@ -699,8 +699,8 @@ export const DEFAULT_SETTINGS: SiteSettings = {
 };
 
 export const DEFAULT_FRONT_TEXTS: FrontTexts = {
-  heroBadge1En: 'AI-Powered UGC Ad Studio',
-  heroBadge1Bn: 'AI-চালিত UGC অ্যাড স্টুডিও',
+  heroBadge1En: 'Digital Ad Studio',
+  heroBadge1Bn: 'ডিজিটাল অ্যাড স্টুডিও',
   heroBadge2En: 'Accepting New Brands',
   heroBadge2Bn: 'নতুন ব্র্যান্ড নেওয়া হচ্ছে',
   heroHeadingEn: 'Scroll-Stopping Video Ads That Turn Views Into Customers',

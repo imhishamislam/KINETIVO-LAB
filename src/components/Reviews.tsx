@@ -48,10 +48,10 @@ const REVIEWS_DATA = [
     name: 'Adnan Orco',
     roleEn: 'Founder · Orokko Garments & Accessories',
     roleBn: 'প্রতিষ্ঠাতা · ওরোক্কো গার্মেন্টস অ্যান্ড অ্যাক্সেসরিজ',
-    quoteEn: 'We launched in 8 markets with one concept. The lip-sync is scary good — our Spanish audience had no idea it was AI.',
-    quoteBn: 'আমরা একটা কনসেপ্ট দিয়ে ৮টা মার্কেটে লঞ্চ করেছি। লিপ-সিঙ্ক এত ভালো যে আমাদের স্প্যানিশ অডিয়েন্স বুঝতেই পারেনি এটা AI।',
-    metricEn: '8 languages, 1 shoot-day: zero',
-    metricBn: '৮ ভাষা, শুটিং-ডে: শূন্য'
+    quoteEn: 'We partnered with KINETIVOSTUDIO for our B2B promotional video, and they delivered an absolute masterpiece! They perfectly captured our vision as an all-in-one sourcing solution. The way they highlighted our products in production and seamlessly integrated our motto, WhatsApp contact, and Mirpur address at the end was highly professional. Outstanding service and great communication throughout the project!',
+    quoteBn: 'আমাদের B2B প্রমোশনাল ভিডিওর জন্য আমরা KINETIVOSTUDIO-এর সাথে কাজ করেছি এবং তারা সত্যি একটি মাস্টারপিস তৈরি করে দিয়েছে! অল-ইন-ওয়ান সোর্সিং সলিউশন হিসেবে আমাদের ভিশন তারা নিখুঁতভাবে ফুটিয়ে তুলেছে। প্রোডাকশনের মাঝে প্রোডাক্ট হাইলাইট করা এবং শেষে আমাদের মোটো, হোয়াটসঅ্যাপ কন্টাক্ট ও মিরপুরের ঠিকানা যেভাবে সুন্দরভাবে উপস্থাপন করেছে তা অত্যন্ত পেশাদার। পুরো প্রজেক্ট জুড়ে অসাধারণ সার্ভিস ও চমৎকার যোগাযোগ ছিল!',
+    metricEn: 'B2B Sourcing Masterpiece',
+    metricBn: 'B2B সোর্সিং মাস্টারপিস'
   },
   {
     initials: 'JT',

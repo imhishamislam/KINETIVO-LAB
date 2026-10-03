@@ -132,7 +132,19 @@ export default function App() {
         if (cloudData.settings) setSettings(cloudData.settings);
         if (Array.isArray(cloudData.leads)) setLeads(cloudData.leads);
         if (cloudData.frontTexts) {
-          setFrontTexts(cloudData.frontTexts);
+          const ft = cloudData.frontTexts;
+          const heroBadge1En = (!ft.heroBadge1En || ft.heroBadge1En === 'AI-Powered UGC Ad Studio')
+            ? DEFAULT_FRONT_TEXTS.heroBadge1En
+            : ft.heroBadge1En;
+          const heroBadge1Bn = (!ft.heroBadge1Bn || ft.heroBadge1Bn === 'AI-চালিত UGC অ্যাড স্টুডিও')
+            ? DEFAULT_FRONT_TEXTS.heroBadge1Bn
+            : ft.heroBadge1Bn;
+          setFrontTexts({
+            ...DEFAULT_FRONT_TEXTS,
+            ...ft,
+            heroBadge1En,
+            heroBadge1Bn
+          });
         }
       }
     });
