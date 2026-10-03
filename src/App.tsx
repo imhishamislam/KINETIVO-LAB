@@ -105,7 +105,18 @@ export default function App() {
       if (cloudData) {
         if (Array.isArray(cloudData.videos) && cloudData.videos.length > 0) setVideos(cloudData.videos);
         if (cloudData.showreel) setShowreel(cloudData.showreel);
-        if (Array.isArray(cloudData.blogs) && cloudData.blogs.length > 0) setBlogs(cloudData.blogs);
+        if (Array.isArray(cloudData.blogs) && cloudData.blogs.length > 0) {
+          const sanitized = cloudData.blogs.map(b => {
+            if (b.id === 'blog-1' || b.slug === '3-second-hook-secret') {
+              return {
+                ...b,
+                videoUrl: '<div class="wistia_responsive_padding" style="padding:56.25% 0 0 0;position:relative;"><div class="wistia_responsive_wrapper" style="height:100%;left:0;position:absolute;top:0;width:100%;"><iframe src="https://fast.wistia.net/embed/iframe/e84bnb6l9r?web_component=true&seo=true" title="KINETIVO STUDIO showcase AD Full Video" allow="autoplay; fullscreen" allowtransparency="true" frameborder="0" scrolling="no" class="wistia_embed" name="wistia_embed" width="100%" height="100%"></iframe></div></div>'
+              };
+            }
+            return b;
+          });
+          setBlogs(sanitized);
+        }
         if (Array.isArray(cloudData.pages) && cloudData.pages.length > 0) setPages(cloudData.pages);
         if (cloudData.settings) setSettings(cloudData.settings);
         if (Array.isArray(cloudData.leads)) setLeads(cloudData.leads);

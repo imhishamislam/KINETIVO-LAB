@@ -107,7 +107,17 @@ export async function loadInitialDataFromDisk(): Promise<{
         localStorage.setItem(STORAGE_KEYS.SHOWREEL, JSON.stringify(cloudData.showreel));
       }
       if (Array.isArray(cloudData.blogs) && cloudData.blogs.length > 0) {
-        localStorage.setItem(STORAGE_KEYS.BLOGS, JSON.stringify(cloudData.blogs));
+        const sanitizedBlogs = cloudData.blogs.map(b => {
+          if (b.id === 'blog-1' || b.slug === '3-second-hook-secret') {
+            return {
+              ...b,
+              videoUrl: '<div class="wistia_responsive_padding" style="padding:56.25% 0 0 0;position:relative;"><div class="wistia_responsive_wrapper" style="height:100%;left:0;position:absolute;top:0;width:100%;"><iframe src="https://fast.wistia.net/embed/iframe/e84bnb6l9r?web_component=true&seo=true" title="KINETIVO STUDIO showcase AD Full Video" allow="autoplay; fullscreen" allowtransparency="true" frameborder="0" scrolling="no" class="wistia_embed" name="wistia_embed" width="100%" height="100%"></iframe></div></div>'
+            };
+          }
+          return b;
+        });
+        localStorage.setItem(STORAGE_KEYS.BLOGS, JSON.stringify(sanitizedBlogs));
+        cloudData.blogs = sanitizedBlogs;
       }
       if (Array.isArray(cloudData.pages) && cloudData.pages.length > 0) {
         localStorage.setItem(STORAGE_KEYS.PAGES, JSON.stringify(cloudData.pages));
@@ -213,7 +223,10 @@ export function getStoredBlogs(): BlogPost[] {
       const parsed: BlogPost[] = JSON.parse(raw);
       return parsed.map(b => {
         if (b.id === 'blog-1' || b.slug === '3-second-hook-secret') {
-          return { ...b, videoUrl: '' };
+          return {
+            ...b,
+            videoUrl: '<div class="wistia_responsive_padding" style="padding:56.25% 0 0 0;position:relative;"><div class="wistia_responsive_wrapper" style="height:100%;left:0;position:absolute;top:0;width:100%;"><iframe src="https://fast.wistia.net/embed/iframe/e84bnb6l9r?web_component=true&seo=true" title="KINETIVO STUDIO showcase AD Full Video" allow="autoplay; fullscreen" allowtransparency="true" frameborder="0" scrolling="no" class="wistia_embed" name="wistia_embed" width="100%" height="100%"></iframe></div></div>'
+          };
         }
         return b;
       });

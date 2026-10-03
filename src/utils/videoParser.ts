@@ -91,6 +91,16 @@ export function parseVideoUrl(input: string): ParsedVideo {
     };
   }
 
+  // Wistia: https://fast.wistia.net/embed/iframe/ID or https://home.wistia.com/medias/ID
+  const wistiaIframeMatch = trimmed.match(/wistia\.(?:net|com)\/(?:embed\/iframe|medias)\/([a-zA-Z0-9]+)/);
+  if (wistiaIframeMatch && wistiaIframeMatch[1]) {
+    return {
+      type: 'iframe',
+      src: `https://fast.wistia.net/embed/iframe/${wistiaIframeMatch[1]}?web_component=true&seo=true`,
+      originalInput: trimmed
+    };
+  }
+
   // Fallback to iframe src if it looks like an HTTPS URL
   if (trimmed.startsWith('http://') || trimmed.startsWith('https://')) {
     return {

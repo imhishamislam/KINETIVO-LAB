@@ -93,21 +93,29 @@ export const BlogPage: React.FC<BlogPageProps> = ({
               </div>
             )}
 
-            {/* Optional Embedded Video in Article */}
+            {/* Embedded Video in Article */}
             {activePost.videoUrl && (
-              <div className="rounded-2xl overflow-hidden mb-8 border border-white/10 aspect-[16/9] bg-black">
-                {(() => {
-                  const parsed = parseVideoUrl(activePost.videoUrl);
-                  return (
-                    <iframe
-                      src={parsed.src}
-                      title="Post Video"
-                      className="w-full h-full border-0"
-                      allow="autoplay; encrypted-media; fullscreen"
-                      allowFullScreen
-                    />
-                  );
-                })()}
+              <div className="rounded-2xl overflow-hidden mb-8 border border-white/10 aspect-[16/9] bg-black relative">
+                {activePost.videoUrl.includes('<div') || activePost.videoUrl.includes('<iframe') ? (
+                  <div
+                    className="w-full h-full [&_iframe]:w-full [&_iframe]:h-full [&_iframe]:border-0 [&_.wistia_responsive_padding]:!p-0 [&_.wistia_responsive_padding]:!h-full [&_.wistia_responsive_wrapper]:!h-full [&_.wistia_responsive_wrapper]:!w-full"
+                    dangerouslySetInnerHTML={{ __html: activePost.videoUrl }}
+                  />
+                ) : (
+                  (() => {
+                    const parsed = parseVideoUrl(activePost.videoUrl);
+                    return (
+                      <iframe
+                        src={parsed.src}
+                        title={isBn ? activePost.titleBn : activePost.titleEn}
+                        className="w-full h-full border-0"
+                        allow="autoplay; fullscreen"
+                        allowFullScreen
+                        name="wistia_embed"
+                      />
+                    );
+                  })()
+                )}
               </div>
             )}
 
