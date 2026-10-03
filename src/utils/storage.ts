@@ -209,7 +209,15 @@ export function saveShowreel(data: ShowreelData): void {
 export function getStoredBlogs(): BlogPost[] {
   try {
     const raw = localStorage.getItem(STORAGE_KEYS.BLOGS);
-    if (raw) return JSON.parse(raw);
+    if (raw) {
+      const parsed: BlogPost[] = JSON.parse(raw);
+      return parsed.map(b => {
+        if (b.id === 'blog-1' || b.slug === '3-second-hook-secret') {
+          return { ...b, videoUrl: '' };
+        }
+        return b;
+      });
+    }
   } catch (e) {
     console.error('Failed to load blogs from storage', e);
   }
@@ -230,20 +238,35 @@ export function getStoredPages(): ExtraPage[] {
     const raw = localStorage.getItem(STORAGE_KEYS.PAGES);
     if (raw) {
       const parsed: ExtraPage[] = JSON.parse(raw);
-      // Migrate old default pages with old unsplash URLs to the new AI generated high-res images and professional content
+      // Migrate default pages to use latest content and assets
       return parsed.map(page => {
         const defaultMatch = DEFAULT_EXTRA_PAGES.find(dp => dp.id === page.id || dp.slug === page.slug);
-        if (defaultMatch && (!page.bannerImg || page.bannerImg.includes('unsplash.com'))) {
-          return {
-            ...page,
-            bannerImg: defaultMatch.bannerImg,
-            titleEn: defaultMatch.titleEn,
-            titleBn: defaultMatch.titleBn,
-            subtitleEn: defaultMatch.subtitleEn,
-            subtitleBn: defaultMatch.subtitleBn,
-            contentEn: defaultMatch.contentEn,
-            contentBn: defaultMatch.contentBn
-          };
+        if (defaultMatch) {
+          // If page-about or page-terms, keep latest official copy and banners
+          if (page.id === 'page-about' || page.slug === 'about-us') {
+            return {
+              ...page,
+              bannerImg: defaultMatch.bannerImg,
+              titleEn: defaultMatch.titleEn,
+              titleBn: defaultMatch.titleBn,
+              subtitleEn: defaultMatch.subtitleEn,
+              subtitleBn: defaultMatch.subtitleBn,
+              contentEn: defaultMatch.contentEn,
+              contentBn: defaultMatch.contentBn
+            };
+          }
+          if (!page.bannerImg || page.bannerImg.includes('unsplash.com')) {
+            return {
+              ...page,
+              bannerImg: defaultMatch.bannerImg,
+              titleEn: defaultMatch.titleEn,
+              titleBn: defaultMatch.titleBn,
+              subtitleEn: defaultMatch.subtitleEn,
+              subtitleBn: defaultMatch.subtitleBn,
+              contentEn: defaultMatch.contentEn,
+              contentBn: defaultMatch.contentBn
+            };
+          }
         }
         return page;
       });

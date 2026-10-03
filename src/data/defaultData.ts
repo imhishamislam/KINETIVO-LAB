@@ -257,7 +257,7 @@ Never rely on a single hook. Top DTC brands test 3 to 5 opening variations for e
 ### ২. একাধিক অ্যাঙ্গেল পরীক্ষা
 কখনও একটিমাত্র হুকের উপর নির্ভর করবেন না। সফল ব্র্যান্ডগুলো প্রতিটি কনসেপ্টের জন্য কমপক্ষে ৩ থেকে ৫টি ভিন্ন হুক টেস্ট করে।`,
     bannerImg: 'https://images.unsplash.com/photo-1533750516457-a7f992034fec?auto=format&fit=crop&w=1000&q=80',
-    videoUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+    videoUrl: '',
     author: 'Hisham Islam',
     date: 'March 2026',
     readTime: '4 min read',
@@ -306,70 +306,295 @@ export const DEFAULT_EXTRA_PAGES: ExtraPage[] = [
     id: 'page-about',
     slug: 'about-us',
     titleEn: 'About KINETIVO STUDIO',
-    titleBn: 'কিনেটিভো স্টুডিও সম্পর্কে',
-    subtitleEn: 'An elite AI-powered video advertising and performance creative studio engineering high-converting direct response assets for ambitious global brands.',
-    subtitleBn: 'উচ্চ-রূপান্তরকারী ভিডিও বিজ্ঞাপন এবং পারফরম্যান্স ক্রিয়েটিভ স্টুডিও — যা উচ্চাকাঙ্ক্ষী গ্লোবাল ব্র্যান্ডের জন্য তৈরি করে স্ক্রল-থামানো আসল রেভিনিউ ক্রিয়েটিভ।',
-    contentEn: `## Who We Are: The New Paradigm of Creative Production
+    titleBn: 'About KINETIVO STUDIO',
+    subtitleEn: 'Ideas in Motion — Turning ideas, products, and brands into high-impact visual experiences.',
+    subtitleBn: 'Ideas in Motion — Turning ideas, products, and brands into high-impact visual experiences.',
+    contentEn: `## Ideas in Motion.
 
-KINETIVO STUDIO is a modern AI-first commercial production and performance creative powerhouse. Headquartered in Bangladesh and engineering high-impact campaigns worldwide, we bridge cutting-edge generative cinematography, algorithmic direct response architecture, and deep consumer psychology.
+**KINETIVO STUDIO is an AI-powered creative advertising studio built to turn ideas, products, and brands into high-impact visual experiences.**
 
-We exist for one relentless mission: **to eradicate creative fatigue and build unstoppable paid media funnels for visionaries, DTC founders, and digital enterprises.**
+We combine creative direction, cinematic storytelling, AI-generated visuals, motion, and advertising strategy to create content that doesn't just look good — it gets attention.
 
-### Why Traditional Video Production Fails in 2026
-In today's fast-moving algorithmic media landscape (TikTok, Meta, Reels, YouTube Shorts), ad fatigue sets in within 5 to 9 days. Traditional agency models are structurally broken:
-- **Painfully Slow**: 3 to 6 weeks from kickoff to delivery.
-- **Exorbitantly Expensive**: $3,000–$10,000+ per shoot day with actors, equipment rentals, location scouting, and catering.
-- **Zero Agility**: If a creative angle flops, reshooting requires new contracts, new invoices, and another month of wasted momentum.
+From a single product image to a complete campaign concept, we transform ordinary ideas into premium advertising content designed for today's fast-moving digital world.
 
-### The KINETIVO Advantage: Hyper-Realistic Production at Warp Speed
-At KINETIVO STUDIO, we replace slow shoot days with proprietary generative video pipelines, high-fidelity lip-sync engines, and direct-response performance scripts:
-- **Lightning 48–72 Hour Turnaround**: Test fresh creative angles every single week before your competitors even finish their storyboard meetings.
-- **Infinite Native Localization (200+ Languages)**: Scale winning winning ad hooks across European, Middle Eastern, Asian, and Latin American markets with authentic local dialects and natural facial resonance.
-- **Performance-First DNA**: Every second of video is engineered around the **3-Second Hook Rate**, **Hold Rate**, and **Click-to-Purchase Conversion**.
-- **100% Complete Commercial Ownership**: No royalties, no talent buyout renewals, and no usage limitations.
+---
 
-### Our 3-Pillar Creative Philosophy
+## We Create. You Grow.
 
-#### 1. The 0.8-Second Pattern Interrupt
-The modern human thumb scrolls 300 feet of content daily. Our creative scientists engineer sensory disruption in the first frame — unexpected camera moves, sound cues, and visceral curiosity gaps that compel the viewer to stop immediately.
+Great advertising isn't just about beautiful visuals.
 
-#### 2. Direct-Response Emotional Resonance
-Great visuals mean nothing without buyer conviction. Our scripts combine problem agitation, empathetic founder or customer narratives, hyper-detailed social proof, and undeniable value demonstrations that build rapid trust.
+It's about making someone stop scrolling.
 
-#### 3. Algorithmic Iteration & Angle Diversity
-We believe creative volume beats guesswork. By testing 5 to 10 distinct hook angles for each product, we identify 10x winners that drop your blended Customer Acquisition Cost (CAC) by up to 60%.
+It's about creating curiosity in the first few seconds, building desire through storytelling, and making your brand memorable.
 
-### Global Reach & Technical Excellence
-From high-converting TikTok UGC and luxury 3D product commercials to complex B2B SaaS explainers and 15-minute high-ticket VSLs, KINETIVO STUDIO equips your brand with elite visual assets that dominate ad feeds worldwide.`,
-    contentBn: `## আমরা কারা: ক্রিয়েটিভ প্রোডাকশনের আধুনিক রূপান্তর
+That's where KINETIVO STUDIO comes in.
 
-কিনেটিভো স্টুডিও একটি সর্বাধুনিক এআই-চালিত কর্মার্শিয়াল ভিডিও বিজ্ঞাপন ও পারফরম্যান্স ক্রিয়েটিভ স্টুডিও। বাংলাদেশ থেকে পরিচালিত হলেও আমরা যুক্তরাষ্ট্র, যুক্তরাজ্য, মধ্যপ্রাচ্য ও বিশ্বজুড়ে নেতৃস্থানীয় ইকমার্স ব্র্যান্ড, স্যাজ (SaaS) কোম্পানি ও ডিজিটাল প্রতিষ্ঠানে সেবা প্রদান করি।
+We use the power of AI and creative production to help brands produce **cinematic ads, product commercials, social media content, UGC-style campaigns, app and SaaS promos, brand films, and visual campaigns** — faster and more creatively.
 
-আমাদের মূল লক্ষ্য: **ক্রিয়েটিভের ক্লান্তি দূর করে পেইড অ্যাডভার্টাইজিংয়ে সর্বোচ্চ আরওএএস (ROAS) ও কাস্টমার অ্যাকুইজিশন নিশ্চিত করা।**
+---
 
-### কেন প্রচলিত ভিডিও শুটিং ২০২৬ সালে অচল?
-বর্তমান দ্রুতগতির মেটা (Facebook/Instagram), টিকটক ও ইউটিউব অ্যালগরিদমে যেকোনো ভালো ক্রিয়েটিভ ৭ থেকে ১০ দিনের মধ্যেই দর্শককে ক্লান্ত করে ফেলে। সনাতন প্রোডাকশন হাউজের মডেল এখন অকার্যকর:
-- **অত্যন্ত ধীরগতি**: শুটিং ব্রিফ থেকে ডেলিভারি পেতে ৩ থেকে ৬ সপ্তাহ সময় নষ্ট হয়।
-- **অতিরিক্ত ব্যয়বহুল**: প্রতিটি শুটিং-ডেতে অভিনেতা, স্টুডিও ভাড়া ও টেকনিক্যাল ক্রু বাবদ হাজার হাজার ডলার খরচ হয়।
-- **পরিবর্তন অসম্ভব**: একটি কনসেপ্ট বাজারে কাজ না করলে নতুন করে রিশুটিং করতে আরও কয়েক সপ্তাহ ও অর্থ ব্যয় হয়।
+## What We Do
 
-### কিনেটিভো স্টুডিওর অনন্য সুবিধাসমূহ
-কিনেটিভো স্টুডিও আধুনিক জেনারেটিভ এআই ও হাইপার-রিয়েলিস্টিক ভিজ্যুয়াল প্রযুক্তির সাহায্যে পুরো প্রক্রিয়াটিকে গতিশীল করেছে:
-- **৪৮ থেকে ৭২ ঘণ্টায় ডেলিভারি**: সপ্তাহ নয়, দিনের মধ্যেই লঞ্চ-রেডি হাই-কনভার্টিং বিজ্ঞাপন হাতে পান।
-- **২০০+ ভাষায় নেটিভ লোকালাইজেশন**: একই বিজ্ঞাপন নিখুঁত লিপ-সিঙ্ক ও স্থানীয় উচ্চারণে বিশ্বের যেকোনো প্রান্তের দর্শকের কাছে পৌঁছে দিন।
-- **ডিরেক্ট-রেসপন্স ভিত্তিক স্ক্রিপ্ট**: প্রতিটি সেকেন্ড পরিকল্পিত হয় প্রথম ৩-সেকেন্ডের হুক রেট ও সেলস কনভার্সন বৃদ্ধির জন্য।
-- **শতভাগ বাণিজ্যিক মালিকানা**: আজীবন সম্পূর্ণ ব্যবহারের অধিকার, কোনো অতিরিক্ত রয়্যালটি বা ফি ছাড়া।
+### 🎬 AI Commercials
+Cinematic product advertising designed to make your product look like it belongs on a global campaign.
 
-### আমাদের ৩টি মূল কর্মপদ্ধতি
+### 📱 Social Media Ads
+Short-form, scroll-stopping advertising built for platforms like Facebook, Instagram, TikTok, and YouTube.
 
-#### ১. ০.৮-সেকেন্ডের প্যাটার্ন ইন্টারাপ্ট
-সোশ্যাল মিডিয়ার দ্রুতগতির ফিডে দর্শককে প্রথম মুহূর্তেই থামিয়ে দেওয়া আমাদের প্রথম কাজ। অদ্ভুত ফ্রেম মুভমেন্ট, অপ্রত্যাশিত সাউন্ড ও চোখ ধাঁধানো ভিজ্যুয়াল দিয়ে আমরা স্ক্রল থামাই।
+### 🛍️ Product Advertising
+Turn product photos and simple assets into dynamic visual campaigns without the traditional production complexity.
 
-#### ২. মানসিক সংযোগ ও বিশ্বাসযোগ্যতা
-শুধু সুন্দর ছবি নয়, পণ্যের আসল মূল্য ও কাস্টমারের দৈনন্দিন সমস্যার সমাধান স্পষ্টভাবে তুলে ধরা হয় যাতে দ্রুত কেনার সিদ্ধান্ত তৈরি হয়।
+### 🚀 SaaS & App Promos
+Transform features and workflows into engaging visual stories that help people understand your product quickly.
 
-#### ৩. বৈচিত্র্যময় হুক ও অ্যাঙ্গেল টেস্টিং
-একই পণ্যের বিভিন্ন দৃষ্টিকোণ (UGC রিভিউ, আনবক্সিং, তুলনা, সিনেমাটিক ফিল) দ্রুত তৈরি করে টেস্ট করার সুবিধা, যা অ্যাড স্পেন্ড কমাতে সাহায্য করে।`,
+### 🎥 UGC & Creator-Style Ads
+Authentic, creator-inspired advertising concepts designed to feel native to social platforms while keeping your brand at the center.
+
+### ✨ Brand Visuals
+From launch campaigns to brand films, we create distinctive visual identities that help businesses stand apart.
+
+---
+
+## AI Is Our Tool. Creativity Is Our Advantage.
+
+AI has changed how advertising can be produced.
+
+But technology alone doesn't create great advertising.
+
+**The idea does.**
+
+Our approach combines AI with human creative direction — concept development, storytelling, visual composition, pacing, cinematography, sound design, and advertising psychology.
+
+The result is content that feels intentional, cinematic, and built around your brand.
+
+---
+
+## From Idea to Impact
+
+Every project starts with a simple question:
+
+**What should people feel when they see this?**
+
+From there, we build the concept, visual language, scenes, motion, sound, and story around that objective.
+
+Whether you're launching a product, growing an e-commerce brand, promoting an app, or building a new business, we create visual content designed to move your audience from:
+
+**Attention → Interest → Desire → Action**
+
+---
+
+## Built for the New Era of Advertising
+
+Traditional production can be expensive, slow, and difficult to scale.
+
+AI gives brands a new creative advantage.
+
+It allows us to explore more ideas, create ambitious visual worlds, prototype concepts faster, and produce content that would traditionally require large production teams.
+
+**KINETIVO STUDIO brings that capability to modern brands.**
+
+We believe the future of advertising isn't simply about AI replacing production.
+
+It's about **creative teams using AI to think bigger.**
+
+---
+
+## Why KINETIVO STUDIO?
+
+### 🎯 Creative First
+We start with the idea, not the technology.
+
+### 🎬 Cinematic Quality
+Every visual is designed with commercial storytelling, composition, lighting, movement, and pacing in mind.
+
+### ⚡ AI-Powered Production
+We use modern AI tools to make ambitious creative concepts faster and more flexible.
+
+### 👁️ Built for Attention
+Our content is designed for the realities of modern social media — where the first few seconds matter.
+
+### 💎 Brand Focused
+Every concept is created around your product, audience, positioning, and objective.
+
+### 🚀 Made to Move
+Because great advertising should make people stop, feel, remember, and act.
+
+---
+
+## Our Philosophy
+
+### Don't just show the product.
+**Show the possibility.**
+
+### Don't just tell people what your brand does.
+**Make them experience it.**
+
+### Don't create content just to fill a feed.
+**Create something worth stopping for.**
+
+---
+
+## The KINETIVO Promise
+
+We don't want to make another ordinary advertisement.
+
+We want to create something your audience remembers.
+
+Something that makes your product feel bigger.
+
+Something that makes your brand look premium.
+
+Something that turns an idea into a visual experience.
+
+**Because every great idea deserves to move.**
+
+---
+
+## KINETIVO STUDIO
+**Ideas in Motion.**`,
+    contentBn: `## Ideas in Motion.
+
+**KINETIVO STUDIO is an AI-powered creative advertising studio built to turn ideas, products, and brands into high-impact visual experiences.**
+
+We combine creative direction, cinematic storytelling, AI-generated visuals, motion, and advertising strategy to create content that doesn't just look good — it gets attention.
+
+From a single product image to a complete campaign concept, we transform ordinary ideas into premium advertising content designed for today's fast-moving digital world.
+
+---
+
+## We Create. You Grow.
+
+Great advertising isn't just about beautiful visuals.
+
+It's about making someone stop scrolling.
+
+It's about creating curiosity in the first few seconds, building desire through storytelling, and making your brand memorable.
+
+That's where KINETIVO STUDIO comes in.
+
+We use the power of AI and creative production to help brands produce **cinematic ads, product commercials, social media content, UGC-style campaigns, app and SaaS promos, brand films, and visual campaigns** — faster and more creatively.
+
+---
+
+## What We Do
+
+### 🎬 AI Commercials
+Cinematic product advertising designed to make your product look like it belongs on a global campaign.
+
+### 📱 Social Media Ads
+Short-form, scroll-stopping advertising built for platforms like Facebook, Instagram, TikTok, and YouTube.
+
+### 🛍️ Product Advertising
+Turn product photos and simple assets into dynamic visual campaigns without the traditional production complexity.
+
+### 🚀 SaaS & App Promos
+Transform features and workflows into engaging visual stories that help people understand your product quickly.
+
+### 🎥 UGC & Creator-Style Ads
+Authentic, creator-inspired advertising concepts designed to feel native to social platforms while keeping your brand at the center.
+
+### ✨ Brand Visuals
+From launch campaigns to brand films, we create distinctive visual identities that help businesses stand apart.
+
+---
+
+## AI Is Our Tool. Creativity Is Our Advantage.
+
+AI has changed how advertising can be produced.
+
+But technology alone doesn't create great advertising.
+
+**The idea does.**
+
+Our approach combines AI with human creative direction — concept development, storytelling, visual composition, pacing, cinematography, sound design, and advertising psychology.
+
+The result is content that feels intentional, cinematic, and built around your brand.
+
+---
+
+## From Idea to Impact
+
+Every project starts with a simple question:
+
+**What should people feel when they see this?**
+
+From there, we build the concept, visual language, scenes, motion, sound, and story around that objective.
+
+Whether you're launching a product, growing an e-commerce brand, promoting an app, or building a new business, we create visual content designed to move your audience from:
+
+**Attention → Interest → Desire → Action**
+
+---
+
+## Built for the New Era of Advertising
+
+Traditional production can be expensive, slow, and difficult to scale.
+
+AI gives brands a new creative advantage.
+
+It allows us to explore more ideas, create ambitious visual worlds, prototype concepts faster, and produce content that would traditionally require large production teams.
+
+**KINETIVO STUDIO brings that capability to modern brands.**
+
+We believe the future of advertising isn't simply about AI replacing production.
+
+It's about **creative teams using AI to think bigger.**
+
+---
+
+## Why KINETIVO STUDIO?
+
+### 🎯 Creative First
+We start with the idea, not the technology.
+
+### 🎬 Cinematic Quality
+Every visual is designed with commercial storytelling, composition, lighting, movement, and pacing in mind.
+
+### ⚡ AI-Powered Production
+We use modern AI tools to make ambitious creative concepts faster and more flexible.
+
+### 👁️ Built for Attention
+Our content is designed for the realities of modern social media — where the first few seconds matter.
+
+### 💎 Brand Focused
+Every concept is created around your product, audience, positioning, and objective.
+
+### 🚀 Made to Move
+Because great advertising should make people stop, feel, remember, and act.
+
+---
+
+## Our Philosophy
+
+### Don't just show the product.
+**Show the possibility.**
+
+### Don't just tell people what your brand does.
+**Make them experience it.**
+
+### Don't create content just to fill a feed.
+**Create something worth stopping for.**
+
+---
+
+## The KINETIVO Promise
+
+We don't want to make another ordinary advertisement.
+
+We want to create something your audience remembers.
+
+Something that makes your product feel bigger.
+
+Something that makes your brand look premium.
+
+Something that turns an idea into a visual experience.
+
+**Because every great idea deserves to move.**
+
+---
+
+## KINETIVO STUDIO
+**Ideas in Motion.**`,
     bannerImg: aboutCoverImg,
     videoUrl: '',
     showInNav: true,

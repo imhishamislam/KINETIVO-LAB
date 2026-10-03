@@ -166,68 +166,96 @@ export const CustomPage: React.FC<CustomPageProps> = ({
         )}
 
         {/* Content Body with Rich Markdown & Card Formatting */}
-        <div className="bg-[#0e0e16]/60 border border-white/10 rounded-3xl p-6 sm:p-10 backdrop-blur-xl shadow-xl">
-          <div className="space-y-6 text-[#d0d0df] text-[15px] sm:text-[16px] leading-relaxed">
+        <div className="bg-[#0e0e16]/80 border border-white/10 rounded-3xl p-6 sm:p-12 backdrop-blur-xl shadow-2xl">
+          <div className="space-y-8 text-[#d2d2e2] text-[15px] sm:text-[16.5px] leading-relaxed">
             {content.split('\n\n').map((paragraph, idx) => {
-              // Section Heading Level 2 (##)
-              if (paragraph.startsWith('## ')) {
+              const trimmed = paragraph.trim();
+
+              // Horizontal Divider (---)
+              if (trimmed === '---') {
                 return (
-                  <div key={idx} className="pt-6 pb-2 first:pt-0 border-b border-white/10 mb-6">
-                    <h2 className="text-2xl sm:text-3xl font-extrabold text-white font-['Outfit'] tracking-tight flex items-center gap-3">
-                      <span className="w-1.5 h-6 rounded-full bg-gradient-to-b from-[#c6f24e] to-[#2ed9e3]" />
-                      <span>{paragraph.replace('## ', '')}</span>
+                  <div key={idx} className="my-8 flex items-center justify-center gap-3">
+                    <div className="h-[1px] flex-1 bg-gradient-to-r from-transparent via-white/15 to-transparent" />
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#2ed9e3]/60" />
+                    <div className="h-[1px] flex-1 bg-gradient-to-r from-transparent via-white/15 to-transparent" />
+                  </div>
+                );
+              }
+
+              // Section Heading Level 1 (# )
+              if (trimmed.startsWith('# ')) {
+                return (
+                  <div key={idx} className="pt-8 pb-3 border-b border-white/15 first:pt-0">
+                    <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-white font-['Outfit'] tracking-tight flex items-center gap-3">
+                      <span className="w-2 h-7 rounded-full bg-gradient-to-b from-[#2ed9e3] to-[#a855f7]" />
+                      <span>{trimmed.replace('# ', '')}</span>
                     </h2>
                   </div>
                 );
               }
 
-              // Section Heading Level 3 (###)
-              if (paragraph.startsWith('### ')) {
+              // Section Heading Level 2 (## )
+              if (trimmed.startsWith('## ')) {
                 return (
-                  <div key={idx} className="pt-4 mb-2">
-                    <h3 className="text-lg sm:text-xl font-bold text-[#c6f24e] font-['Outfit'] tracking-normal">
-                      {paragraph.replace('### ', '')}
+                  <div key={idx} className="pt-6 pb-2 border-b border-white/10 first:pt-0">
+                    <h3 className="text-xl sm:text-2xl lg:text-3xl font-extrabold text-white font-['Outfit'] tracking-tight flex items-center gap-3">
+                      <span className="w-1.5 h-5 rounded-full bg-gradient-to-b from-[#2ed9e3] to-[#c6f24e]" />
+                      <span>{trimmed.replace('## ', '')}</span>
                     </h3>
                   </div>
                 );
               }
 
-              // Section Heading Level 4 (####)
-              if (paragraph.startsWith('#### ')) {
+              // Section Heading Level 3 (### )
+              if (trimmed.startsWith('### ')) {
                 return (
-                  <div key={idx} className="pt-2 mb-1">
-                    <h4 className="text-base sm:text-lg font-bold text-[#2ed9e3] font-['Outfit']">
-                      {paragraph.replace('#### ', '')}
+                  <div key={idx} className="pt-4 pb-1">
+                    <h4 className="text-lg sm:text-xl font-bold text-white font-['Outfit'] tracking-normal flex items-center gap-2">
+                      <span className="text-lg">{trimmed.replace('### ', '').split(' ')[0]}</span>
+                      <span className="bg-gradient-to-r from-white to-[#e2e2ee] bg-clip-text text-transparent">
+                        {trimmed.replace('### ', '').split(' ').slice(1).join(' ')}
+                      </span>
                     </h4>
                   </div>
                 );
               }
 
+              // Section Heading Level 4 (#### )
+              if (trimmed.startsWith('#### ')) {
+                return (
+                  <div key={idx} className="pt-2 mb-1">
+                    <h5 className="text-base sm:text-lg font-bold text-[#2ed9e3] font-['Outfit']">
+                      {trimmed.replace('#### ', '')}
+                    </h5>
+                  </div>
+                );
+              }
+
               // Blockquotes (> )
-              if (paragraph.startsWith('> ')) {
+              if (trimmed.startsWith('> ')) {
                 return (
                   <blockquote
                     key={idx}
-                    className="border-l-4 border-[#2ed9e3] pl-5 pr-4 py-3 italic text-white bg-gradient-to-r from-[#2ed9e3]/10 to-transparent rounded-r-2xl my-5 font-medium text-base"
+                    className="border-l-4 border-[#2ed9e3] pl-5 pr-4 py-3.5 italic text-white bg-gradient-to-r from-[#2ed9e3]/10 to-transparent rounded-r-2xl my-5 font-medium text-base"
                   >
-                    {paragraph.replace('> ', '')}
+                    {trimmed.replace('> ', '')}
                   </blockquote>
                 );
               }
 
               // Bullet points (- )
-              if (paragraph.startsWith('- ')) {
-                const items = paragraph.split('\n').map(line => line.replace('- ', ''));
+              if (trimmed.startsWith('- ')) {
+                const items = trimmed.split('\n').map(line => line.replace('- ', ''));
                 return (
-                  <ul key={idx} className="space-y-2.5 my-4">
+                  <ul key={idx} className="space-y-3 my-4">
                     {items.map((it, i) => (
-                      <li key={i} className="flex items-start gap-3 bg-white/[0.02] p-3 rounded-xl border border-white/5 text-[#c8c8d8]">
-                        <CheckCircle2 className="w-4 h-4 text-[#c6f24e] shrink-0 mt-0.5" />
+                      <li key={i} className="flex items-start gap-3 bg-white/[0.025] hover:bg-white/[0.04] transition-colors p-3.5 rounded-xl border border-white/5 text-[#d0d0df]">
+                        <CheckCircle2 className="w-4 h-4 text-[#2ed9e3] shrink-0 mt-0.5" />
                         <span className="text-sm sm:text-base leading-relaxed">
                           {/* Parse bold text inside list items */}
                           {it.split(/(\*\*.*?\*\*)/).map((chunk, cIdx) => {
                             if (chunk.startsWith('**') && chunk.endsWith('**')) {
-                              return <strong key={cIdx} className="text-white font-bold">{chunk.slice(2, -2)}</strong>;
+                              return <strong key={cIdx} className="text-white font-semibold">{chunk.slice(2, -2)}</strong>;
                             }
                             return chunk;
                           })}
@@ -238,10 +266,10 @@ export const CustomPage: React.FC<CustomPageProps> = ({
                 );
               }
 
-              // Standard paragraphs with **bold** parser
+              // Standard paragraphs with **bold** parser (strictly clean neutral text color, never green paragraph text)
               return (
-                <p key={idx} className="text-[#a9a9bc] leading-relaxed">
-                  {paragraph.split(/(\*\*.*?\*\*)/).map((chunk, cIdx) => {
+                <p key={idx} className="text-[#c3c3d6] leading-relaxed font-normal text-[15px] sm:text-[16.5px]">
+                  {trimmed.split(/(\*\*.*?\*\*)/).map((chunk, cIdx) => {
                     if (chunk.startsWith('**') && chunk.endsWith('**')) {
                       return <strong key={cIdx} className="text-white font-bold">{chunk.slice(2, -2)}</strong>;
                     }
